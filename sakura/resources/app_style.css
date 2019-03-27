@@ -1,6 +1,9 @@
 * {margin: 0px; padding: 0px;}
 body{
-    -ms-overflow-style: none;
+	-ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+	display:none;
 }
 img {vertical-align: middle;}
 .event {background: #fff;}
