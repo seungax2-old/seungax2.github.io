@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+  
+<link rel="stylesheet" href="resources/app_style.css">
+<script  src="resources/jquery-1.12.3.js"></script>
+<script  src="resources/taphold.js"></script>
+</head>
+
+<body>
+
+<div class="event">
+    <div class="img"><img class="changeTopImg" src="resources/main_01.jpg"/></div>
+    <div class="img">
+        <img class="changeInfoImg" src="resources/main_02_off.jpg"/>
+        <div class="commonWrap infoWrap" style="display: none;">
+            <p class="timer flex center">30</p>
+            <p class="flowerTotal flex center">0</p>
+        </div>
+    </div>
+    
+    <div class="img noStartWrap">
+        <img src="resources/main_03_off.jpg"/>
+        <a class="btn_start"></a>
+    </div>
+    
+    <div class="img tutorialWarp" style="display: none;">
+        <img src="resources/popup_sub.jpg"/>
+        <a class="btn_gameStart"></a>
+    </div>
+    
+    <div class="img startWrap" style="display: none;">
+        <img src="resources/main_03_on.jpg"/>
+        <div class="flowerWrap commonWrap">
+            <div class="relativeWrap">
+                <p class="flower0 flower"><img src=""/></p>
+                <p class="flower1 flower"><img src=""/></p>
+                <p class="flower2 flower"><img src=""/></p>
+                <p class="flower3 flower"><img src=""/></p>
+            </div>
+        </div>
+        <p class="noclickDiv commonWrap"></p>
+    </div>
+    
+    
+    <div class="img"><img src="resources/main_04.jpg"/></div>
+</div>
+
+<div class="event-pop" id="single-pop" style="display: none;">
+    <div class="event-inner">
+        <img src="" id="popImg">
+        <a href="#none" class="close-btn"></a>
+    </div>
+</div>
+       
+<script>
+
+$(document).ready(function(){
+    var $singlepop = $("#single-pop");
+    var $noClick = $(".noclickDiv");
+    var $tutorial = $(".tutorialWarp");
+    var flower = ["f_fail1","f_fail2","f_fail3","f_sc"];
+    var $flower = $(".flower");
+    var $flowerImg = $(".flower img");
+    
+    //체크용 변수
+    var flowerSuffle;
+    var before;
+    
+    //게임 인터벌
+    var flowerInterval;
+    
+    //꽃피는 애니메이션
+    var flower_imgSrc;
+    var flower_class;
+    var scClass;
+    
+    //벚꽃잡았을시
+    var success = 0;
+    var clickClass;
+    var $flowerTotal = $(".flowerTotal");
+    
+    //꽃이 몇개 피는지 랜덤변수
+    var fNum_Random;
+    //꽃피는 위치 랜덤변수 배열
+    var showPlace = [];
+    
+    /*타이머*/
+    var timer;
+    var setTime = 30;
+    var timeresult = "pass";
+    var $secondWrap = $(".timer");
+    
+    //싱글 팝업창 닫기
+    $("#single-pop .close-btn").on("click", function(){
+        $singlepop.hide();
+    });
+    
+    $(".btn_start").on("click",function(){
+        $tutorial.show();
+        $(".noStartWrap").hide();
+    });
+    
+    $(".btn_gameStart").on("click",function(){
+        $tutorial.hide();
+        $(".startWrap").show();
+        $(".infoWrap").show();
+        $(".changeTopImg").attr("src","resources/main_01_on.jpg");
+        $(".changeInfoImg").attr("src","resources/main_02_on.jpg");
+        /*타이머 시작!*/
+        gametimer();
+        /*꽃피는 애니메이션 한번 돌고*/
+        flowerAni();
+        /*이후 반복*/
+        /*console.log(Math.floor(Math.random()*5)+10+"00")*/
+        flowerInterval = setInterval(function(){flowerAni();},1850);
+    });
+    
+    
+    function flowerAni(){
+        //꽃이 피는 위치 랜덤배열
+        var flowerplaceAr = flowerShowRandom();
+        $noClick.hide();
+        //각 위치에서 피는 꽃이미지 랜덤 중복체크
+        flower = beforeCheck();
+        //각 위치에 이미지 배치, 벚꽃일꼉우 f_sc클래스 설정
+        for(var i = 0; i<flower.length; i++){
+            flower_imgSrc = "resources/"+flower[i]+".png";
+            flower_class= ".flower"+i+" img";
+            scClass = ".flower"+i;
+            $(flower_class).attr("src",flower_imgSrc);
+            if(flower[i] == "f_sc"){
+                $(scClass).addClass("f_sc");
+            }
+        }
+        //꽃피는 위치 랜덤패열에 따라 꽃보여주는 애니메이션 적용
+        for(var j = 0; j<fNum_Random; j++){
+            var rn = Math.floor(Math.random()*3)+1
+            var scaleClass = "flower_scale" + rn
+            var $showClass = ".flower"+flowerplaceAr[j]+" img";
+            $($showClass).addClass(scaleClass);
+            
+        }
+        /*애니메이션 끝나는 타이밍맞추어 화면 리셋*/
+        setTimeout(function(){
+            $flower.removeClass("f_sc");
+            $flowerImg.removeClass("flower_scale1");
+            $flowerImg.removeClass("flower_scale2");
+            $flowerImg.removeClass("flower_scale3");
+            showPlace = [];
+        },1800);
+
+    }
+    
+    function flowerShowRandom(){
+        //몇개보여줄래 랜덤 중복체크
+        fNum_RandomCheck();
+        //어느 위치에다가 보여줄래 (몇개보여줄게 == 배열길이)
+        for(var r=0; r<fNum_Random; r++){
+            if(r>0){
+                //0일때는 우선 값을 넣어준뒤 이후부턴 중복체크
+                randomCheck();
+            }else{
+                showPlace.push(Math.floor(Math.random()*4));
+            }
+        }
+        return showPlace;
+    }
+    
+    function fNum_RandomCheck(){
+        //1~4개 랜덤
+        var nowRandom = Math.floor(Math.random()*4)+1;
+        //같으면 재귀함수, 아니면 랜덤변수에 값저장
+        if(fNum_Random == nowRandom){
+            fNum_RandomCheck();
+        }else{
+            fNum_Random = nowRandom;
+        }
+    }
+    
+    function randomCheck(){
+        //0~3 랜덤
+        var nowRandom = Math.floor(Math.random()*4);
+        
+        //같으면 재귀함수, 아니면 꽃위치 배열에 값 저장
+        var random_flag = false;
+        for(var c=0; c<showPlace.length; c++){
+            if(showPlace[c] == nowRandom){
+                random_flag = true;
+                break;
+            }
+        }
+        if(random_flag){
+            randomCheck();
+        }else{
+            showPlace.push(nowRandom);
+        }
+    }
+    
+    //배열 셔플
+    function suffle(){
+        flower.sort(function(){
+            return Math.random() - Math.random();
+        });
+        return flower;
+    }
+    
+    //배열 셔플 벚꽃 위치 중복체크
+    function beforeCheck(){
+        before = jQuery.inArray('f_sc',flower);
+        //1. 배열 셔플돌린다
+        flowerSuffle = suffle();
+        //2.벚꽃의 현재 배열 위치를 확인한다
+        var now = jQuery.inArray('f_sc',flowerSuffle);
+        //3.같으면 재귀함수, 아니면 애니메이션돌리기
+        if(before == now){
+            beforeCheck();
+        }else{
+            before = now;
+        }
+        return flowerSuffle;
+    }
+    
+    //타이머
+    function gametimer(){
+        timer = setInterval(function(){
+            setTime = setTime-1;
+            if(setTime < 10){
+                setTime = "0"+setTime;
+            }
+            $secondWrap.html(setTime);
+            if(setTime == 0){
+                clearInterval(timer);
+                timeresult="fail";
+            }else if(setTime < 11){
+                $(".timer").css("color","#f1202f");
+            }
+        }, 1000);
+        /*결과 확인 함수*/
+        setTimeout(function() {
+            if(timeresult != "pass"){
+                gameResult(timeresult);   
+            }
+        },30100);
+    }
+    
+    var $flowerTotal = $(".flowerTotal");
+    $flower.on("click",function(){
+        $noClick.show();
+        clickClass = $(this).hasClass("f_sc");
+        if(clickClass){
+            /*성공*/
+            success += 1;
+            $flowerTotal.html(success);
+            console.log(success)
+            if( 0 < success && success < 3 ){
+                $flowerTotal.css("color","#fd6671");
+            }else if(3 <= success && success < 5){
+                $flowerTotal.css("color","#f2515c");
+            }else if(5 <= success && success < 7 ){
+                $flowerTotal.css("color","#e63d49");
+            }else if(success == 7){
+                $flowerTotal.css("color","#da2c39");
+                gameResult('pass');
+            }
+        }else{
+            $noClick.hide();
+        }
+    });
+    
+    /*결과처리함수*/
+    function gameResult(result){
+        clearInterval(timer);
+        clearInterval(flowerInterval);
+        if(result == "fail"){
+            $("#popImg").attr("src","resources/pop_lastDayFail.png");
+            /*$("#popImg").attr("src","resources/pop_Fail.png");*/
+            $singlepop.show();
+        }else{
+            $("#popImg").attr("src","resources/1p.png");
+            $singlepop.show();
+        }
+        $noClick.show();
+        $flowerImg.removeClass("flower_scale");
+    }
+    
+});
+    
+   
+
+</script>
+</body>
+
+</html>

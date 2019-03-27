@@ -1,0 +1,117 @@
+* {margin: 0px; padding: 0px;}
+img {vertical-align: middle;}
+.event {background: #fff;}
+.event .img {position: relative;}
+.event .img img {width: 100%;}
+.event .img .btn_start{position: absolute;bottom: 43.2%;left: 17.8%;width: 59.7%;height: 20.9%;}
+.event .img .btn_gameStart{position: absolute;bottom: 21.2%;left: 19.3%;width: 59.7%;height: 13.2%;}
+.event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
+
+/* 팝업 */
+.event-pop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    box-sizing:border-box;
+    display: flex;
+    -webkit-display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+	z-index:100;
+}
+.event-pop .event-inner{position: relative; width:85%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner .popup_mid{box-sizing: border-box; display:flex; display:-webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 8%; width:100%; height:440px; background:#422752;}
+.event-pop .event-inner .popup_mid.one_con{display:inherit;}
+.event-pop .event-inner .popup_mid.one_con > p{width:50%; margin:0 auto;}
+.event-pop .event-inner .popup_mid.one_con .popup_con2{display:none;}
+.event-pop .event-inner .popup_mid > p{position:relative; -webkit-flex: 1; flex: 1;}
+.event-pop .event-inner .popup_mid p:nth-of-type(1){margin-right: 7%;}
+
+.event-pop .event-inner > p.popup_bt{position:relative;}
+.event-pop .event-inner img{width: 100%;}
+.event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;}
+#single-pop .event-inner .close-btn{position: absolute;bottom: 8.6%;right: 19.1%;width: 63.2%;height: 16.8%;top: auto;}
+.flex{display: flex; display: -webkit-flex;}
+.flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
+.center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
+
+.commonWrap{position: absolute; width: 100%; height: 100%; left: 0; bottom: 0;
+    transform:scale(1.0);-webkit-transform:scale(1.0);-moz-transform:scale(1.0);-ms-transform:scale(1.0);-o-transform:scale(1.0);
+}
+.relativeWrap{position: relative; width: 100%; height: 100%;}
+
+.infoWrap p{font-size: 7vw;/*padding-bottom: 1%;*/box-sizing: border-box;position: absolute;height: 100%;}
+.infoWrap p.timer{width: 15%;left: 34%;color:#fb8b93;}
+.infoWrap p.flowerTotal{width: 13%;left: 65.5%; color:#fb8b93;}
+.flower{
+    width: 25%; position: absolute;
+}
+.flower.flower0{left: 39%;top: 7%;}
+.flower.flower1{left: 55%;top: 27%;}
+.flower.flower2{left: 64%;top: 49%;}
+.flower.flower3{left: 5%;top: 52%;}
+
+.flower img{
+    transform: scale(0);
+    -webkit-transform:scale(0);
+    -moz-transform:scale(0);
+    -ms-transform:scale(0);
+    -o-transform:scale(0);
+}
+
+.flower_scale1{
+    animation : flower_scale 1s 0s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -webkit-animation : flower_scale 1s 0s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -moz-animation : flower_scale 1s 0s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -ms-animation : flower_scale 1s 0s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -o-animation :flower_scale 1s 0s 1 cubic-bezier(0, 0, 1, 1) forwards;
+}
+.flower_scale2{
+    animation : flower_scale 1s 0.3s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -webkit-animation : flower_scale 1s 0.3s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -moz-animation : flower_scale 1s 0.3s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -ms-animation : flower_scale 1s 0.3s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -o-animation :flower_scale 1s 0.3s 1 cubic-bezier(0, 0, 1, 1) forwards;
+}
+.flower_scale3{
+    animation : flower_scale 1s 0.6s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -webkit-animation : flower_scale 1s 0.6s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -moz-animation : flower_scale 1s 0.6s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -ms-animation : flower_scale 1s 0.6s 1 cubic-bezier(0, 0, 1, 1) forwards;
+    -o-animation :flower_scale 1s 0.6s 1 cubic-bezier(0, 0, 1, 1) forwards;
+}
+
+@keyframes flower_scale{
+    form {
+        transform: scale(0);
+        -webkit-transform:scale(0);
+        -moz-transform:scale(0);
+        -ms-transform:scale(0);
+        -o-transform:scale(0);
+    }
+    40%{
+        transform: scale(1.0);
+        -webkit-transform:scale(1.0);
+        -moz-transform:scale(1.0);
+        -ms-transform:scale(1.0);
+        -o-transform:scale(1.0);
+    }
+    75%{
+        transform: scale(1.0);
+        -webkit-transform:scale(1.0);
+        -moz-transform:scale(1.0);
+        -ms-transform:scale(1.0);
+        -o-transform:scale(1.0);
+    }
+    to {
+        transform: scale(0);
+        -webkit-transform:scale(0);
+        -moz-transform:scale(0);
+        -ms-transform:scale(0);
+        -o-transform:scale(0);
+    }
+}
