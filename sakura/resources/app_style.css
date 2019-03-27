@@ -1,5 +1,7 @@
 * {margin: 0px; padding: 0px;}
-body{width:360px;}
+body{
+    -ms-overflow-style: none;
+}
 img {vertical-align: middle;}
 .event {background: #fff;}
 .event .img {position: relative;}
