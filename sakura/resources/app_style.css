@@ -1,4 +1,5 @@
 * {margin: 0px; padding: 0px;}
+body{width:360px;}
 img {vertical-align: middle;}
 .event {background: #fff;}
 .event .img {position: relative;}
