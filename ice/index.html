@@ -151,7 +151,8 @@ $(window).load(function(){
             $glove.addClass("rotateGlove");
             isDrawing = true;
             lastPoint = getMouse(e, iceWrap);
-            iceWrap.addEventListener('touchmove', handleMouseMove, false);
+            /* iceWrap.addEventListener('touchmove', handleMouseMove, false); */
+            iceWrap.addEventListener('mousemove', handleMouseMove, false);
             /*melting();*/
         }, 500);
     }
