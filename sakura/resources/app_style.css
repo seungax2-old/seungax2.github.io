@@ -6,8 +6,8 @@ img {vertical-align: middle;}
 .event {background: #fff;}
 .event .img {position: relative;}
 .event .img img {width: 100%;}
-.event .img .btn_start{position: absolute;bottom: 43.2%;left: 17.8%;width: 59.7%;height: 20.9%;}
-.event .img .btn_gameStart{position: absolute;bottom: 21.2%;left: 19.3%;width: 59.7%;height: 13.2%;}
+.event .img .btn_start{position: absolute;bottom: 43.2%;left: 17.8%;width: 59.7%;height: 20.9%;cursor: pointer;}
+.event .img .btn_gameStart{position: absolute;bottom: 21.2%;left: 19.3%;width: 59.7%;height: 13.2%;cursor: pointer;}
 .event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
 
 /* 팝업 */
@@ -51,6 +51,7 @@ img {vertical-align: middle;}
 .infoWrap p.timer{width: 15%;left: 34%;color:#fb8b93;}
 .infoWrap p.flowerTotal{width: 13%;left: 65.5%; color:#fb8b93;}
 .flower{
+	cursor: pointer;
     width: 25%; position: absolute;
 }
 .flower.flower0{left: 39%;top: 7%;}

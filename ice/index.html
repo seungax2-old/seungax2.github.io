@@ -75,8 +75,12 @@ $(window).load(function(){
     var $subTxtDiv = $(".subTxtDiv");
     var iceWrap = document.getElementById('iceWrap');
     var glove = document.getElementById("moveCursor");
-    glove.addEventListener('touchstart', handleMouseDown, false);
-    glove.addEventListener('touchend', handleMouseUp, false);
+    /* glove.addEventListener('touchstart', handleMouseDown, false);
+    glove.addEventListener('touchend', handleMouseUp, false); */
+    glove.addEventListener('mousedown', handleMouseDown, false);
+    glove.addEventListener('mouseup', handleMouseUp, false);
+    
+    
     
     /*touchstart*/
     var startMove;
@@ -132,8 +136,6 @@ $(window).load(function(){
 /*
             alert("아직 얼음이 얼지 않았어요!");
 */
-            
-            
             $startBtnDiv.hide();
             $subTxtDiv.show();
             $glove.show();
