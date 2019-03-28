@@ -53,9 +53,9 @@
 <script>
     
 $(window).load(function(){
-    
 
     var scrollT;
+    
     var filter = "win16|win32|win64|mac|macintel";
     if ( navigator.platform ) { 
         if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
@@ -84,8 +84,8 @@ $(window).load(function(){
     var glove = document.getElementById("moveCursor");
     glove.addEventListener('touchstart', handleMouseDown, false);
     glove.addEventListener('touchend', handleMouseUp, false);
-    glove.addEventListener('mouseup', handleMouseDown, false);
-    glove.addEventListener('mousedown', handleMouseUp, false);
+    glove.addEventListener('mousedown', handleMouseDown, false);
+    glove.addEventListener('mouseup', handleMouseUp, false);
     
     /*touchstart*/
     var startMove;
@@ -141,7 +141,6 @@ $(window).load(function(){
 /*
             alert("아직 얼음이 얼지 않았어요!");
 */
-          
             $startBtnDiv.hide();
             $subTxtDiv.show();
             $glove.show();
@@ -242,6 +241,7 @@ $(window).load(function(){
                 offsetY += iceWrap.offsetTop;
             } while ((iceWrap = iceWrap.offsetParent));
         }
+        console.log(e.pageX)
         mx = (e.pageX || e.touches[0].clientX) - offsetX;
         my = (e.pageY || e.touches[0].clientY) - offsetY+scrollT;
 
