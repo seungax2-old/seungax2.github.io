@@ -1,8 +1,10 @@
 *, *:before, *:after {box-sizing: border-box; outline: none; margin: 0; padding: 0;}
+body{ -ms-overflow-style: none; }
+body::-webkit-scrollbar { display:none; }
 .event{position: relative;background:#fff;overflow: hidden;}
 .event .img{position:relative;}
 .event .img img{width:100%;vertical-align:middle;} 
-.event .img .start_btn{position: absolute;top: 38.8%;left: 18.6%;height: 15.7%;width: 63%;}
+.event .img .start_btn{position: absolute;top: 38.8%;left: 18.6%;height: 15.7%;width: 63%;cursor: pointer;}
 .event .img .start_btn span{z-index: -1;height: 0;line-height: 0;font-size: 0;}
 .Pouring{position: absolute;width:100%;height: 100%;right: 0;top: 0;}
 .snowPouring{position: relative;height: 100%;}
@@ -20,7 +22,7 @@
 
 #iceImg img{display: none;}
 #iceImg img.showImg{display: block;}
-.glove{position: absolute; left: 50%;top: 50%;width: 15%; height: auto;}
+.glove{position: absolute; left: 50%;top: 50%;width: 15%; height: auto;cursor: pointer;}
 .rotateGlove{transform: rotate(-30deg);}
 
 .ice{position: absolute; left:0; width:100%; height: 100%; top: 0;}
@@ -37,4 +39,4 @@
 .event-pop .event-inner{position: relative; width:85%;}
 .event-pop .event-inner > p{width: 100%;}
 .event-pop .event-inner img{width: 100%;}
-.event-pop .event-inner .close-btn{position: absolute; bottom: 7.2%; left: 18.3%; width: 62.4%; height: 8.9%;}
+.event-pop .event-inner .close-btn{position: absolute; bottom: 7.2%; left: 18.3%; width: 62.4%; height: 8.9%;cursor: pointer;}

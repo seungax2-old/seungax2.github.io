@@ -2,3 +2,9 @@
 iframe::-webkit-scrollbar { display:none; }
 img{-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 
+.flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
+.flex{display: flex; display: -webkit-flex;}
+.flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
+.center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
+.centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
+.right{-webkit-justify-content: right; justify-content: right; -webkit-align-items: right; align-items: right; }
