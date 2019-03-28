@@ -56,27 +56,36 @@ $(window).load(function(){
     
 
     var scrollT;
-    var varUA = navigator.userAgent.toLowerCase();
-    if (varUA.match('android') != null) {
-        //안드로이드 일때 처리
-        scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
-        $(window).scroll(function () {
-            scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
-        });
-    } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
-        //IOS 일때 처리
-        scrollT=$(document).scrollTop();
-        $(window).scroll(function () {
-            scrollT = $(".event").scrollTop();
-        });
+    var filter = "win16|win32|win64|mac|macintel";
+    if ( navigator.platform ) { 
+        if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
+        	var varUA = navigator.userAgent.toLowerCase();
+            if (varUA.match('android') != null) {
+                //안드로이드 일때 처리
+                scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+                $(window).scroll(function () {
+                    scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+                });
+            } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+                //IOS 일때 처리
+                scrollT=$(document).scrollTop();
+                $(window).scroll(function () {
+                    scrollT = $(".event").scrollTop();
+                });
+            } 
+        } else { 
+        	scrollT = $(".event").scrollTop();
+        }
     }
-    
+
     var $startBtnDiv = $(".startBtnDiv");
     var $subTxtDiv = $(".subTxtDiv");
     var iceWrap = document.getElementById('iceWrap');
     var glove = document.getElementById("moveCursor");
     glove.addEventListener('touchstart', handleMouseDown, false);
     glove.addEventListener('touchend', handleMouseUp, false);
+    glove.addEventListener('mouseup', handleMouseDown, false);
+    glove.addEventListener('mousedown', handleMouseUp, false);
     
     /*touchstart*/
     var startMove;
@@ -149,6 +158,7 @@ $(window).load(function(){
             isDrawing = true;
             lastPoint = getMouse(e, iceWrap);
             iceWrap.addEventListener('touchmove', handleMouseMove, false);
+            iceWrap.addEventListener('mousehmove', handleMouseMove, false);
             /*melting();*/
         }, 500);
     }
@@ -174,6 +184,7 @@ $(window).load(function(){
         isDrawing = false;
         meltingState = false;
         iceWrap.removeEventListener('touchmove', handleMouseMove, false);
+        iceWrap.removeEventListener('mousehmove', handleMouseMove, false);
         $glove.removeClass("rotateGlove");
     }
     
@@ -240,6 +251,7 @@ $(window).load(function(){
     function meltingResult(){
         alert("다 녹이이임!");
         iceWrap.removeEventListener('touchmove', handleMouseMove, false);
+        iceWrap.removeEventListener('mousehmove', handleMouseMove, false);
         $glove.hide();
     }
     
