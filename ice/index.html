@@ -158,7 +158,7 @@ $(window).load(function(){
             isDrawing = true;
             lastPoint = getMouse(e, iceWrap);
             iceWrap.addEventListener('touchmove', handleMouseMove, false);
-            iceWrap.addEventListener('mousehmove', handleMouseMove, false);
+            iceWrap.addEventListener('mousemove', handleMouseMove, false);
             /*melting();*/
         }, 500);
     }
@@ -184,7 +184,7 @@ $(window).load(function(){
         isDrawing = false;
         meltingState = false;
         iceWrap.removeEventListener('touchmove', handleMouseMove, false);
-        iceWrap.removeEventListener('mousehmove', handleMouseMove, false);
+        iceWrap.removeEventListener('mousemove', handleMouseMove, false);
         $glove.removeClass("rotateGlove");
     }
     
@@ -251,7 +251,7 @@ $(window).load(function(){
     function meltingResult(){
         alert("다 녹이이임!");
         iceWrap.removeEventListener('touchmove', handleMouseMove, false);
-        iceWrap.removeEventListener('mousehmove', handleMouseMove, false);
+        iceWrap.removeEventListener('mousemove', handleMouseMove, false);
         $glove.hide();
     }
     
