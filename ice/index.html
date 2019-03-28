@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="resources/app_style.css">
+</head>
+
+<body>
+<div class="event">
+    <div class="img" style="overflow: hideen;">
+        <div class="Pouring">
+            <div class="snowPouring"></div>
+        </div>
+        <img src="resources/main_01.png"/>
+    </div>
+    <div class="img" id="iceWrap">
+        <!--layer1-->
+        <div class="ice" id="iceImg">
+           <!--이벤트 페이지 내 이미지 경로 바꿀시 로딩 오래걸리는 이슈위해 미리 전부 업로드 시켜놓기 : iphone xs-->
+            <img class="ice01 showImg" src="resources/ice01.png"/>
+            <img class="ice02" src="resources/ice02.png"/>
+            <img class="ice03" src="resources/ice03.png"/>
+            <img class="ice04" src="resources/ice04.png"/>
+            <img class="ice05" src="resources/ice05.png"/>
+            <img class="ice06" src="resources/ice06.png"/>
+            <img class="ice07" src="resources/ice07.png"/>
+            <img class="ice08" src="resources/ice08.png"/>
+            <img class="ice09" src="resources/ice09.png"/>
+        </div>
+        
+        <!--layer2 : start 버튼-->
+        <div class="layerDiv startBtnDiv">
+            <a class="start_btn"><span>얼음녹이기 click</span></a>
+            <img src="resources/btn.png"/>
+        </div>
+        
+        <!--layer3 : 안내 텍스트-->
+        <div class="layerDiv subTxtDiv" style="display: none;">
+            <img src="resources/sub_txt.png"/>
+        </div>
+        
+        <!--layer 최상단-->
+        <div id ="moveCursor" class="glove" style="display: none;">
+            <img src="resources/glove.png"/>
+        </div>
+        
+        <img src="resources/main_02.png"/>
+    </div>
+    <div class="img"><img src="resources/main_03.png"/></div>
+</div>
+<script  src="resources/jquery-1.12.3.js"></script>
+<script>
+    
+$(window).load(function(){
+    
+
+    var scrollT;
+    var varUA = navigator.userAgent.toLowerCase();
+    if (varUA.match('android') != null) {
+        //안드로이드 일때 처리
+        scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        $(window).scroll(function () {
+            scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        });
+    } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+        //IOS 일때 처리
+        scrollT=$(document).scrollTop();
+        $(window).scroll(function () {
+            scrollT = $(".event").scrollTop();
+        });
+    }
+    
+    var $startBtnDiv = $(".startBtnDiv");
+    var $subTxtDiv = $(".subTxtDiv");
+    var iceWrap = document.getElementById('iceWrap');
+    var glove = document.getElementById("moveCursor");
+    glove.addEventListener('touchstart', handleMouseDown, false);
+    glove.addEventListener('touchend', handleMouseUp, false);
+    
+    /*touchstart*/
+    var startMove;
+    
+    /*touchmove*/
+    var $glove = $("#moveCursor");
+    var glove_W = $glove.width()*0.5;
+    var glove_H = $glove.height()*0.5;
+    var glove_totalH = $glove.height();
+    var glove_totalw = $glove.width();
+    var window_w = $(".ice").width();
+    var window_h = $(".ice").height();
+    
+    /*melting()*/
+    var $iceImg = $("#iceImg");
+    var $iceImg_img = $("#iceImg img");
+    var timer = 1;
+    var iceMelting;
+    var meltingState = false;
+    
+    start_snowPouring();
+    function start_snowPouring(snow_place){
+        var $snowPouringDiv;
+        $snowPouringDiv = $(".snowPouring");
+        for(var i=0; i<25; i++){
+            var left_position = Math.floor(Math.random() * 100) + 1;
+            var snow_size = Math.floor(Math.random() * 3) + 1;
+            var delay_time = Math.floor(Math.random() * 3) + 1;
+            var top_position = Math.floor(Math.random() * 35) + 1;
+            var duration_time = Math.floor(Math.random()*5) + 3;
+            var snows = "<p class='snow' style='animation-duration:" +duration_time+ "s;animation-delay:" + delay_time + "s; -webkit-animation-delay: "+delay_time+"s; top:-" + top_position + "%; left:" + left_position + "%; height:" + snow_size + "vw; width:" + snow_size + "vw;'></p>"
+            $snowPouringDiv.append(snows);
+        }
+    }
+    
+    $(".start_btn").on("click",function(){
+        var strDate = new Date();
+        /*var time = (strDate.getHours() >= 10 ? '' : '0') + strDate.getHours();*/
+        /*시간단위부터 비교 함으로 앞의 0은 때야된다*/
+        var time = strDate.getHours();
+        var minutes = (strDate.getMinutes() >= 10 ? '' : '0') + strDate.getMinutes();
+
+        var today = time + "" + minutes;
+        console.log(today);
+        /*1800 이후, 1000 이전에만 이벤트 참가가능*/
+        if(today>1800 || today<1000){
+            $startBtnDiv.hide();
+            $subTxtDiv.show();
+            $glove.show();
+            glove.style.left = window_w*0.5 - glove_W + "px";
+            glove.style.top = window_h*0.5 - glove_H + "px";
+        }else{
+/*
+            alert("아직 얼음이 얼지 않았어요!");
+*/
+            
+            
+            $startBtnDiv.hide();
+            $subTxtDiv.show();
+            $glove.show();
+            glove.style.left = window_w*0.5 - glove_W + "px";
+            glove.style.top = window_h*0.5 - glove_H + "px";
+        }
+        
+    });
+    
+    function handleMouseDown(e) {
+        startMove = setTimeout(function() {
+            $subTxtDiv.hide();
+            $glove.addClass("rotateGlove");
+            isDrawing = true;
+            lastPoint = getMouse(e, iceWrap);
+            iceWrap.addEventListener('touchmove', handleMouseMove, false);
+            /*melting();*/
+        }, 500);
+    }
+    
+    function melting(){
+        meltingState = true;
+        iceMelting = setInterval(function(){
+            timer = timer+1;
+            $iceImg_img.removeClass("showImg");
+            $(".ice0"+timer).addClass("showImg");
+            if(timer == 9){
+                $iceImg.hide();
+                clearInterval(iceMelting);
+                meltingResult();
+            }
+        }, 800);
+    };
+    function handleMouseUp(e) {
+        e.preventDefault();
+        $subTxtDiv.show();
+        clearTimeout(startMove);
+        clearInterval(iceMelting);
+        isDrawing = false;
+        meltingState = false;
+        iceWrap.removeEventListener('touchmove', handleMouseMove, false);
+        $glove.removeClass("rotateGlove");
+    }
+    
+    //위치 거리 계산
+    function distanceBetween(point1, point2) {
+        return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+    }
+    //위치 앵글 계산
+    function angleBetween(point1, point2) {
+        return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+    }
+    
+    //터치 무브시 이벤트
+    function handleMouseMove(e) {
+        //드로잉 끝났다 - 터치엔드시 리턴
+        if (!isDrawing) { return; }
+        if (!meltingState) { melting(); }
+        e.preventDefault();
+        
+        //무빙 포인트 기록
+        var currentPoint = getMouse(e, iceWrap),
+        //첫 포인트과 움직인 순간의 포인트 사이 거리 계산
+        dist = distanceBetween(lastPoint, currentPoint),
+        //첫 포인트과 움직인 순간의 포인트 사이 앵글 계산 (각도)
+        angle = angleBetween(lastPoint, currentPoint),
+        x, y;
+
+        for (var i = 0; i < dist; i++) {
+            x = lastPoint.x + (Math.sin(angle) * i);
+            y = lastPoint.y + (Math.cos(angle) * i);
+            var gloveX = x - glove_W
+            var gloveY = y - glove_H
+            
+            if( gloveX < 0){gloveX = 0}
+            if( gloveY < 0){gloveY = 0}
+            if( gloveX > window_w){ gloveX = window_w - glove_totalw;}
+            if( gloveY > window_h){ gloveY = window_h - glove_totalH;}
+           
+            glove.style.left = gloveX + "px";
+            glove.style.top = gloveY + "px";
+            
+        }
+        
+        lastPoint = currentPoint;
+        
+    }
+
+    //터치 위치 계산
+    function getMouse(e, iceWrap) {
+        var offsetX = 0, offsetY = 0, mx, my;
+
+        if (iceWrap.offsetParent !== undefined) {
+            do {
+                offsetX += iceWrap.offsetLeft;
+                offsetY += iceWrap.offsetTop;
+            } while ((iceWrap = iceWrap.offsetParent));
+        }
+        mx = (e.pageX || e.touches[0].clientX) - offsetX;
+        my = (e.pageY || e.touches[0].clientY) - offsetY+scrollT;
+
+        return {x: mx, y: my};
+    }
+    
+    function meltingResult(){
+        alert("다 녹이이임!");
+        iceWrap.removeEventListener('touchmove', handleMouseMove, false);
+        $glove.hide();
+    }
+    
+});
+</script>
+</body>
+
+</html>
