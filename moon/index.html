@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>wavePercent</title>
+      <link rel="stylesheet" href="resources/app_style.css">
+</head>
+
+<body>
+<div class="event">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" style="display: none;">
+  <symbol id="wave">
+      <path d="M280,20a359.45,359.45,0,0,1-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C186,6.5,182,4.7,171.5,2.7A168.21,168.21,0,0,0,140,0h0V20Z" />
+      <path d="M0,20a359.45,359.45,0,0,0,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C94,6.5,98,4.7,108.5,2.7A167.36,167.36,0,0,1,140,0h0V20Z"/>
+      <path d="M560,20a359.45,359.45,0,0,1-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C466,6.5,462,4.7,451.5,2.7A168.21,168.21,0,0,0,420,0h0V20Z"/>
+      <path d="M280,20a359.45,359.45,0,0,0,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C374,6.5,378,4.7,388.5,2.7A167.36,167.36,0,0,1,420,0h0V20Z"/>
+  </symbol>
+</svg>
+    <div class="img">
+        <img src="resources/main_01.png"/>
+        <!--<div class="blur">
+            <img class="" src="resources/outside.png" style="width: 100%; height: 100%;"/>
+        </div>-->
+        <div class="moon-box">
+            <div class="moon-face">
+                <img class="face"src="resources/face02.png"/>
+            </div>
+
+            <div id="water" class="water">
+                <svg viewBox="0 0 560 20" class="water_wave water_wave_front">
+                    <use xlink:href="#wave"></use>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="rotate_leaf">
+            <div class="leaf">
+                <img src="resources/leaf01.png"/>
+            </div>
+        </div>
+        <div class="rotate_leaf2">
+            <div class="leaf">
+                <img src="resources/leaf02.png"/>
+            </div>
+        </div>
+        <div class="rotate_leaf3">
+            <div class="leaf">
+                <img src="resources/leaf03.png"/>
+            </div>
+        </div>
+        <div class="rotate_leaf4">
+            <div class="leaf">
+                <img src="resources/leaf04.png"/>
+            </div>
+        </div>
+        <div class="rotate_leaf5">
+            <div class="leaf">
+                <img src="resources/leaf05.png"/>
+            </div>
+        </div>
+        
+        
+        <div class="moon-click" style="z-index: 5; position: absolute; height: 50%; width: 100%; left: 0; bottom: 0;">
+            <div style="position: absolute; height: auto; width: 100%; left: 0; bottom: 0; padding: 0 8% 7%;">
+                <img src="resources/text01.png"/>
+            </div>
+        </div>
+    </div>
+ <!--   <div class="img">
+        <img src="resources/main_02.png"/>
+    </div>
+    <div class="img">
+        <img src="resources/main_03.png"/>
+    </div>-->
+    <div class="img">
+        <img src="resources/main_04.png"/>
+    </div>
+<!--</div>-->
+</div>
+    <script  src="resources/jquery-1.12.3.js"></script>
+    <script  src="resources/taphold.js"></script>
+<script>
+    
+    
+var water=document.getElementById("water"); // svg water
+var percent=0; // 화면 숫자가 percent
+ var interval; 
+ 
+var tabhold="flase";
+var msg= "notYet";
+var getCoupon = "success";
+var downper = 0;    
+
+/*최초한번*/
+$(".moon-click").on("taphold", {duration: 1000}, function() {
+    $(".moon-click").hide();
+    var tabhold="true"
+    clearInterval(interval);
+    move(tabhold);
+});
+
+$('.moon-click').on('touchend', function() {
+    if(percent != 0 && percent != 100){
+        var tabhold="false"
+        clearInterval(interval);
+        move(tabhold);
+    }
+       
+});
+    
+    
+$(".moon-box").on("taphold", {duration: 1000}, function() {
+    var tabhold="true"
+    clearInterval(interval);
+    move(tabhold);
+});  
+
+$('.moon-box').on('touchend', function() {
+    /*땟을때 바닥이거나, 가득찬상태에선 아무 이벤트 하지않는다*/
+    if(percent != 0 && percent != 100){
+        var tabhold="false"
+        clearInterval(interval);
+        move(tabhold);
+    }else{return;}
+});
+   
+    var moonStatus = "fail"
+function move(taphold_status){
+        if(taphold_status == "true"){/*누름*/
+
+            if(downper == 0){/*내려간 위치 0 percent로 시작하면 됨*/
+                interval=setInterval(function(){ 
+                    percent++; 
+                    water.style.transform='translate(0'+','+(100-percent)+'%)';
+                    if(percent==100){
+                        clearInterval(interval);
+                        alertFc(moonStatus);
+                    }
+                },60);
+            }else if(downper == 100){
+                /*가득찬 상태 아무런 이벤트 하지 않는데*/
+                return;
+            }else{/*내려간 위치 중간 >> downper에서 올라가야함*/
+                interval=setInterval(function(){ 
+                    downper++; 
+                    water.style.transform='translate(0'+','+(100-downper)+'%)';
+                    if(downper==100){
+                        clearInterval(interval);
+                        alertFc(moonStatus);
+                        percent = 0; /*퍼센트, downper 100으로 맞춰주기*/
+                    }
+                },60);
+            }
+
+        }else{/*땜 내려감*/
+            downper = percent;/*downper에 퍼센트 넣어주기*/
+            interval=setInterval(function(){ 
+                downper--;
+                water.style.transform='translate(0'+','+(100-downper)+'%)';
+                if(downper==0){
+                    clearInterval(interval);
+                    percent = 0;/*퍼센트, downper  0 리셋!*/
+                }
+            },60);
+        }
+            
+}
+    
+function alertFc( getCoupon ){
+    $(".moon-face").attr("src","resources/bg_02.png");
+    
+    if(getCoupon == "fail"){
+        /*당첨 안됬을때*/
+        $(".face").attr("src","resources/face01.png");
+        msg= "done";
+
+        $(".face").addClass("face-shake");
+        $(".moon-face").addClass("face-shake2");
+    }else if(getCoupon == "success"){
+        /*당첨 됨!!*/
+        $(".face").attr("src","resources/face03.png");
+        msg= "done";
+
+        $(".moon-box").addClass("face-jump");  
+    }
+}
+
+    
+</script>
+
+
+
+</body>
+
+</html>

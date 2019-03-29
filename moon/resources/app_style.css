@@ -1,0 +1,329 @@
+﻿*, *:before, *:after {
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+.event{position: relative;padding-bottom:25px;background:#fff;}
+.event .img{position:relative;}
+.event .img img{width:100%;vertical-align:top;} 
+
+
+
+.moon-box {
+    height: 38%;
+    width: 76%;
+    position: absolute;
+    top: 68.7%;
+    left: 50%;
+    z-index: 2;
+    -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+    background: #e8e6e1;
+    border-radius: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+}
+.moon-box .moon-face {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background: url(bg01.png) no-repeat; background-size: 100% 100%;
+}
+
+.moon-box img{width: 100%; height: auto;}
+
+.moon-box .water {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translate(0, 100%);
+          transform: translate(0, 100%);
+    background: #f7d770;
+    transition: all .3s;
+}
+
+.moon-box .water_wave {
+    width: 200%;
+    position: absolute;
+    bottom: 100%;
+}
+
+.moon-box .water_wave_front {
+  left: 0;
+  fill: #f7d770;
+  margin-bottom: -1px;
+  -webkit-animation: wave-front .7s infinite linear;
+          animation: wave-front .7s infinite linear;
+}
+
+@-webkit-keyframes wave-front {
+  100% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+}
+
+@keyframes wave-front {
+  100% {
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+  }
+}
+
+
+.face-shake{
+    animation-name: face-shake;
+    animation-delay:0.03s;
+    animation-duration:0.9s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.34, 0.43, 0, 0.12);
+}
+.face-shake2{
+    animation-name: face-shake2;
+    animation-delay:0.03s;
+    animation-duration:0.9s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.34, 0.43, 0, 0.12);
+}
+
+.face-jump{
+    animation-name: face-jump;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+.blur{
+    width: 60%;height: 30%;position: absolute;top: 48%;left: 50%;transform: translate(-50%, -50%);
+    transform-origin :50 % 50 %;
+    animation-name: blur;
+    animation-delay:0s;
+    animation-duration:5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.66, 0.65, 0.56, 0.66);
+    
+    /*animation-timing-function: cubic-bezier(0.46, 0.62, 0.47, 0.73);*/
+}
+
+.rotate_leaf{
+    width: 15%;height: auto;position: absolute;top: 13%;left: 77%;
+    animation-name: rotate_leaf;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+
+.rotate_leaf2{
+    width: 15%;height: auto;position: absolute; 
+    top: 21%;
+    left: 3%;
+    animation-name: rotate_leaf_r;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+
+.rotate_leaf3{
+    width: 14%;height: auto;position: absolute;top: 40%;
+    left: 80%;
+    animation-name: rotate_leaf;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+.rotate_leaf4 {
+    width: 11%;height: auto;position: absolute;top: 44.5%;
+    left: 34%;
+    animation-name: rotate_leaf_l;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+.rotate_leaf5{
+    width: 17%;
+    height: auto;
+    position: absolute;
+    top: 84%;
+    left: 4%;
+    animation-name: rotate_leaf_r;
+    animation-delay:0.03s;
+    animation-duration:2.7s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-timing-function:ease-in-out;
+}
+/*얼굴돌기*/
+@keyframes face-shake {
+    form {
+        -webkit-transform: scale(1)rotate(0deg);
+        transform: scale(1)rotate(0deg);
+    }
+    25%{
+        -webkit-transform: translateX(-13%);
+        transform: translateX(-13%)rotateY(-30deg);
+        backface-visibility: hidden;
+    }
+    50% {
+        -webkit-transform: translateX(0deg);
+        transform: translateX(0deg);
+    }
+    75% {
+        -webkit-transform: translateX(13%);
+        transform: translateX(13%)rotateY(10deg);
+    }
+    to {
+        -webkit-transform:translateX(0deg);
+        transform: translateX(0deg);
+    }
+}
+
+@keyframes face-shake2 {
+    form {
+    }
+    25%{
+        box-shadow: -10px -1px 30px 2px #e5e3b6 inset
+    }
+    50% {
+    }
+    75% {
+        box-shadow:10px -1px 30px 2px #e5e3b6 inset
+    }
+    to {
+    }
+}
+
+
+/*얼굴방방*/
+@keyframes face-jump {
+    form {
+        -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+    }
+    20%{
+        -webkit-transform: translate(-50%, -80%);
+          transform: translate(-50%, -80%);
+    }
+    40%{
+        -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+    }
+    55%{
+        -webkit-transform: translate(-50%, -75%);
+          transform: translate(-50%, -75%);
+    }
+    70%{
+        -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+    }
+    85% {
+        -webkit-transform: translate(-50%, -65%);
+          transform: translate(-50%, -65%);
+    }
+    to {
+        -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+    }
+    
+    
+}
+
+@keyframes rotate_leaf {
+    form {
+        transform:rotate(0deg);
+    }
+    
+    50% {
+        transform:translate(0, 30%)rotate(30deg);
+    }
+    
+    to {
+        transform:rotate(0deg);
+    }
+}
+
+@keyframes rotate_leaf_r {
+    form {
+        transform:rotate(0deg);
+    }
+    
+    50% {
+        transform:translate(30%, 0)rotate(30deg);
+    }
+    
+    to {
+        transform:rotate(0deg);
+    }
+}
+
+@keyframes rotate_leaf_l {
+    form {
+        transform:rotate(0deg);
+    }
+    
+    50% {
+        transform:translate(-30%, 0)rotate(30deg);
+    }
+    
+    to {
+        transform:rotate(0deg);
+    }
+}
+
+
+/*
+은은한 애니메이션 제2 시안에 x
+일단 주석
+@keyframes blur { 
+    form {
+         width: 60%;
+        height: 30%;
+    }
+    25%{
+        width: 70%;
+        height: 35%;
+    }
+    50% {
+         width: 80%;
+        height: 40%;
+    }
+    75% {
+        width: 70%;
+        height: 35%;
+    }
+    to {
+         width: 60%;
+        height: 30%;
+    }
+}
+*/
+
+

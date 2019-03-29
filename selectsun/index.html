@@ -1,0 +1,317 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no">
+  <title>SPC 해피포인트::APP</title>
+ 
+  <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+  <script src="resources/jquery-1.12.3.js"></script>
+  <script src="resources/swiper.min.js"></script>
+  <link rel="stylesheet" href="resources/swiper.min.css">
+</head>
+<body>
+    
+    <!-- External Resource Files for Test.html -->
+    <link type="text/css" rel="stylesheet" href="./resources/app_style.css" />
+    <!-- Event Area -->
+   <div class="event">
+       <div class="img"> <img src="resources/main_01.png" alt=""></div>
+        <div class="img"> <img src="resources/layer_1.png" alt=""></div>
+        <div class="img">
+            
+            <!--문제 1번 영역 버튼/체크박스-->
+            <div class="qna_tablet Q_1">
+                <img class="p_l" src="resources/layer_2.png">
+                <a class="btn nextpage"></a>
+                <div class="ch_box"></div>
+                <div id="check1">
+                    <label class="label1">
+                      <input type="radio" name="select" id="" value="A">
+                      <img src="resources/none_check.png">
+                    </label>
+                </div>
+                <div id="check2">
+                    <label class="label2">
+                      <input type="radio" name="select" id="" value="B">
+                      <img src="resources/none_check.png">
+                    </label>
+                </div>
+            </div>
+            
+            <!--문제 2번 영역 버튼/체크박스-->
+            <div class="qna_tablet Q_2">
+                <img class="p_l" src="resources/layer_2.png">
+                <a class="btn suggest"></a>
+                <div class="ch_box"></div>
+                <div id="check1">
+                    <label class="label1">
+                      <input type="radio" name="select" id="" value="A">
+                      <img src="resources/none_check.png">
+                    </label>
+                </div>
+                <div id="check2">
+                    <label class="label2">
+                      <input type="radio" name="select" id="" value="B">
+                      <img src="resources/none_check.png">
+                    </label>
+                </div>
+            </div>
+            
+            <!--문제 이미지 q2 이미지는 js 에서 변경-->
+            <div class="question">
+                <div class="swiper-container" style="position: relative;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide q1"><img src="resources/1-1.png"></div>
+                        <div class="swiper-slide q2"><img src=""></div>
+                    </div>
+                </div>
+             </div>
+            
+            <div><img src="resources/layer_3.png"></div>
+
+        </div>
+       
+       <div class="img"> <img src="resources/main_02.png" alt=""></div>
+       <div class="img"> <img src="resources/main_03.png" alt=""></div>
+       <div class="img"> <img src="resources/main_04.png" alt=""></div>
+       <!-- <div class="img">
+          <img src="resources/main_02_01.jpg" alt="">
+        </div>
+        <div class="img">
+          <img src="resources/main_02_02.jpg" alt="">
+          <div class="l-calendar">
+              <ul>
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first lastchild">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first lastchild">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first lastchild">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  
+                 <li class="first">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+                  <li class="first lastchild">
+                      <p class="l-icon"><img src="resources/nomalball.png"></p>
+                  </li>
+              </ul>
+          </div>   
+        </div>
+         <div class="img">
+          <img src="resources/main_03.jpg" alt="">
+        </div>
+    </div>-->
+    
+    <!-- 당첨 성공 -->
+    <div class="event-pop" id="event-pop" style="display: none;">
+        <div class="event-inner">
+            <p><!--<img id="imgSrc" src="resources/coupon1.jpg">--></p>
+            <a class="close-btn sns-btn"></a><!--쿠폰받기-->
+        </div>
+    </div>
+    
+    <!-- 당첨 실패-->
+    <div class="event-pop" id="fail-pop" style="display: none;">
+        <div class="event-inner l-sns">
+            <p><!--<img id="imgSrc" src="resources/fail1.jpg">--></p>
+            <a class="close-btn"></a><!--내일도전-->
+        </div>
+    </div>
+    <!-- End -->
+    <script>
+
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        nextButton: '.swiper-button-next',
+        simulateTouch:false,
+        touchAngle:-1,
+        spaceBetween: 30
+    });
+
+
+    var isProcessing = false;
+    var check_value = "";
+        
+    $('.Q_2').hide();
+    $(document).ready(function(){
+        
+        
+        /* 1문제에서 버튼*/
+        $(".nextpage").on("click", function(){
+            
+            if($('.Q_1 input:radio[name=select]').is(':checked')){
+                check_value = $('.Q_1 input:radio[name="select"]:checked').val();
+                $('.Q_1').hide();
+                $('.Q_2').show();
+                if(check_value == 'A'){
+                    $('.question .q2 img').attr('src', 'resources/1-2a.png'); 
+                }else if(check_value == 'B'){
+                    $('.question .q2 img').attr('src', 'resources/1-2b.png');
+                }
+                swiper.slideTo(1,1300,false); /*슬라이드 빠르게 넘기고 싶으면 초 늘리기*/
+                $(this).addClass('suggest');
+                
+            }else{
+                alert("선택해선택!")
+            }
+            
+        });
+       
+        /* 2문제에서 버튼*/
+        $(".suggest").on("click", function(){
+            
+            if($('.Q_2 input:radio[name=select]').is(':checked')){
+                check_value = $('.Q_2 input:radio[name="select"]:checked').val();
+                if(check_value == "A"){
+                    alert("2번에-1선택");    
+                }else{
+                    alert("2번에-2선택");    
+                }
+            }else{
+                alert("선택해선택!")
+            }
+            
+        });
+        
+        $(".close-btn").on("click", function(){
+            $(".event-pop").hide();
+            $('.event').css('top', 0);
+            $('html, body').removeAttr('style').scrollTop(scrollHeight);
+            $('body').unbind('touchmove');
+        });
+
+    })
+
+    function formatDate(date) {
+        var yyyy = date.getFullYear();
+        var mm = (date.getMonth() + 1 >= 10 ? '' : '0') + (date.getMonth() + 1);
+        var dd = (date.getDate() >= 10 ? '' : '0') + date.getDate();
+
+        return yyyy + '' + mm + '' + dd;
+    }
+
+    function proc() {
+
+       var snsChk='<%=snsChk%>';
+
+       if("Y"==snsChk){
+            location.href="hpcapp://logincallback";
+            return false;
+        }
+
+        var params = $('#ap_form').serialize();
+
+        if(isProcessing){
+            return;
+        } else {
+
+            isProcessing = true;
+
+            $.ajax({
+            beforeSend:function(){app_popup("open");},
+            complete:function(){app_popup("close");},
+            type: "post",
+            url: "/event/eventProc.spc",
+            data: params,
+            success: function(data) {
+                json = jQuery.parseJSON(data);
+                var code = json.resCd;
+                var message = json.resMsg.replace(/<br>/gi, "\n");
+                var rspKey = json.rspKey;
+
+                if(code == "10"){
+                    if(confirm("로그인이 필요한 서비스 입니다.\n로그인 페이지로 이동 하시겠습니까?")){
+                        location.href="hpcapp://login";
+                    } else {
+                        return false;
+                    }
+                } else {
+                    if(code == "00"){
+                        // 당첨
+                        if(rspKey == ""){
+                            // [DD] 첼시바이브 커피 1천원 OFF쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon1') );
+                        }else if(rspKey == ""){
+                            // [DD] 커피 1천원 OFF 쿠폰 당첨 
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon2') ); 
+                        }else if(rspKey == ""){
+                            // 디퀸즈 SQ STELLA CRAFT 1잔 FREE쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon3') );
+                        }else if(rspKey == ""){
+                            //[LAG] 크리스피 치킨 샐러드 FREE 쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon4') );
+                        }else if(rspKey == ""){
+                            //[BR] 슈팅스타블라스트 1천원 OFF 쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon5') );
+                        }else if(rspKey == ""){
+                            //스트릿 크림생맥주 1잔 FREE 쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon6') );
+                        }else if(rspKey == ""){
+                            //[JJ] 음료 900원 OFF+미니축구공 FREE 쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon7') );
+                        }else if(rspKey == ""){
+                            //[PB] 디저트3종 1천원 OFF 쿠촌 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon8') );
+                        }else if(rspKey == ""){
+                            //[PAS] PEAR LPAY 음료 2종 1천원 OFF 쿠폰당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon9') );
+                        }else if(rspKey == ""){
+                            //[PAS] 아메리카노 50% 할인 쿠폰 당첨
+                            $("#imgSrc").attr("src", $("#imgSrc").attr("src").replace(/coupon1/gi,'coupon10') );
+                        }
+
+                        $("#event-pop").show();
+
+                    }else if(code == "05"){
+                        alert(message)	// 오늘은 이미 참여하셨습니다.
+                    }else if(code == "F1" || code == "F2" || code == "F3"){
+                        $("#fail-pop").show();	// 꽝
+                    }else{
+                        alert(message);
+                    }
+                }
+
+                if (code != null && (code == '00' || code == 'F1' || code == 'F2' || code == 'F3')) {
+                    var strFile = "icon" + $('#offr_id').val() + ".png";
+                    var strDate = formatDate(new Date());
+                    var filePath = '${result.filePath }';
+                    $('#' + strDate).attr('src', filePath + '/' + strFile);
+                }
+                isProcessing = false;
+            },
+            error: function(request, status, error) {
+                isProcessing = false;
+            }
+        });
+    }
+    }
+    </script>
+</body>
+</html>

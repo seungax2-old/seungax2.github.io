@@ -1,0 +1,50 @@
+*, *:before, *:after {box-sizing: border-box; outline: none; margin: 0; padding: 0;}
+
+.event{position: relative;background:#fff;overflow: hidden;}
+.event .img{position:relative;}
+.event .img img{width:100%;vertical-align:middle;} 
+.event .img .btn{position: absolute;bottom: 9.8%;left: 28.9%;height: 10.5%;width: 39.4%;}
+.event .img .buy_btn1{position: absolute;bottom:0;left: 52.9%;height: 6.8%;width: 29.6%;}
+.event .img .buy_btn{position: absolute;bottom:0;left: 52.9%;height: 21.5%;width: 29.6%;}
+.event .img .editprivacy{position: absolute;width: 37.8%;height: 100%;bottom: 0;left: 6.4%;}
+.event .img span{z-index: -1;height: 0;line-height: 0;font-size: 0;}
+
+#scratchWrap .scratch_canvas {position: absolute;top: 0;right:0;/*width: 100%;height: 100%;*/}
+#scratchWrap .under_tree{width: 100%; height: auto; visibility: hidden;}
+#moveCursor {position: absolute;bottom: 0;z-index: 5;height: 100%;width: 53.1%;left: 22%;bottom: 0%;}
+#moveCursor img{height: 100%; width: 100%;}
+
+.layerDiv{position: absolute;left: 0;width: 100%;height: 100%;top: 0;}
+.layerDiv2{position: absolute;left: 0;width: 100%;top: 52%;}
+
+/* 팝업 */
+.event-pop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    box-sizing:border-box;
+    display: flex;
+    -webkit-display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+	z-index:100;
+}
+.event-pop .event-inner{position: relative; width:85%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner .popup_mid{box-sizing: border-box; display:flex; display:-webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 8%; width:100%; height:440px; background:#422752;}
+.event-pop .event-inner .popup_mid.one_con{display:inherit;}
+.event-pop .event-inner .popup_mid.one_con > p{width:50%; margin:0 auto;}
+.event-pop .event-inner .popup_mid.one_con .popup_con2{display:none;}
+.event-pop .event-inner .popup_mid > p{position:relative; -webkit-flex: 1; flex: 1;}
+.event-pop .event-inner .popup_mid p:nth-of-type(1){margin-right: 7%;}
+
+.event-pop .event-inner > p.popup_bt{position:relative;}
+.event-pop .event-inner img{width: 100%;}
+.event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;}
+#single-pop .event-inner .close-btn{position: absolute;bottom: 6.6%;left: 31.1%;width: 38.2%;height: 11%;top: auto;}
+
+#single-pop2 .event-inner .close-btn{position: absolute;bottom: 6.6%;left: 52.3%;width: 38.2%;height: 11%;top: auto;}
+#single-pop2 .event-inner .editprivacy{position: absolute;bottom: 6.6%;left: 9.5%;width: 38.2%;height: 11%;top: auto;}

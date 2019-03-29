@@ -1,0 +1,53 @@
+﻿* {margin: 0px; padding: 0px;}
+img {vertical-align: middle;}
+.event {background: #fff;}
+.event .img {position: relative;}
+.event .img img {width: 100%;}
+.event .img .btn{position: absolute;bottom: 40%;left: 17.8%;width: 64.3%;height: 9.5%;}
+.event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
+.event .start-btn {position:absolute; top: 89.5%; width:100%; height:65%; background:rgba(0,0,0,0.7);}
+
+/* 팝업 */
+.event-pop{position:fixed; top:0; left:0; right:0; bottom:0; box-sizing:border-box; display: flex; -webkit-display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.6); z-index:100;}
+.event-pop .event-inner{position: relative; width: 80%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner > p img{width: 100%;}
+#event-pop .event-inner .close-btn{position: absolute; width: 86.5%; height: 10%; bottom: 0%; left: 6.5%;}
+
+.cardWrap{position: absolute; width: 100%; height: 100%; left: 0; top: 0;}
+.clickWrap{position: absolute;bottom: 0;left: 0;width: 100%;}
+
+.card_Container {width: 100%;height: 100%;position: relative;padding: 27.3% 6% 6.4% 7.3%;box-sizing: border-box;}
+.card_Container .card_line{margin-bottom: 5.9vw; /*원근감-부모*/-webkit-perspective: 130vw;-ms-perspective: 130vw;perspective: 130vw;}
+.card_Container .card_line:last-child{margin-bottom: 0;}
+.card_Container .card_line .card {
+    width:27.1vw;
+    margin-right: 2.7vw;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: -webkit-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275), -webkit-transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.card_Container .card_line .card:last-child{margin-right: 0;}
+.card_Container .card_line .card .resultImg{visibility: hidden;}
+
+.card_Container .card_line .card div {
+    position: absolute;
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.card_Container .card_line .card .back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.card_Container .card_line .card.flipped {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.flex{display: flex; display: -webkit-flex;}
+.none_click{position: absolute;bottom: 0;left: 0;width: 100%; height: 100%;background: none;}

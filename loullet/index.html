@@ -1,0 +1,188 @@
+<!--
+
+* 본페이지는 이벤트 테스트 페이지입니다.
+테스트 후 eventViewAp.jsp파일을 수정해주셔야 합니다.
+수정 전 본 파일(test.html)을 아래 순서대로 진행해주세요.
+
+1. 모든 css,js,image 등 외부파일들은 ./resources 폴더에 넣어주세요
+2. ${result.filePath } 를 ./resources 변경해주세요
+3. External Resource File for eventViewAp.jsp 쪽 주석을 풀어주세요
+4. External Resource File for Test.html 쪽 주석으로 변경해주세요
+5. ../eventViewAp.app 내에 <body> .... </body> 내의 내용을
+2번째 줄 부터 개발자 작업 영역 전까지 넣어주세요
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no">
+  <title>SPC 해피포인트 APP 이벤트</title>
+</head>
+<body>
+
+  <!-- External Resource Files for eventViewAp.jsp
+  <link type="text/css" rel="stylesheet" href="${result.filePath }/style.css" />
+  <script type="text/javascript" src="${result.filePath }/jquery-1.10.2.min.js"></script>
+  -->
+    <!-- End -->
+    
+    <!-- External Resource Files for Test.html -->
+    <!--<link type="text/css" rel="stylesheet" href="./resources/common.css" />-->
+    <link type="text/css" rel="stylesheet" href="./resources/app_style.css" />
+    <script type="text/javascript" src="./resources/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./resources/jQueryRotate.js"></script>
+    <!-- End -->
+
+    <!-- Event Area -->
+    <div class="event">
+        <div class="img"><img src="resources/na_main_01.jpg" alt=""></div>
+        <div class="img">
+            <img src="resources/na_main_02.jpg" alt="">
+            <div style="position: absolute; top: 0; right: 0; width: 100%;">
+            <div class="roulette_wrap" >
+                <div class="roulette">
+                    <img class="spin" src="resources/roulette_img1.png">
+                    <!--<div style="board1">
+                        <div class="pin"><img src="resources/pin_img1.png"></div>
+                    </div>-->
+                    <!--<div class="board1">
+                        <div class="button_start"><img src="resources/button_img1.png"></div>
+                        <div class="pin"><img src="resources/pin_img1.png"></div>
+                    </div>-->
+                    <div class="board1">
+                        <div class="pin"><img src="resources/pin_img1.png"></div>
+                    </div>
+                    <div class="board1">
+                        <div class="button_start"><img src="resources/button_img1.png"></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="img"><img src="resources/na_main_03.jpg" alt=""></div>
+        <div class="img">
+            <a class="btn"><span></span></a>
+            <img src="resources/na_main_04.jpg" alt="">
+        </div>
+        <div class="img"><img src="resources/na_main_05.jpg" alt=""></div>
+    </div>
+    <!-- End -->
+    
+    <!--popup-->
+    <div class="event-pop" id="event-pop" style="display: none;">
+        <div class="event-inner">
+            <p><img id="imgSrc" src=""></p>
+            <a class="close-btn sns-btn"></a>
+        </div>
+    </div>
+    <!--End-->
+    
+        <script type="text/javascript">
+             var scrollHeight = 0;
+         $(document).ready(function(){
+            //step2. 닫기 클릭 시
+            $(".close-btn").on("click", function(){
+                $("#event-pop").hide();
+                $('.event').css('top', 0);
+                $('html, body').removeAttr('style').scrollTop(scrollHeight);
+                $('body').unbind('touchmove');
+            })
+        });
+
+        /*0:쉑버거","1:해피포인트","2:초콜렛 쉐이크","3:바닐라쉐이크","4:서프 앤 프라이*/
+        var pArr = ["0","1","2","3","4"];
+    
+            $(document).ready(function () {
+    
+                    $(".button_start").one('click' , function(e) {
+                            e.preventDefault();
+                            rotation();
+                    });
+    
+            });
+            var n = 0;
+            //start
+            function rotation($part) {
+    
+                    $(".spin").rotate({
+              angle:0,
+              animateTo:360 * 5 + randomize(0, 360),
+              center: ["50%", "50%"],
+              easing: $.easing.easeInOutElastic,
+              callback: function(){
+                            n = $(this).getRotateAngle();
+                            endAnimate(n);
+                  console.log(n)
+                        },
+              duration:3000
+           });
+    
+            }
+            var roulette_result; //result
+            //end
+            function endAnimate($i, $part) {
+    
+                    var i = $i;
+                    var real_angle = i%360;
+                    var num = 360/pArr.length;
+                    var part = Math.floor(real_angle/num);
+    
+                    if(part < 1 || part >= (pArr.length) ) {
+                        part = 0;
+                    }
+    
+/*                    roulette_result =  pArr[part];
+                    console.log('result: ' +roulette_result);*/
+                    popupshow();
+            }
+    
+            //random
+            function randomize($min, $max) {
+                    return Math.floor(Math.random() * ($max - $min + 1)) + $min;
+            }
+            /*0:쉑버거","1:해피포인트","2:초콜렛 쉐이크","3:바닐라쉐이크","4:서프 앤 프라이*/
+            function popupshow(){
+                var degree = Math.floor(n/360);
+                var deg = n-degree*360;
+                console.log(deg);
+                
+                if(0<=deg && deg<73){
+                     roulette_result =  pArr[4];
+                    console.log('result: ' +roulette_result);
+                    $("#imgSrc").attr("src", "resources/popup_f.jpg");
+                }else if(73<=deg && deg<145){
+                    roulette_result =  pArr[3];
+                    console.log('result: ' +roulette_result);
+                    $("#imgSrc").attr("src", "resources/popup_v.jpg");
+                }else if(145<=deg && deg<217){
+                    roulette_result =  pArr[2];
+                    console.log('result: ' +roulette_result); 
+                    $("#imgSrc").attr("src", "resources/popup_c.jpg");
+                    
+                }else if(217<=deg && deg<289){
+                     roulette_result =  pArr[1];
+                    console.log('result: ' +roulette_result);
+                    $("#imgSrc").attr("src", "resources/popup_5p.jpg");
+                    
+                    
+                }else{
+                    roulette_result =  pArr[0];
+                    console.log('result: ' +roulette_result);
+                    $("#imgSrc").attr("src", "resources/popup_b.jpg");
+                }
+                
+                console.log($("#imgSrc").attr("src"))
+                
+                $('body').on('touchmove', function(e){ e.preventDefault()});
+                $('.scroll_view').on('touchmove', function(e){ e.stopPropagation()});
+                scrollHeight = $(this).scrollTop();
+                 $('.event').css('top', -scrollHeight);
+                $("#event-pop").show();
+                $('html, body').css({'height':$(window).height(),'overflow':'hidden'});
+            }
+            
+        </script>  
+</body>
+</html>

@@ -1,0 +1,215 @@
+﻿        *{margin:0px; padding:0px; box-sizing: border-box;}
+        .event{position: relative;background:#fff;}
+        .event .img{position:relative;}
+        .event .img img{width:100%;vertical-align:top;} 
+        #stars_ani{ list-style:none;}
+        .star-line_y {
+            position: absolute;
+            left: 0;
+            width: 5px !important;
+            height: 180px !important;
+            border-radius: 50% !important;
+            background:#fff;
+            
+            box-shadow: 0px 0px 20px 10px rgba(255, 235, 59, 0.53);
+            -webkit-box-shadow: 0px 0px 20px 10px rgba(255, 235, 59, 0.53);
+            -moz-box-shadow: 0px 0px 20px 10px rgba(255, 235, 59, 0.53);
+            -ms-box-shadow: 0px 0px 20px 10px rgba(255, 235, 59, 0.53);
+            -o-box-shadow: 0px 0px 20px 10px rgba(255, 235, 59, 0.53);
+        }
+
+        .line_y_scale{
+            transform-origin: center bottom;
+            -webkit-transform-origin: center bottom;
+            -moz-transform-origin: center bottom;
+            -ms-transform-origin: center bottom;
+            -o-transform-origin: center bottom;
+            
+            transform: scaleY(0);
+            -webkit-transform: scaleY(0);
+            -moz-transform: scaleY(0);
+            -ms-transform: scaleY(0);
+            -o-transform: scaleY(0);
+    
+        }
+        .star-wrapper {
+          position: absolute;
+          bottom: 7%;
+          width: 100%;
+          height: 21%;
+            left: 0;
+        }
+        .star-line-container {
+          position: absolute;
+          left: 0;
+          z-index: 10;
+          width: 100%;
+          height: 100%;
+        }
+        .star-line-wrapper:nth-child(1) {
+          position: absolute;
+          top: 175%;
+          left: 18%;
+          width: 100%;
+          transform: rotate(102deg);
+          -webkit-transform: rotate(102deg);
+          -moz-transform: rotate(102deg);
+          -ms-transform: rotate(102deg);
+          -o-transform: rotate(102deg);    
+            
+        }
+        
+        #ballclick{ 
+            position: absolute ;
+            bottom: 0;
+            left:0;
+            width:100%;
+        }
+        
+        .ball{
+            animation-name: ball-scale;
+            animation-delay:0.03s;
+            animation-duration:0.9s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+            animation-timing-function: cubic-bezier(0.34, 0.43, 0, 0.12);
+        }
+        
+        .ball-spin{
+            animation-name: ball-spin;
+            animation-delay:0s;
+            animation-duration:2s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: 1;
+            animation-timing-function: cubic-bezier(1, 0.99, 0.23, 0.22);
+        }
+
+        .star-line {
+          animation-name: line-emit;
+          animation-delay: 0.05s;
+          animation-duration: 0.65s;
+          animation-fill-mode: forwards;
+          animation-iteration-count: 3;
+          animation-timing-function: cubic-bezier(0.5, 0, 0, 0.8);
+        }
+        
+        /*공돌때 빛나기*/
+        @keyframes line-emit {
+          from {
+            transform: scaleY(0);
+            -webkit-transform: scaleY(0);
+            -moz-transform: scaleY(0);
+            -ms-transform: scaleY(0);
+            -o-transform: scaleY(0);
+          }
+          50% {
+            animation-timing-function: cubic-bezier(0.67, 0.65, 0.32, 0.31);;
+            transform: scaleY(0.4);
+            -webkit-transform: scaleY(0.4);
+            -moz-transform: scaleY(0.4);
+            -ms-transform: scaleY(0.4);
+            -o-transform: scaleY(0.4);
+          }
+          90% { opacity: 1; }
+          to {
+            transform-origin: center top;
+            -webkit-transform-origin: center top;
+            -moz-transform-origin: center top;
+            -ms-transform-origin: center top;
+            -o-transform-origin: center top;
+              
+            transform: scaleY(0);
+            -webkit-transform: scaleY(0);
+            -moz-transform: scaleY(0);
+            -ms-transform: scaleY(0);
+            -o-transform: scaleY(0);
+            opacity: 0;
+          }
+        }
+        
+        /*제자리 공돌기*/
+        @keyframes ball-spin {
+            form {
+                  -webkit-transform: rotate(0deg);/* Safari & Chrome */
+                  -moz-transform: rotate(0deg); /* Firefox */
+                  -ms-transform: rotate(0deg); /* Internet Explorer */
+                  -o-transform: rotate(0deg);/* Opera */
+                  transform: rotate(0deg);/* W3C */
+                  }
+            50% {
+                
+                 -webkit-transform:rotate(360deg);
+                 -moz-transform:rotate(360deg);
+                 -ms-transform:rotate(360deg);
+                 -o-transform:rotate(360deg);
+                 transform:rotate(360deg);
+                }
+            to {
+                -webkit-transform: rotate(720deg);
+                -moz-transform: rotate(720deg);
+                -ms-transform: rotate(720deg);
+                -o-transform: rotate(720deg);
+                transform: rotate(720deg);    
+                }   
+        }
+        
+        /*공돌면서 날아가기*/
+        @keyframes ball-scale{
+            form {
+                    -webkit-transform: scale(1)rotate(0deg);
+                    -moz-transform: scale(1)rotate(0deg);
+                    -ms-transform: scale(1)rotate(0deg);
+                    -o-transform: scale(1)rotate(0deg);
+                    transform: scale(1)rotate(0deg);
+              }
+              50% {
+                   -webkit-transform: scale(0.35)translateY(-420%)rotate(350deg);
+                   -moz-transform: scale(0.35)translateY(-420%)rotate(350deg);
+                   -ms-transform: scale(0.35)translateY(-420%)rotate(350deg);
+                   -o-transform: scale(0.35)translateY(-420%)rotate(350deg);
+                   transform: scale(0.35)translateY(-420%)rotate(350deg);
+              }
+             to {
+                 -webkit-transform: scale(0.13)translateY(-468%)rotate(680deg);
+                 -moz-transform: scale(0.13)translateY(-468%)rotate(680deg);
+                 -ms-transform: scale(0.13)translateY(-468%)rotate(680deg);
+                 -o-transform: scale(0.13)translateY(-468%)rotate(680deg);
+                 transform: scale(0.13)translateY(-468%)rotate(680deg);
+              }
+            
+        }
+
+/* calendar */
+.l-calendar{position: absolute; top: 0; left: 6.5%; width:87%; height: 100%;}
+.l-calendar ul{width:100%; height:100%;}
+.l-calendar ul li{float:left; padding-top: 12%; width:29%; height: 31%; margin: 0; list-style: none;}
+.l-calendar ul li:nth-of-type(3n+1){clear: both;}
+.l-calendar ul li.first{ padding-top: 10.5%;height: 24.5%; margin: 0 6.5% 0 0;}
+.lastchild{ margin:0 !important;}
+.l-calendar ul li .l-icon{width:100%;} 
+.l-calendar ul li .txt{width:80%; margin: 0 auto;}
+
+/* 팝업 */
+.event-pop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    box-sizing:border-box;
+    display: flex;
+    -webkit-display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+	z-index:100;
+}
+.event-pop .event-inner{position: relative; width: 80%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner > p img{width: 100%;}
+.event-pop .event-inner .close-btn{position:absolute; bottom: 0; left: 0; width: 100%; height: 11%;}
+
+
+
+
+

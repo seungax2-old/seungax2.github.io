@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="368px" height="313px" viewBox="0 0 368 313" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#001A31;stop-opacity:1" />
+            <stop offset="70%" style="stop-color: #ef5a00;stop-opacity:1" />
+            <stop offset="100%" style="stop-coloR: #ef5a00;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(0.000000, -2.000000)" fill="url(#grad1)">
+            <path d="M304.3778,30.239 C310.1198,28.306 314.2888,22.871 314.2888,16.5 C314.2888,8.525 307.7648,2 299.7888,2 L66.3728,2 C58.3968,2 51.8728,8.525 51.8728,16.5 C51.8728,23.199 56.4838,28.859 62.6848,30.504 C24.3918,59.94 0.2058,103.097 0.2058,151.212 C0.2058,151.212 -10.2942,265.833 118.7058,303.333 C118.2678,304.268 117.6678,305.612 117.6678,307.09 L117.6678,308.771 C117.6678,311.761 120.1148,314.208 123.1058,314.208 L243.7678,314.208 C246.7588,314.208 249.2058,311.761 249.2058,308.771 L249.2058,307.09 C249.2058,305.586 248.5858,304.22 247.5898,303.233 L248.7058,303.333 C377.7058,265.833 367.2058,151.212 367.2058,151.212 C367.2058,102.951 342.8718,59.68 304.3778,30.239 Z" id="Fill-1"></path>
+        </g>
+    </g>
+</svg>

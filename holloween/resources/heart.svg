@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500px" height="600px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path id="path1" d="M 150 250 C 0 150 100 0 150 150 C 200 0 300 150 150 250 Z" stroke="gray" stroke-dasharray="5,5" fill="transparent"/>
+<path id="path2" d="M 150 250 C 0 150 100 0 150 150 C 200 0 300 150 150 250 Z" stroke-width="7" stroke="#7CFC00" fill="transparent" stroke-linecap="round"/>
+<circle class="knob" r="25" fill="#88CE02" stroke-width="4" stroke="#111" x="10" y="80"/>
+</svg>

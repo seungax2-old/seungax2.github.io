@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+      <link rel="stylesheet" href="resources/app_style.css">
+        <script  src="resources/jquery-1.12.3.js"></script>
+        <script  src="resources/taphold.js"></script>
+
+  
+</head>
+
+<body>
+    
+<div class="event">
+    
+    <div class="img">
+        <img src="resources/na_main_01.png"/>
+        <div class="hat">
+            <img src="resources/hat.png"/>
+        </div>
+        <div class="broom">
+            <img src="resources/broom.png"/>
+        </div>
+        <div class="ghost">
+            <img src="resources/ghost.png"/>
+        </div>
+        <div class="light-bowl">
+            <img src="resources/light_img.png"/>
+        </div>
+        
+        <div class="bubble">
+            <ul class="bg-bubbles"  style="display: none;">
+                <!--위로-->
+                <li class="bubble-up"><img src="resources/bubble.png"/></li>
+                <li class="bubble-up"><img src="resources/bubble.png"/></li>
+                <li class="bubble-up"><img src="resources/bubble.png"/></li>
+                <li class="bubble-up"><img src="resources/bubble.png"/></li>
+                <li class="bubble-up"><img src="resources/bubble.png"/></li>
+                <!--보글보글-->
+                <li class="bubble-shake"><img src="resources/bubble.png"/></li>
+                <li class="bubble-shake"><img src="resources/bubble.png"/></li>
+                <li class="bubble-shake"><img src="resources/bubble.png"/></li>
+                <li class="bubble-shake"><img src="resources/bubble.png"/></li>
+                <li class="bubble-shake"><img src="resources/bubble.png"/></li>
+            </ul>
+        </div>
+        
+        <div class="smoke">
+            <div class="smokeContainer" style="display: none;">
+                <!--<div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
+                    <img src="resources/smoke.png">
+                </div>
+                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
+                    <img src="resources/smoke.png">
+                </div>
+                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px)">
+                    <img src="resources/smoke.png">
+                </div>
+                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
+                    <img src="resources/smoke.png">
+                </div>-->
+            </div>
+        </div>
+    
+        
+        <div class="bowl">
+             <svg id="bowl-ani" viewBox="0 0 368 313" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <!--달궈짐-->
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop id="fireHot1" offset="0%" stop-color="#001A31"></stop>
+                        <stop id="fireHot2" offset="50%" stop-color="#001A31"></stop>
+                        <stop id="fireHot3" offset="100%" stop-color="#001A31"></stop>
+                    </linearGradient>
+                </defs>
+                <g id="Symbols" stroke="none" stroke-width="1" fill="" fill-rule="evenodd">
+                    <g id="bowl-fill" transform="translate(0.000000, -2.000000)" fill="url(#grad1)"><!--url(#grad1)-->
+                        <path d="M304.3778,30.239 C310.1198,28.306 314.2888,22.871 314.2888,16.5 C314.2888,8.525 307.7648,2 299.7888,2 L66.3728,2 C58.3968,2 51.8728,8.525 51.8728,16.5 C51.8728,23.199 56.4838,28.859 62.6848,30.504 C24.3918,59.94 0.2058,103.097 0.2058,151.212 C0.2058,151.212 -10.2942,265.833 118.7058,303.333 C118.2678,304.268 117.6678,305.612 117.6678,307.09 L117.6678,308.771 C117.6678,311.761 120.1148,314.208 123.1058,314.208 L243.7678,314.208 C246.7588,314.208 249.2058,311.761 249.2058,308.771 L249.2058,307.09 C249.2058,305.586 248.5858,304.22 247.5898,303.233 L248.7058,303.333 C377.7058,265.833 367.2058,151.212 367.2058,151.212 C367.2058,102.951 342.8718,59.68 304.3778,30.239 Z" id="Fill-1"></path>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="soup">
+            <img src="resources/soup.png"/>
+        </div>
+       <div class="log">
+            <img src="resources/log.png"/>
+        </div>
+        
+        <div class="fire" >
+            <div class="click-div">
+                
+                <div class="touch-img">
+                    <img src="resources/touch.png"/>
+                </div>
+                
+                <div class="fire-div" style="display: none;">
+                    
+                    <div class="fire-left-edge">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    
+                    <div class="fire-right-edge">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    
+                    <div class="fire-right">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                        <div class="particle-fire2"></div>
+                    </div>
+                    
+                    <div class="fire-left">
+                        <div class="main-fire "></div>
+                        <div class="particle-fire"></div>
+                        <div class="particle-fire2"></div>
+                    </div>
+                    <div class="fire-main">
+                        <div class="main-fire"></div>
+                        <div class="particle-fire"></div>
+                    </div>
+                    <div class="fire-bottom">
+                        <div class="main-fire "></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="img"><img src="resources/na_main_02.png"/></div>
+    <div class="img">
+      <img src="resources/na_main_03.png" alt="">
+      <div class="l-calendar">
+          <ul>
+              <li class="first">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+              <li class="first">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+              <li class="first lastchild">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+
+              <li class="first">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+              <li class="first">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+              <li class="first lastchild">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+
+              <li class="first">
+              </li>
+              <li class="first">
+                  <p class="l-icon"><img src="resources/icon4.png"></p>
+              </li>
+              <li class="first">
+              </li>
+
+          </ul>
+      </div>   
+    </div>
+    <div class="img"><img src="resources/na_main_04.png"/></div>
+</div>
+    
+    
+<div class="event-pop" id="event-pop" style="display:none;">
+     <div class="event-inner">
+ 		<p><img src="resources/popup_tit.jpg"></p>
+         <div class="popup_mid">
+             
+         	<p class="popup_con1" >
+         		<img class="btnImg01" src="resources/item1_normal.png">
+	         	<label class="radio_button">
+	              <input type="radio" name="select" class="btn1" value="1">
+	            </label>
+            </p>
+             
+         	<p class="popup_con2">
+	        	<img class="btnImg02" src="resources/item2_normal.png">
+	            <label class="radio_button">
+	              <input type="radio" name="select" class="btn2" value="2">
+	            </label>
+         	</p>
+             
+       	 </div>
+         <p class="popup_bt">
+         	<img class="btnImg"src="resources/pop_btn_nomal.jpg">
+       		<a class="close-btn"></a><!--쿠폰받기-->
+       	</p>
+     </div>
+</div>
+<script>
+  
+    var startTime;
+    var endTime;
+    var endTouch;
+    var check = "1";
+    var scrollHeight = $(this).scrollTop();
+    smokes();
+    $("#event-pop .close-btn").on("click", function(){
+        $("#event-pop").hide();
+    });
+    function smokes(){
+        for(var i=0;i<7;i++){
+            var $smokeParticle;
+            
+            /*$smokeParticle.css('left',Math.floor(Math.random()*80)+1+ '%');*/
+            /*$smokeParticle.css('bottom','0');*/
+            
+            if(i<3){
+                $smokeParticle= $('<div id="smokeBlur" class="smokeParticle smokeParticleSecond"><img src="resources/smoke.png"/></div>');
+                
+            }else{
+                $smokeParticle = $('<div id="smokeBlur" class="smokeParticle smokeParticleFirst"><img src="resources/smoke.png"/></div>');
+            }
+            
+            $('.smokeContainer').append($smokeParticle);
+            var smokeContainer = $(".smokeContainer").width();
+            var blur = smokeContainer*0.025;
+            var blurpx = 'blur('+Math.floor(blur)+'px)'
+            console.log(blurpx)
+            $smokeParticle.css('filter',blurpx);
+            $smokeParticle.css('webkitFilter',blurpx);
+            
+          
+            /*$smokeParticle.css('filter','bulr('+blur+'px)');*/
+            
+           /* document.getElementById("smokeBlur").style.webkitFilter = blurpx;
+            document.getElementById("smokeBlur").style.Filter = blurpx;*/
+        }
+      /*animateSmoke();*/
+    }  
+   /* function animateSmoke(){
+         $('.smokeParticle').each(function(){
+             var r =(Math.random() * 2)+1;
+             $(this).css('animation-delay',r+"s");
+             $(this).css('webkitAnimation-delay',r+"s");
+             
+           
+             
+         });
+    }
+    */
+    $(document).ready(function(){
+        $(".click-div").on("touchstart", function() {
+            startTime = new Date().getTime();
+            
+            $(".touch-img").hide();
+            $(".fire-div").show();
+            
+            /*$(".fire-main").addClass("fireScale");
+            $(".fire-bottom").addClass("fireScale");
+            $(".fire-right").addClass("fireScale3");
+            $(".fire-left").addClass("fireScale2");
+            $(".fire-left-edge").addClass("fireScale3");
+            $(".fire-right-edge").addClass("fireScale4");*/
+            
+            $(".fire-main, .fire-bottom").addClass("fireScale");
+            $(".fire-right, .fire-left-edge").addClass("fireScale3");
+            $(".fire-left").addClass("fireScale2");
+            $(".fire-right-edge").addClass("fireScale4");
+            
+            $("#fireHot1").addClass("fireHot1");
+            $("#fireHot2").addClass("fireHot2");
+            $("#fireHot3").addClass("fireHot3");
+            
+            /*2초누르면 강제 애니메이션 끝나게*/
+            endTouch = setTimeout(function() {
+                endAni();
+            }, 2000);
+        });
+        $('.click-div').on('touchend', function() {
+            endTime = new Date().getTime();
+            var clickTime = Math.round((endTime - startTime)/1000);
+            clearTimeout(endTouch);
+            if(clickTime < 2){
+                
+                $("#fireHot1").removeClass("fireHot1");
+                $("#fireHot2").removeClass("fireHot2");
+                $("#fireHot3").removeClass("fireHot3");
+                
+                $(".touch-img").show();
+            
+                $(".fire-div").hide();
+
+                $(".fireScale, .fireScale2, .fireScale3, .fireScale4").addClass("stopAni");
+                
+                $(".fire-main, .fire-bottom").removeClass("fireScale");
+                $(".fire-right, .fire-left-edge").removeClass("fireScale3");
+                $(".fire-left").removeClass("fireScale2");
+                $(".fire-right-edge").removeClass("fireScale4");
+                
+               /* $(".fireScale2").addClass("stopAni");
+                $(".fireScale3").addClass("stopAni");
+                $(".fireScale4").addClass("stopAni");*/
+                
+                /*$(".fire-main").removeClass("fireScale");
+                $(".fire-bottom").removeClass("fireScale");
+                $(".fire-right").removeClass("fireScale3");
+                $(".fire-left").removeClass("fireScale2");
+                $(".fire-left-edge").removeClass("fireScale3");
+                $(".fire-right-edge").removeClass("fireScale4");*/
+            }else{
+                endAni();
+                /*롱클릭 완료*/
+            }
+        });
+        
+        $('input:radio[name="select"]').click(function() {
+            $(".btnImg").attr("src","resources/pop_btn_active.jpg");
+            
+            /*선택한 아이템*/
+            var selectItem = $("#event-pop :input:radio[name=select]:checked").val();
+            console.log(selectItem);
+            /*2번 돔*/
+            for(var i=1; i<3; i++){
+                var $selectDom = $('#event-pop .btn'+i)
+                /*이미지 경로*/
+                var popImgnum = $selectDom.parent().parent().find('img').attr('src').split('/')[1].split('_')[0];
+                console.log(popImgnum);
+                /*변경될 이미지 클래스 이름*/
+                var btnName ="btnImg0"+i;
+                console.log(btnName)
+                var radioCheck = $selectDom.is(':checked');
+                console.log(radioCheck)
+                if(radioCheck){
+                    var changeImg = "resources/"+popImgnum + "_on.png";
+                    $("."+btnName).attr("src", changeImg);
+                }else{
+                    var changeImg = "resources/"+popImgnum + "_normal.png";
+                    $("."+btnName).attr("src", changeImg);
+                }
+            }
+        });
+        
+    });
+    function endAni(){
+        /*롱클릭 완료*/
+        $('.click-div').unbind('touchstart');
+
+       /* $(".fire-main ").removeClass("fireScale");
+        $(".fire-bottom").removeClass("fireScale");
+        $(".fire-left").removeClass("fireScale2");*/
+        $(".fire-main, .fire-bottom").removeClass("fireScale");
+        $(".fire-left").removeClass("fireScale2");
+
+        setTimeout(function() {
+            $(".fire-right, .fire-left-edge").removeClass("fireScale3");
+            /*$(".fire-left-edge").removeClass("fireScale3");*/
+        }, 1000);
+        setTimeout(function() {
+            $(".fire-right-edge").removeClass("fireScale4");
+        }, 2000);
+
+        checkGetCoupon();
+    }
+    function checkGetCoupon(){
+        if(check == "1"){
+            /*당첨*/
+            $(".smokeContainer").hide();
+            $(".bubble ul").show();
+            $(".bubble").addClass("start-bubble-up");
+            
+            setTimeout(function() {
+                $("#event-pop").show();
+                $('body').on('touchmove', function(e){ e.preventDefault()});
+                $('.event').css('top', -scrollHeight);
+                $('html, body').css({'height':$(window).height(),'overflow':'hidden'});
+            }, 2000);
+        }else{
+            $(".bubble ul").hide();
+            $(".smokeContainer").show();
+            $(".smoke").addClass("start-bubble-up");
+            
+            setTimeout(function() {
+                $(".smokeParticleFirst").addClass("smokeFirstAni");
+                /*$(".smokeParticle").removeClass('opacity0');*/
+                $(".fire-div").addClass("fire-stop");
+                $("#fireHot1").removeClass("fireHot1");
+                $("#fireHot2").removeClass("fireHot2");
+                $("#fireHot3").removeClass("fireHot3");
+
+                $("#fireHot2").addClass("rowhot2");
+                $("#fireHot3").addClass("rowhot3");
+            }, 1000);
+            setTimeout(function() {
+                $(".smokeParticleSecond").addClass("smokeSecontAni");
+                
+            }, 2500);
+            
+          /*  setTimeout(function() {
+                $("#event-pop").show();
+                $('body').on('touchmove', function(e){ e.preventDefault()});
+                $('.event').css('top', -scrollHeight);
+                $('html, body').css({'height':$(window).height(),'overflow':'hidden'});
+            }, 4000);*/
+        }
+    }
+    
+</script>
+</body>
+
+</html>

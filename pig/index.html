@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+<meta charset="UTF-8">
+  
+<link rel="stylesheet" href="resources/app_style.css">
+<script  src="resources/jquery-1.12.3.js"></script>
+
+  
+</head>
+
+<body>
+    
+<div class="event">
+    <div class="img"><img src="resources/header.png"/></div>
+    <div class="img">
+        <img src="resources/card_bg.png"/>
+        <!--<img src="resources/mainTest.jpg"/>-->
+        <div class="cardWrap">
+            <div class="card_Container">
+                <div class="card_line flex">
+                    <div class="card">
+                        <div class="front"><img src="resources/card01.png"/></div>
+                        <div class="back"><img src="resources/card01_fail.png"/></div>
+                        <img class="resultImg" src="resources/card01.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card02.png"/></div>
+                        <div class="back"><img src="resources/card02_fail.png"/></div>
+                        <img class="resultImg" src="resources/card02.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card03.png"/></div>
+                        <div class="back"><img src="resources/card03_fail.png"/></div>
+                        <img class="resultImg" src="resources/card03.png"/>
+                    </div>
+                </div>
+                
+                <div class="card_line flex">
+                    <div class="card">
+                        <div class="front"><img src="resources/card04.png"/></div>
+                        <div class="back"><img src="resources/card04_fail.png"/></div>
+                        <img class="resultImg" src="resources/card04.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card05.png"/></div>
+                        <div class="back"><img src="resources/card05_fail.png"/></div>
+                        <img class="resultImg" src="resources/card05.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card06.png"/></div>
+                        <div class="back"><img src="resources/card06_fail.png"/></div>
+                        <img class="resultImg" src="resources/card06.png"/>
+                    </div>
+                </div>
+                
+                <div class="card_line flex">
+                    <div class="card">
+                        <div class="front"><img src="resources/card07.png"/></div>
+                        <div class="back"><img src="resources/card07_fail.png"/></div>
+                        <img class="resultImg" src="resources/card07.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card08.png"/></div>
+                        <div class="back"><img src="resources/card08_fail.png"/></div>
+                        <img class="resultImg" src="resources/card08.png"/>
+                    </div>
+                    <div class="card">
+                        <div class="front"><img src="resources/card09.png"/></div>
+                        <div class="back"><img src="resources/card09_fail.png"/></div>
+                        <img class="resultImg" src="resources/card09.png"/>
+                    </div>
+                </div>
+                <div class="clickWrap"><img src="resources/txt_btn.png"/><a class="btn"></a></div>
+                <div class="none_click" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="img"><img src="resources/bottom.png"/></div>
+</div>
+
+<script>
+$(".clickWrap").on("click",function(){
+    $(this).remove();
+});
+$('.card').one('click', function () {
+    $(this).toggleClass('flipped');
+});
+</script>
+</body>
+
+</html>

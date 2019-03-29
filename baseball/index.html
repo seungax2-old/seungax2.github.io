@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+  
+<link rel="stylesheet" href="resources/app_style.css">
+<script  src="resources/jquery-1.12.3.js"></script>
+<script  src="resources/taphold.js"></script>
+</head>
+
+<body>
+
+<div class="event">
+    <div class="img"><img src="resources/main_01.jpg"/></div>
+    <div class="img">
+        <img src="resources/main_02.jpg"/>
+        <p class="commonWrap r1"><img src="resources/1_normal.png"/></p>
+        <p class="commonWrap r2"><img src="resources/2_off.png"/></p>
+        <p class="commonWrap r3"><img src="resources/3_on.png"/></p>
+    </div>
+    <div class="img notStart">
+        <img src="resources/main_03_off.jpg"/>
+        <a class="btn_start"></a>
+    </div>
+    
+    <div class="img Start" style="display: none;">
+        <img src="resources/main_03_on.jpg"/>
+        <p class="ball"><img src="resources/ball.png"/></p>
+        
+        <div class="star-container" style="display: none;">
+            <div class="star-wrapper">
+                <ul class="star-line-container">
+                  <div class="star-line-wrapper">
+                    <li class="star-line"></li>
+                  </div>
+                  <div class="star-line-wrapper">
+                    <li class="star-line"></li>
+                  </div>
+                  <div class="star-line-wrapper">
+                    <li class="star-line"></li>
+                  </div>
+                  <div class="star-line-wrapper">
+                    <li class="star-line"></li>
+                  </div>
+                  <div class="star-line-wrapper">
+                    <li class="star-line"></li>
+                  </div>
+                </ul>
+                <div class="star-circle circel_style"></div>
+                <div class="star-circle2 circel_style"></div>
+            </div>
+        </div>
+        
+        <p class="grid commonWrap" style="display: none;"><img src="resources/grid.png"/></p>
+        <p class="bat"><img src="resources/bat.png"/></p>
+        <p class="commonWrap">
+            <img src="resources/btn_swing.png"/>
+            <a class="btn_swing"></a>
+        </p>
+        <p class="noclickDiv commonWrap"></p>
+    </div>
+    <div class="img"><img src="resources/main_04.jpg"/></div>
+</div>
+
+<div class="event-pop" id="single-pop" style="display: none;">
+    <div class="event-inner">
+        <img src="resources/pop_homerun.jpg" id="popImg">
+        <a href="#none" class="close-btn"></a>
+    </div>
+</div>
+       
+<script>
+
+$(document).ready(function(){
+    var $singlepop = $("#single-pop");
+    var $ball = $(".ball");
+    var $ballImg = $(".ball img");
+    var $grid = $(".grid");
+    var $noClick = $(".noclickDiv");
+    var clickTime;
+    $(".btn_start").on("click",function(){
+        $(".notStart").hide();
+        $(".Start").show();
+        
+        /*공날라오기*/
+        $ball.addClass("throw");
+        $ballImg.addClass("rotate");
+        /*그리드 보여주기*/
+        setTimeout(function() {
+            $grid.show();
+            $grid.addClass("gird_scale");
+            
+            setTimeout(function() {$noClick.hide();},500);
+            
+            /*2초동안 아무 액션 없을시 강제로 실패팝업 띄우고 탈락처리 -> 아웃으로 데이터 저장 필요(애니메이션은 강제)*/
+            clickTime = setTimeout(function(){
+                swingAni('out');
+            },2000);
+        }, 1300);
+    });
+    
+    $(".btn_swing").on("click",function(){
+        $noClick.show();
+        clearTimeout(clickTime);
+        fnCouponDownload();
+    });
+    
+    function fnCouponDownload(){
+        /*배트를 휘두르는 타이밍 때문에 proc확률에 따른 결과 확인 후 애니메이션 진행되어야함*/
+        swingAni('homerun');
+    }
+    
+    /*팝업을 보여주는 타이밍이 다름으로 애니메이션 진행후 팝업 보여줘야함*/
+    function swingAni(resultAct){
+        $(".bat").addClass("swing");
+        $grid.hide();
+        setTimeout(function(){
+            if(resultAct == "homerun"){
+                $ball.addClass("hmAni");
+                $(".star-container").show();
+                setTimeout(function(){
+                    $singlepop.show();
+                },2100);
+            }else{
+                $ball.addClass("outAni");
+                setTimeout(function(){
+                    alert("탈락")
+                },1200);
+            }
+            setTimeout(function(){
+                $ballImg.removeClass("rotate");
+            },1000);
+        },500);
+    }
+
+    //싱글 팝업창 닫기
+    $("#single-pop .close-btn").on("click", function(){
+        $singlepop.hide();
+    });
+    
+/*    //proc 확률 결과에따라 성공시
+    function outBall(){
+        $ball.addClass("outAni");
+        setTimeout(function(){
+            $ballImg.removeClass("rotate");
+        },1000);
+    }
+
+    //proc 확률 결과에따라 실패시   
+    function homerunBall(){
+        $ball.addClass("hmAni");
+        setTimeout(function(){
+            $ballImg.removeClass("rotate");
+        },1000);
+    }*/
+    
+});
+
+</script>
+</body>
+
+</html>

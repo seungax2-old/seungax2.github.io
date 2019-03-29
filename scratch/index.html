@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="resources/app_style.css">
+</head>
+
+<body>
+<div class="event">
+    <div class="img"><img src="resources/main_01.jpg"/></div>
+    <div class="img">
+        <img src="resources/main_02.jpg"/>
+    </div>
+    
+    <!--event1-->
+    <div class="img" style="overflow: hideen;">
+        <img src="resources/main_03.jpg"/>
+        <a class="btn"><span>쿠폰받기</span></a>
+    </div>
+
+    <!--event2-->
+    <div class="img scratch" style="overflow: hideen;">
+        <div class="layerDiv2 cursor_click_txt" style="z-index: 4;"><img src="resources/text_info.png"/></div>
+        
+        <div class="img" style="overflow: hideen;"><img src="resources/scratch_01.jpg"/></div>
+        <div class="img getSize" id="scratchWrap" >
+
+            <div class="img" style="display: none;">
+                <img id="scratchImg" src="resources/scratch_02_on.png"/>
+            </div>
+            <canvas class="scratch_canvas" id="scratchCanvas" ></canvas>
+            <div class="under_tree">
+                <img src="resources/scratch_02.jpg"/>
+                <div id="moveCursor"></div>
+            </div>  
+        </div>
+        <div class="img"><img src="resources/scratch_03.jpg" alt=""></div>
+    </div>
+    
+    <!--event3-->
+    <div class="img">
+        <a class="buy_btn1"><span>구매하기</span></a>
+        <img src="resources/main_05.jpg"/>
+    </div>
+    <div class="img">
+        <a class="buy_btn"><span>구매하기</span></a>
+        <img src="resources/main_06.jpg"/>
+    </div>
+    <div class="img">
+        <a class="buy_btn"><span>구매하기</span></a>
+        <img src="resources/main_07.jpg"/>
+    </div>
+    <div class="img"><img src="resources/main_08.jpg"/></div>
+    <div class="img">
+        <a class="editprivacy" onclick="popup_edit"><span>개인정보수정하기</span></a>
+        <img src="resources/main_09.jpg"/>
+    </div>
+    <div class="img"><img src="resources/main_10.jpg"/></div>
+</div>
+
+<!-- poppup -->
+    <!--쿠폰받기 팝업-->
+    <div class="event-pop" id="single-pop" style="display: none;">
+        <div class="event-inner">
+            <img src="resources/pop1.jpg" id="popImg">
+            <a href="#none" class="close-btn"></a>
+        </div>
+    </div>
+
+    <!--스크래치 완료시 응모 팝업-->
+    <div class="event-pop" id="single-pop2" style="display: none;">
+        <div class="event-inner">
+            <img src="resources/pop2.jpg" id="popImg">
+            <a href="#none" class="editprivacy"></a>
+            <a href="#none" class="close-btn"></a>
+        </div>
+    </div>
+<!-- //popup -->
+    
+<script  src="resources/jquery-1.12.3.js"></script>
+<script>
+    
+$(window).load(function(){
+    var $singlepop = $("#single-pop");
+    var $singlepop2 = $("#single-pop2");
+    var commonPop = $(".event-pop");
+    
+    //싱글 팝업창 닫기
+    $(".event-pop .close-btn").on("click", function(){
+        commonPop.hide();
+    });
+    
+    var startMove;
+    var cursor = document.getElementById("moveCursor");
+    
+    var $cursor = $("#moveCursor"),
+        $cursor_txt = $(".cursor_click_txt");
+    
+    var cursor_h = $(window).width()*0.1,
+        cursor_hH = $(window).width()*0.05,
+        cursor_removeH = $cursor.height()*0.09;
+    
+    var cursor_W = $(window).width()*0.1,
+        cursor_hW = $(window).width()*0.05;
+    
+    var isDrawing, lastPoint;
+    var container    = document.getElementById('scratchWrap');
+    var canvas       = document.getElementById('scratchCanvas');
+    var ctx          = canvas.getContext('2d');
+    
+    canvas.height = $(".getSize").height();
+    canvas.width =  $( ".event" ).width();
+    
+    var dummyArray = Array.from(Array(parseInt(canvas.width / 5)), () => new Array(parseInt(canvas.height / 5)));
+    
+    var canvasWidth  = canvas.width,
+        canvasHeight = canvas.height;
+    
+    var image        = new Image(),
+        brush        = new Image();
+    
+    cursor.style.visibility = 'visible';
+    
+    // 지워지는 부분 이미지
+    image.src = "resources/scratch_02_on.png";
+    image.onload = function() {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        // localStorage.setItem("saved-image-example", canvas.toDataURL("image/png"));
+        document.querySelectorAll('.under_tree')[0].style.visibility = 'visible';
+    };
+
+    //브러쉬 이미지
+    brush.src = "resources/brush_img.png";
+    cursor.addEventListener('touchstart', handleMouseDown, false);
+    cursor.addEventListener('touchend', handleMouseUp, false);
+    
+    var varUA = navigator.userAgent.toLowerCase();
+    var scrollT;
+    if (varUA.match('android') != null) {
+        //안드로이드 일때 처리
+        scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        $(window).scroll(function () {
+            scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        });
+        
+    } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+        //IOS 일때 처리
+        scrollT=$(document).scrollTop();
+        $(window).scroll(function () {
+            scrollT = $(".event").scrollTop();
+        });
+    }
+    
+    //위치 거리 계산
+    function distanceBetween(point1, point2) {
+        return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+    }
+    //위치 앵글 계산
+    function angleBetween(point1, point2) {
+        return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+    }
+
+    //픽셀수 확인하면서 지워진 부분 계산 -> 총 픽셀로 나누어서 퍼센트율 계산
+    function getFilledInPixels(stride) {
+        //stride > 1픽셀씩 확인하면 계산시간 너무 길어짐으로 단위 올림 but 너무 올릴수록 정확x!!
+        if (!stride || stride < 1) { stride = 1; }
+        var pixels   = ctx.getImageData(0, 0, canvasWidth, canvasHeight),
+        pdata    = pixels.data,
+        l        = pdata.length,
+        total    = (l / stride),
+        count    = 0;
+       
+        // 모든 픽셀 반복문 > 픽셀의 값이 없으면 지워진 부분
+        for(var i = 0; i < l; i += stride) {
+            if (parseInt(pdata[i]) === 0) {
+                count++;
+            }
+        }
+        //퍼센트 계산해서 리턴
+        return Math.round((count / total) * 100);
+    }
+
+    //터치 위치 계산
+    function getMouse(e, canvas) {
+        var offsetX = 0, offsetY = 0, mx, my;
+
+        if (canvas.offsetParent !== undefined) {
+            do {
+                offsetX += canvas.offsetLeft;
+                offsetY += canvas.offsetTop;
+            } while ((canvas = canvas.offsetParent));
+        }
+
+        mx = (e.pageX || e.touches[0].clientX) - offsetX;
+        my = (e.pageY || e.touches[0].clientY) - offsetY+scrollT;
+
+        return {x: mx, y: my};
+    }
+
+    // 얼만큼 지워졌는지 퍼센트 지워진 퍼센트기준으로 완전 스크래치로
+    // 공백 부분까지 지워진것으로 치기 때문에 55%로 변경함
+    function handlePercentage(filledInPixels) {
+        filledInPixels = filledInPixels || 0;
+        if (filledInPixels > 55) {
+            $cursor_txt.remove();
+            canvas.parentNode.removeChild(canvas);
+            container.removeEventListener('touchmove', handleMouseMove, false);
+            $cursor.hide();
+            finalResult();
+        }
+    }
+
+    //터치시작 첫 포인트 기록
+    function handleMouseDown(e) {
+        startMove = setTimeout(function() {
+            $cursor_txt.hide();
+            isDrawing = true;
+            lastPoint = getMouse(e, canvas);
+            container.addEventListener('touchmove', handleMouseMove, false);
+        }, 1000);
+    }
+
+    //터치 무브시 이벤트
+    function handleMouseMove(e) {
+        //드로잉 끝났다 - 터치엔드시 리턴
+        if (!isDrawing) { return; }
+        e.preventDefault();
+
+        //무빙 포인트 기록
+        var currentPoint = getMouse(e, canvas),
+        //첫 포인트과 움직인 순간의 포인트 사이 거리 계산
+        dist = distanceBetween(lastPoint, currentPoint),
+        //첫 포인트과 움직인 순간의 포인트 사이 앵글 계산 (각도)
+        angle = angleBetween(lastPoint, currentPoint),
+        x, y;
+        
+        var bounds = [{x:0.1, y:0.1}]
+        for (var i = 0; i < dist; i++) {
+            x = lastPoint.x + (Math.sin(angle) * i);
+            y = lastPoint.y + (Math.cos(angle) * i);
+            
+            bounds.forEach((e) => {
+                if(x / canvas.width <= e.x && y / canvas.height <= e.y) {
+                    x = canvas.width * e.x;
+                    y = canvas.height * e.y;
+                }
+            });
+            //도형합성 - 투명으로 지우는 속성
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.drawImage(brush, x - cursor_hW, y - cursor_removeH, cursor_W, cursor_W);
+          
+            var cursorX = x - cursor_hW
+            var cursorY = y - cursor_hH
+            if( cursorX < 0){cursorX = 0}
+            if( cursorY < 0){cursorY = 0}
+
+            var cursorX2 = parseInt(cursorX / 5);
+            var cursorY2 = parseInt(cursorY / 5);
+            var cursor_W2 = parseInt(cursor_W / 5);
+            // 임시 2차원 배열에 데이터를 넣는다.
+            for(px = cursorX2 ; px < parseInt(cursorX2 + cursor_W2) ; px++) {
+                for(py = cursorY2 ; py < parseInt(cursorY2 + cursor_W2) ; py++) {
+                    try {
+                        dummyArray[px][py] = 1;
+                    }
+                    catch{
+                    }
+                }
+            }
+        }
+        lastPoint = currentPoint;
+        var sumresult = 0;
+        // 2차원 배열에서 1로 된(긁은) 부분의 합을 구함.
+        dummyArray.forEach((e) => {
+            sumresult += e.filter((ee) => {return ee == 1}).length;
+        });
+        handlePercentage(sumresult / (canvas.height / 5 * canvas.width / 5) * 100);
+    }
+
+    //터치 끝날시
+    function handleMouseUp(e) {
+        //e.preventDefault();
+        $cursor_txt.show();
+        clearTimeout(startMove);
+        container.removeEventListener('touchmove', handleMouseMove, false);
+        isDrawing = false;
+    }
+
+    //5.최종결과 함수
+    function finalResult() {
+        $singlepop2.show();
+    }
+});
+
+function popup_edit() {
+    location.href="hpcapp://openurl?https://member.happypointcard.com/member_mobile/join_modify.jsp";
+    setTimeout(() => {
+        location.href="https://member.happypointcard.com/member_mobile/join_modify.jsp";
+    }, 500);
+    $('#event-pop').hide();
+}
+
+</script>
+</body>
+
+</html>

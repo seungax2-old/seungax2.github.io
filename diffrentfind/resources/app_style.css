@@ -1,0 +1,43 @@
+* {margin: 0px; padding: 0px;box-sizing: border-box;}
+img {vertical-align: middle;}
+.event {background: #6a8dd6;}
+.event .img {position: relative;}
+.event .img img {width: 100%;}
+.event .img .btn{position: absolute;bottom: 40%;left: 17.8%;width: 64.3%;height: 9.5%;}
+.event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
+.event .startGame_btn{position: absolute;left: 4.4%;height: 10.3%;bottom: 19.1%;width: 91.1%;}
+
+/* 팝업 */
+.event-pop{position:fixed; top:0; left:0; right:0; bottom:0; box-sizing:border-box; display: flex; -webkit-display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.6); z-index:100;}
+.event-pop .event-inner{position: relative; width: 80%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner > p img{width: 100%;}
+#event-pop .event-inner .close-btn{position: absolute; width: 86.5%; height: 10%; bottom: 0%; left: 6.5%;}
+
+/*.gameState{box-sizing: border-box;padding: 0 7%;position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;font-size: 7vw;color:#fff;}
+.gameState div{width: 50%; height: 100%;}
+.gameState div.chanceWrap{-webkit-justify-content: flex-end;justify-content: flex-end;}
+.gameState div.chanceWrap p{}
+.gameState div.
+.gameState p{}*/
+
+.timerWrap{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;/*padding-bottom: 0.7vw !important; */padding-left: 56%;}
+.timerWrap p{font-size: 8vw;color:#fff; height: 100%;display: flex; display: -webkit-flex;-webkit-align-items: center; align-items: center;width: 19%;margin-right: 5%;}
+/*.timerWrap p.Second{padding-bottom: 1.1%;}*/
+.chanceWrap{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;padding-bottom: 7%;padding-left: 51.5%;}
+.chanceWrap p{margin-right: 7%; height: 100%;display: flex; display: -webkit-flex;-webkit-align-items: center; align-items: center;width: 18%;}
+.chanceWrap p:last-child{margin-right: 0;}
+
+.event .findWrap{/*position: relative;*/position: absolute;top: 0;left: 0;width: 100%;overflow: hidden;/*padding: 0 10vw;height: 100%;*/box-sizing: border-box;}
+.event .findWrap .find_imgWrap{height: 100%;width: 100%;position: relative;overflow: hidden;}
+.event .findWrap .find_imgWrap .pointChk{position: absolute;width: 8.3%;height:auto;}
+.event .findWrap .find_imgWrap .dft_pointX{position: absolute;width: 8.3%;height:auto;left: 0; top: 0;}
+.event .findWrap .find_imgWrap .pointChk img{visibility: hidden;}
+.event .findWrap .find_imgWrap .pointChk.find_check img{visibility: visible;}
+
+
+.flex{display: flex; display: -webkit-flex;}
+.flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
+.center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
+.centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
+.margin_t20{margin-top: 2vw;}

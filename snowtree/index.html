@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="resources/app_style.css">
+</head>
+
+<body>
+<div class="event">
+    <div class="img" style="overflow: hideen;">
+        <div class="leftPouring">
+            <div class="snowPouringl"></div>
+        </div>
+        <div class="rightPouring">
+            <div class="snowPouringr"></div>
+        </div>
+        <img src="resources/main_01.png"/>
+    </div>
+    <div class="img" id="snowWrap">
+        <div class="startBtn">
+            <div class="blink_star layerDiv">
+                <p class="layerDiv light1"><img src="resources/btn_light01.png"/></p>
+                <p class="layerDiv light2"><img src="resources/btn_light02.png"/></p>
+                <p class="layerDiv light3"><img src="resources/btn_light03.png"/></p>
+            </div>
+            <a class="start_btn"><span>시작버튼</span></a>
+            <img class="getSize" src="resources/click_btn01.png"/>
+        </div>
+        
+        <div class="layerDiv2 bloom_click_txt" style="z-index: 4; display: none;"><img src="resources/bloom_click_txt.png"/></div>
+        
+        <canvas class="snow_canvas" id="snowCanvas" ></canvas>
+        <div class="under_tree">
+            <img src="resources/tree.png"/>
+            <div id="moveCursor" style="visibility:hidden;">
+                <div class="bloomTotal">
+                    <p class="blommBody"><img src="resources/bloom_body.png"/></p>
+                    <p class="movebloom"><img src="resources/bloom_hair.png"/></p>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div class="img">
+        <p class="layerDiv treelight_star"><img src="resources/tree_light.png"/></p>
+        <p class="layerDiv "><img src="resources/tree13_star.png"/></p>
+        <img src="resources/tree13.png" alt="">
+    </div>
+    <div class="img">
+        <img src="resources/product.png" alt="">
+    </div>
+    <div class="img">
+        <img src="resources/bottom.png" alt="">
+    </div>
+</div>
+<script  src="resources/jquery-1.12.3.js"></script>
+<script>
+    
+$(window).load(function(){
+    var startTime,endTime,startMove;
+    var bloom = document.getElementById("moveCursor");
+    //빗자루 끝에 맞춰서 쓸기위하여
+    var bloom_H = $("#moveCursor").height()*0.85;
+    //브러쉬 넓이를 잡기위하여
+    var bloom_W = $("#moveCursor").width()*0.7,
+        bloom_hW = $("#moveCursor").width()*0.5;
+    var isDrawing, lastPoint;
+    var container    = document.getElementById('snowWrap');
+    var canvas       = document.getElementById('snowCanvas');
+    var ctx          = canvas.getContext('2d');
+    
+    canvas.height = $(".getSize").height();
+    canvas.width =  $( ".event" ).width();
+    
+    var canvasWidth  = canvas.width,
+    canvasHeight = canvas.height;
+    
+    var image        = new Image(),
+    brush        = new Image();
+    
+    // 지워지는 부분 이미지
+    image.src = "resources/bg_normal.png";
+    image.onload = function() {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        document.querySelectorAll('.under_tree')[0].style.visibility = 'visible';
+    };
+
+    //브러쉬 이미지
+    brush.src = "resources/brush_img.png";
+    bloom.addEventListener('touchstart', handleMouseDown, false);
+    bloom.addEventListener('touchend', handleMouseUp, false);
+    
+    start_snowPouring('l');
+    start_snowPouring('r');
+    function start_snowPouring(snow_place){
+        var $snowPouringDiv;
+        if(snow_place == "l"){
+            $snowPouringDiv = $(".snowPouringl");
+        }else{
+            $snowPouringDiv = $(".snowPouringr");
+        }
+        for(var i=0; i<12; i++){
+            var left_position = Math.floor(Math.random() * 100) + 1;
+            var snow_size = Math.floor(Math.random() * 3) + 1;
+            var delay_time = Math.floor(Math.random() * 3) + 1;
+            var top_position = Math.floor(Math.random() * 35) + 1;
+            var duration_time = Math.floor(Math.random()*5) + 3;
+            var snows = "<p class='snow' style='animation-duration:" +duration_time+ "s;animation-delay:" + delay_time + "s; -webkit-animation-delay: "+delay_time+"s; top:-" + top_position + "%; left:" + left_position + "%; height:" + snow_size + "vw; width:" + snow_size + "vw;'></p>"
+            $snowPouringDiv.append(snows);
+        }
+    }
+
+    var varUA = navigator.userAgent.toLowerCase();
+    var scrollT;
+    if (varUA.match('android') != null) {
+        //안드로이드 일때 처리
+        scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        $(window).scroll(function () {
+            scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        });
+        
+    } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+        //IOS 일때 처리
+        scrollT=$(document).scrollTop();
+        $(window).scroll(function () {
+            scrollT = $(".event").scrollTop();
+        });
+    }
+    
+    $(".start_btn").on("click",function(){
+        $(".startBtn").hide();
+        $(".bloom_click_txt").show();
+        bloom.style.visibility = 'visible';
+        bloom.style.left = $(window).width()*0.5-bloom_hW + "px";
+        bloom.style.top = canvasHeight-($(".bloom_click_txt").height()+$("#moveCursor").height()) + "px";
+    });
+    
+    //위치 거리 계산
+    function distanceBetween(point1, point2) {
+        return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
+    }
+    //위치 앵글 계산
+    function angleBetween(point1, point2) {
+        return Math.atan2( point2.x - point1.x, point2.y - point1.y );
+    }
+
+    //픽셀수 확인하면서 지워진 부분 계산 -> 총 픽셀로 나누어서 퍼센트율 계산
+    function getFilledInPixels(stride) {
+        //stride > 1픽셀씩 확인하면 계산시간 너무 길어짐으로 단위 올림 but 너무 올릴수록 정확x!!
+        if (!stride || stride < 1) { stride = 1; }
+        var pixels   = ctx.getImageData(0, 0, canvasWidth, canvasHeight),
+        pdata    = pixels.data,
+        l        = pdata.length,
+        total    = (l / stride),
+        count    = 0;
+       
+        // 모든 픽셀 반복문 > 픽셀의 값이 없으면 지워진 부분
+        for(var i = 0; i < l; i += stride) {
+            if (parseInt(pdata[i]) === 0) {
+                count++;
+            }
+        }
+        //퍼센트 계산해서 리턴
+        return Math.round((count / total) * 100);
+    }
+
+    //터치 위치 계산
+    function getMouse(e, canvas) {
+        var offsetX = 0, offsetY = 0, mx, my;
+
+        if (canvas.offsetParent !== undefined) {
+            do {
+                offsetX += canvas.offsetLeft;
+                offsetY += canvas.offsetTop;
+            } while ((canvas = canvas.offsetParent));
+        }
+
+        mx = (e.pageX || e.touches[0].clientX) - offsetX;
+        my = (e.pageY || e.touches[0].clientY) - offsetY+scrollT;
+
+        return {x: mx, y: my};
+    }
+
+    //얼만큼 지워졌는지 퍼센트 지워진 퍼센트기준으로 완전 스크래치로
+    function handlePercentage(filledInPixels) {
+        filledInPixels = filledInPixels || 0;
+        if (filledInPixels >90) {
+            alert("90%");
+            canvas.parentNode.removeChild(canvas);
+            container.removeEventListener('touchmove', handleMouseMove, false);
+            $("#moveCursor").hide();
+        }
+    }
+
+    //터치시작 첫 포인트 기록
+    function handleMouseDown(e) {
+        startTime = new Date().getTime();
+        $(".bloom_click_txt").hide();
+        startMove = setTimeout(function() {
+            $("#moveCursor").addClass("rotateBloom");
+            isDrawing = true;
+            lastPoint = getMouse(e, canvas);
+            container.addEventListener('touchmove', handleMouseMove, false);
+            
+        }, 1000);
+    }
+
+    var pastPoint = [];
+    //터치 무브시 이벤트
+    function handleMouseMove(e) {
+        //드로잉 끝났다 - 터치엔드시 리턴
+        if (!isDrawing) { return; }
+        e.preventDefault();
+
+        //무빙 포인트 기록
+        var currentPoint = getMouse(e, canvas),
+        //첫 포인트과 움직인 순간의 포인트 사이 거리 계산
+        dist = distanceBetween(lastPoint, currentPoint),
+        //첫 포인트과 움직인 순간의 포인트 사이 앵글 계산 (각도)
+        angle = angleBetween(lastPoint, currentPoint),
+        x, y;
+
+        for (var i = 0; i < dist; i++) {
+            x = lastPoint.x + (Math.sin(angle) * i);
+            y = lastPoint.y + (Math.cos(angle) * i);
+            //도형합성 - 투명으로 지우는 속성
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.drawImage(brush, x-bloom_hW, y, bloom_W, bloom_W);
+            
+            
+            
+            var pastx = Math.floor(Math.floor(x)/bloom_W)+1;
+            var pasty = Math.floor((Math.floor(y)-canvas.offsetLeft)/bloom_W)+1;
+            var arraySave = pastx.toString() + pasty.toString();
+            pastPoint.push(arraySave);
+            
+            var bloomX = x - bloom_hW
+            var bloomY = y - bloom_H
+            console.log(bloomY)
+            if( bloomX < 0){bloomX = 0}
+            if( bloomY < 0){bloomY = 0}
+            bloom.style.left = bloomX + "px";
+            bloom.style.top = bloomY + "px";
+            /*console.log(x - bloom_hW + "빗자루 x좌표");
+            console.log(y - bloom_H + "빗자루 y좌표");*/
+            
+            if(currentPoint.x > lastPoint.x){
+                $(".movebloom").removeClass("movebloom_right");
+                $(".movebloom").removeClass("movebloom_middle");
+                $(".movebloom").addClass("movebloom_left");
+            } else {
+                $(".movebloom").removeClass("movebloom_left");
+                $(".movebloom").removeClass("movebloom_middle");
+                $(".movebloom").addClass("movebloom_right");
+            }
+        }
+
+        lastPoint = currentPoint;
+       /* var totalPixels = ((canvasHeight/bloom_W) * (canvasWidth/bloom_W))*0.5;
+        var array = pastPoint.reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]);
+        var percent = (array.length/totalPixels)*100;
+        console.log(percent+"%")
+        if(percent >80){
+            alert("80%");
+            canvas.parentNode.removeChild(canvas);
+            container.removeEventListener('touchmove', handleMouseMove, false);
+            $("#moveCursor").hide();
+        }*/
+        /*handlePercentage(getFilledInPixels(10));*/
+    }
+
+    //터치 끝날시
+    function handleMouseUp(e) {
+        e.preventDefault();
+        $(".bloom_click_txt").show();
+        endTime = new Date().getTime();
+        var clickTime = Math.round((endTime - startTime)/1000);
+        clearTimeout(startMove);
+        container.removeEventListener('touchmove', handleMouseMove, false);
+        isDrawing = false;
+        $(".movebloom").removeClass("movebloom_right")
+        $(".movebloom").removeClass("movebloom_left")
+        $(".movebloom").addClass("movebloom_middle");
+        $("#moveCursor").removeClass("rotateBloom");
+        if(clickTime < 2){
+            
+        }else{
+            
+        }
+    }
+});
+</script>
+</body>
+
+</html>

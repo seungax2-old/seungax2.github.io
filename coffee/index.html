@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+<link rel="stylesheet" href="resources/app_style.css">
+<script  src="resources/jquery-1.12.3.js"></script>
+  
+</head>
+
+<body>
+    
+<div class="event">
+    
+    <div class="round1">
+        <div class="img">
+            <img src="resources/main_01_r1.png"/>
+
+            <div class="r1_select selectList_Wrap" style="important; position: absolute;width: 100%;height: 17%;left: 0;bottom: 3%;display: flex; display: -webkit-flex; padding: 0 2%;box-sizing: border-box;">
+                <p style="position: relative; width: 31%;">
+                    <img class="btnImg01" src="resources/r1_1_off.png">
+                    <label class="radio_button">
+                        <input type="radio" name="select" class="btn1" value="r1_1">
+                    </label>
+                </p>
+                <p style="position: relative; width: 31%; margin: 0 3.5%;">
+                    <img class="btnImg02" src="resources/r1_2_off.png">
+                    <label class="radio_button">
+                        <input type="radio" name="select" class="btn2" value="r1_2">
+                    </label>
+                </p>
+                <p style="position: relative; width: 31%;">
+                    <img class="btnImg03" src="resources/r1_3_off.png">
+                    <label class="radio_button">
+                        <input type="radio" name="select" class="btn3" value="r1_3">
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="img"><img class="next_btn" src="resources/main_02_off.png"/></div>
+    </div>
+    
+    
+   <div class="img round_teplete" style="display: none;">
+        <div class="img">
+            <img src="resources/main_01_r2.png"/>
+            <div class="selectList_Wrap_templete" >
+            </div>
+        </div>
+        <div class="img"><img class="next_round" src="resources/btn_off.png"/></div>
+        <!--<div class="img"><img class="next_round3" src="resources/btn_off.png" style="display: none;"/></div>-->
+    </div>
+    
+    <div class="img"><img src="resources/main_03.png"/></div>
+</div>
+    
+    
+<!--<div class="event-pop" id="event-pop" style="display:none;">
+     <div class="event-inner">
+ 		<p><img src="resources/popup_tit.jpg"></p>
+         <div class="popup_mid">
+             
+         	<p class="popup_con1" >
+         		<img class="btnImg01" src="resources/item1_normal.png">
+	         	<label class="radio_button">
+	              <input type="radio" name="select" class="btn1" value="1">
+	            </label>
+            </p>
+             
+         	<p class="popup_con2">
+	        	<img class="btnImg02" src="resources/item2_normal.png">
+	            <label class="radio_button">
+	              <input type="radio" name="select" class="btn2" value="2">
+	            </label>
+         	</p>
+             
+       	 </div>
+         <p class="popup_bt">
+         	<img class="btnImg"src="resources/pop_btn_nomal.jpg">
+       		<a class="close-btn" onClick="javascript:fnCouponDownload('B');"></a>
+       	</p>
+     </div>
+</div>-->
+<script>
+    var round1;
+    var my_select1;
+    var my_select2;
+    var final;
+    var roundNum = 1;
+    
+    var gp_num;
+    var gp_cate;
+    var $gp_name;
+    var gp_max;
+    
+    var ame_gp = ['pb','br','dd','','dd2','pas'];
+    var latte_gp = ['pb','br','','pas'];
+    var signiture_gp = ['br','pas',''];
+    
+    $(document).ready(function(){
+        /*카테고리 선택*/
+        $('.r1_select input:radio[name="select"]').click(function() {
+            $(".next_btn").attr("src","resources/main_02_on.png");
+            /*round1:선택한 아이템 --> 카테고리선택*/
+            var selectItem = $(this).val();
+            round1 = selectItem;
+            for(var i=1; i<4; i++){
+                var selectItem_img = $(".r1_select .btn"+i).val();
+                /*이미지 번호*/
+                var imgName = selectItem_img;
+                /*변경될 이미지 클래스 이름*/
+                var btnName =".r1_select .btnImg0"+i;
+                var radioCheck = $(".r1_select .btn"+i).is(':checked');
+                if(radioCheck){
+                    var changeImg = "resources/"+imgName + "_on.png";
+                    $(btnName).attr("src", changeImg);
+                }else{
+                    var changeImg = "resources/"+imgName + "_off.png";
+                    $(btnName).attr("src", changeImg);
+                }
+            }
+        });
+        
+        /*동적으로 리스트 붙였기 때문에 전체에서 이벤트 잡아오기*/
+        $(document).on("click",'.selectList_Wrap_templete input:radio[name="select"]',function(event){
+            $(".next_round").attr("src","resources/btn_on.png");
+            var selectItem2 = $(this).val();
+            console.log(selectItem2);
+            if(roundNum == 2){
+                my_select1 = selectItem2;   
+            }else if(roundNum==3){
+                my_select2 = selectItem2;
+            }
+            var radio_count = $(".selectList_Wrap_templete").find("input").length;
+            for(var i=1; i<radio_count+1; i++){
+                var selectItem_img = $(".selectList_Wrap_templete .btn"+i).val();
+                console.log(selectItem_img);
+                /*이미지 번호*/
+                var imgName = selectItem_img;
+                /*변경될 이미지 클래스 이름*/
+                var btnName =".selectList_Wrap_templete .btnImg0"+i;
+                var radioCheck = $(".selectList_Wrap_templete .btn"+i).is(':checked');
+                if(radioCheck){
+                    var changeImg = "resources/"+imgName + "_on.png";
+                    $(btnName).attr("src", changeImg);
+                }else{
+                    var changeImg = "resources/"+imgName + "_off.png";
+                    $(btnName).attr("src", changeImg);
+                }
+            }
+        });
+
+        /*라운드1*/
+        $(".next_btn").on("click",function(){
+            roundNum++;
+            
+            $(".round1").hide();
+            $(".round_teplete").show();
+            console.log(round1 +"카테고리");
+            
+            if(round1 == "r1_1"){
+                //아메리카노
+                gp_cate = "ame";
+                $gp_name = ame_gp;
+                gp_num = ame_gp.indexOf("");
+                gp_max = ame_gp.length;
+                console.log("몇번 돌리노!!"+gp_num);
+            }else if(round1 == "r1_2"){
+                //라떼
+                gp_cate = "latte";
+                $gp_name = latte_gp;
+                gp_num = latte_gp.indexOf("");
+                gp_max = latte_gp.length;
+                console.log("몇번 돌리노!!"+gp_num);
+            }else{
+                //시그니처커피
+                gp_cate = "signiture";
+                $gp_name = signiture_gp;
+                gp_num = signiture_gp.indexOf("");
+                gp_max = signiture_gp.length;
+                console.log("몇번 돌리노!!"+gp_num);
+            }
+            
+            
+            for(var i=1; i<gp_num+1; i++){
+                var selectCode = '<p style="position: relative; width: 100%;">'+
+                                    '<img class="btnImg0'+i+'" src="resources/'+gp_cate+'-'+$gp_name[i-1]+'_off.png">'+
+                                    '<label class="radio_button">'+
+                                        '<input type="radio" name="select" class="btn'+i+'" value="'+gp_cate+'-'+$gp_name[i-1]+'">'+
+                                    '</label>'+
+                                 '</p>';
+                $(".selectList_Wrap_templete").append(selectCode);
+            }
+
+            
+            
+            
+        });
+       
+        
+        
+        $(".next_round").on("click",function(){
+            roundNum++;
+            console.log(my_select2)
+            $(".selectList_Wrap_templete").empty();
+            
+            if(my_select2 != undefined){
+                /*라운드 3*/
+                /*아메리카노 -> 선택한 두값을 비교*/
+                if(gp_cate == "ame"){
+                    var selectCode1 = '<p style="position: relative; width: 100%;">'+
+                                                    '<img class="btnImg01" src="resources/'+my_select1+'_off.png">'+
+                                                    '<label class="radio_button">'+
+                                                        '<input type="radio" name="select" class="btn'+btnListnum+'" value="'+my_select1+'">'+
+                                                    '</label>'+
+                                                 '</p>';
+                    $(".selectList_Wrap_templete").append(selectCode1);
+                    
+                    var selectCode2 = '<p style="position: relative; width: 100%;">'+
+                                                    '<img class="btnImg02" src="resources/'+my_select2+'_off.png">'+
+                                                    '<label class="radio_button">'+
+                                                        '<input type="radio" name="select" class="btn'+btnListnum+'" value="'+my_select2+'">'+
+                                                    '</label>'+
+                                                 '</p>';
+                    $(".selectList_Wrap_templete").append(selectCode2);
+                }else{
+                    alert(my_select2 + " 당처어어ㅓㅁ!")
+                }
+                
+                
+                /*라떼 선택한 값 최종!*/
+                
+                
+            }else{
+                /*끝어야 할 위치가*/
+                if(gp_num >2){
+                    /*아메리카노일떄*/
+                     var btnListnum = 1;
+                     for(var i= gp_num+1; i<gp_max; i++){
+                         var selectCode = '<p style="position: relative; width: 100%;">'+
+                                            '<img class="btnImg0'+btnListnum+'" src="resources/'+gp_cate+'-'+$gp_name[i]+'_off.png">'+
+                                            '<label class="radio_button">'+
+                                                '<input type="radio" name="select" class="btn'+btnListnum+'" value="'+gp_cate+'-'+$gp_name[i]+'">'+
+                                            '</label>'+
+                                         '</p>';
+                         $(".selectList_Wrap_templete").append(selectCode);
+                         btnListnum++;
+                    }
+                }else{
+                    /*라떼, 시그니처*/
+                    var last_arr = gp_max -(gp_num+1)
+                    if(last_arr == 0){
+                        /*시그니처 - 2개로 끝*/
+                        alert(my_select1 + " 당처어어ㅓㅁ!")
+                    }else{
+                        /*라떼 - 한개더 비교할것 있음*/
+                        var btnListnum = 1;
+                        for(var i= gp_num+1; i<gp_max; i++){
+                            var selectCode = '<p style="position: relative; width: 100%;">'+
+                                                '<img class="btnImg0'+btnListnum+'" src="resources/'+gp_cate+'-'+$gp_name[i]+'_off.png">'+
+                                                '<label class="radio_button">'+
+                                                    '<input type="radio" name="select" class="btn'+btnListnum+'" value="'+gp_cate+'-'+$gp_name[i]+'">'+
+                                                '</label>'+
+                                             '</p>';
+                            $(".selectList_Wrap_templete").append(selectCode);
+                            btnListnum++;
+                        }    
+                        /*내가선택한거랑 새로운거랑*/
+                        var selectCode2 = '<p style="position: relative; width: 100%;">'+
+                                                '<img class="btnImg0'+btnListnum+'" src="resources/'+my_select1+'_off.png">'+
+                                                '<label class="radio_button">'+
+                                                    '<input type="radio" name="select" class="btn'+btnListnum+'" value="'+my_select1+'">'+
+                                                '</label>'+
+                                             '</p>';
+                        $(".selectList_Wrap_templete").append(selectCode2);
+                    }
+
+
+                }
+                $(".next_round").attr("src","resources/btn_off.png");
+            }
+        });
+        
+    });
+    
+</script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+  
+<link rel="stylesheet" href="resources/app_style.css">
+<script  src="resources/jquery-1.12.3.js"></script>
+<script  src="resources/taphold.js"></script>
+<script  src="resources/snap.svg-min.js"></script>
+</head>
+
+<body>
+
+<div class="event">
+    <div class="img"><img src="resources/main_01.png"/></div>
+    
+    <div class="img ImgDiary">
+        <img src="resources/main_02.png"/>
+        <a class="btn_start"></a>
+    </div>
+    <div class="drawWrap img" style="display: none;">
+        <img src="resources/drawWrap.png"/>
+        <div class="commonWrap">
+            <svg id="drawSvg" width="100%" viewBox="0 0 640 762" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+        </div>
+        <!--draw 버튼 레이어 최상단-->
+        <p class="commonWrap btnDrawWrap"><a class="btn_draw"></a></p>
+        <div class="commonWrap btnCouponWrap" style="display: none;">
+            <p class="img">
+                <img src="resources/btn_coupon.png"/>
+                <a class="btn_coupon"></a>
+            </p>
+        </div>
+    </div>
+        
+    <div class="img"><img src="resources/main_03.png"/></div>
+
+</div>
+
+
+<div class="event-pop" id="single-pop" style="display: none;">
+    <div class="event-inner">
+        <img src="resources/popup_1p.jpg" id="popImg">
+        <a href="#none" class="close-btn"></a>
+    </div>
+</div>
+       
+<script>
+var startTime;
+var endTime;
+var endTouch;
+$(document).ready(function(){
+    var $singlePop = $("#single-pop");
+    var snapSvg = Snap("#drawSvg");
+    var pathes = $('#drawSvg').find('path');
+    
+    $(".btn_start").on("click",function(){
+        $(".ImgDiary").hide();
+        $(".drawWrap").show();
+    });
+    
+    $(".btn_draw").on("touchstart",function(){
+        startTime = new Date().getTime();
+        /*
+            1. 각 path의 길이(length)를 구함
+            2. stroke-dasharray를 path의 길이(length)로 잡음
+            3. stroke-offset을 path의 길이로 잡음 (여기까지 하면 기존의 path가 투명하게 안보임)
+            4. 애니메이션으로 stroke-offset을 0으로 가깝게 이동
+       */
+        var svgPath = snapSvg.path("M235.492131,518.000133 C240.970131,502.863133 263.660131,490.014133 279.194131,482.753133 C287.837131,478.713133 294.272131,476.397133 294.272131,476.397133 C413.627131,435.296133 453.393131,342.257133 453.393131,342.257133 L453.390131,342.258133 C459.487131,330.619133 464.043131,317.718133 466.632131,303.903133 C478.503131,240.570133 444.575131,182.048133 390.853131,173.192133 C358.674131,167.887133 327.683131,180.546133 304.657131,206.011133 L303.676131,204.287133 C293.034131,185.095133 278.827131,179.540133 258.578131,176.202133 C215.747131,169.141133 170.079131,201.805133 159.395131,258.808133 C155.908131,277.413133 156.335131,295.479133 159.983131,311.620133 C166.484131,365.658133 250.865131,422.137133 250.865131,422.137133 C250.865131,422.137133 273.700131,439.581133 272.960131,452.473133").attr({
+            id: "pathSvg",
+            fill: "none",
+            strokeWidth: "10",
+            stroke: "#E16168",
+        });
+        var svg_length = svgPath.getTotalLength();
+        
+        svgPath.attr({
+            "stroke-dasharray": svg_length + " " + svg_length,
+            "stroke-dashoffset": svg_length
+        }).animate({"stroke-dashoffset": 0}, 3000, mina.easeinout);
+        
+        /*3초누르면 강제 애니메이션 끝나게*/
+        endTouch = setTimeout(function() {
+            /*롱클릭 완료*/
+            endAni();
+        }, 3000);
+    });
+    
+    $(".btn_draw").on("touchend",function(){
+        endTime = new Date().getTime();
+        var clickTime = Math.round((endTime - startTime)/1000);
+        clearTimeout(endTouch);
+        if(clickTime < 3){
+            /*애니메이션 강제 종료*/
+            $("#pathSvg").remove();
+        }else{
+            /*롱클릭 완료*/
+            endAni();
+        }
+    });
+    
+    $(".btn_coupon").one("click",function(){
+        /*최종 쿠폰받기 버튼*/
+        $singlePop.show();
+    });
+    
+    //싱글 팝업창 닫기
+    $("#single-pop .close-btn").on("click", function(){
+        $singlePop.hide();
+    });
+});
+  
+function endAni(){
+    setTimeout(function(){
+        $(".btnDrawWrap").hide();
+        $(".btnCouponWrap").show();
+    }, 100);
+}
+</script>
+</body>
+
+</html>

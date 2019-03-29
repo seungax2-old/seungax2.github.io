@@ -1,0 +1,35 @@
+﻿* {margin: 0px; padding: 0px;}
+img {vertical-align: top;}
+.event {background: #fff;}
+.event .img {position: relative;}
+.event .img img {width: 100%;}
+.event .img .btn{position:absolute; top:5%; height:77%; width: 86%; left:7%;}
+
+/* 팝업 */
+.event-pop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    box-sizing:border-box;
+    display: flex;
+    -webkit-display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+	z-index:100;
+}
+.event-pop .event-inner{position: relative; width: 80%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner > p img{width: 100%;}
+.event-pop .event-inner .close-btn{position: absolute;width: 84.8%; height: 11.6%;bottom: 5.6%;left: 7.5%;}
+
+/*룰렛*/
+.roulette_wrap{width: 100%;}
+.roulette{width: 100%;padding: 7%; /* margin: 0px; */ position: relative;overflow: hidden;box-sizing: border-box;}
+/*.pin{position: absolute; top: 0px; left: 0px; width: 8.5%; height: 100%; padding-left: 46.1%; padding-top: 4.5%;}*/
+.pin{position: absolute; top: 0px; height: 100%; padding: 3.4% 45%; height: 100%;}
+.board1{position: absolute; top: 0; left: 0; width: 100%;}
+.button_start{height: 100%;padding: 36%;}
+    

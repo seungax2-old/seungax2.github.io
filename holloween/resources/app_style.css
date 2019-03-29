@@ -1,0 +1,1126 @@
+* {margin: 0px; padding: 0px;}
+img {vertical-align: top;}
+.event {background: #fff;}
+.event .img {position: relative;}
+.event .img img {width: 100%;}
+.event .img .btn{position: absolute; bottom: 0; left: 7.8%; width: 84.3%; height:100%;}
+.event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
+
+/* 팝업 */
+.event-pop{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    box-sizing:border-box;
+    display: flex;
+    -webkit-display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+	z-index:100;
+}
+.event-pop .event-inner{position: relative; width:85%;}
+.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner .popup_mid{box-sizing: border-box; display:flex; display:-webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 8%; width:100%; height:440px; background:#422752;}
+.event-pop .event-inner .popup_mid.one_con{display:inherit;}
+.event-pop .event-inner .popup_mid.one_con > p{width:50%; margin:0 auto;}
+.event-pop .event-inner .popup_mid.one_con .popup_con2{display:none;}
+.event-pop .event-inner .popup_mid > p{position:relative; -webkit-flex: 1; flex: 1;}
+.event-pop .event-inner .popup_mid p:nth-of-type(1){margin-right: 7%;}
+
+.event-pop .event-inner > p.popup_bt{position:relative;}
+.event-pop .event-inner img{width: 100%;}
+.event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;}
+#single-pop .event-inner .close-btn{position:absolute; bottom: 5.3%; right: 6%; width: 88%; height: 11.5%; top: auto;}
+
+
+/* 팝업창 상품 선택 */
+label{position:absolute; top:0; left:0; width:100%; height:100%;}
+label > input{visibility: hidden; position: absolute; width:100%; height:100%;}
+label > input + img{height: 100%;}
+label > input:checked + img{content: attr(changeImg);}
+.imgsrc{content: attr(changeImg)}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 애니메이션 */
+
+.opacity0{opacity: 0;}
+.touch-img{
+    position: absolute;
+    transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    top: 85%;
+    left: 50%;
+    width: 100%;
+}
+
+.broom{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    
+    position: absolute;
+    left: 5%;
+    height: auto;
+    width: 14%;
+    top: 40.8%;
+    
+    animation: broom_hat-shake 2s infinite linear;
+    -webkit-animation: broom_hat-shake 2s infinite linear;
+    
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+}
+
+.ghost{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: 20%;
+    top: 50%;
+    animation: ghost-shake 2s infinite linear;
+    -webkit-animation: ghost-shake 2s infinite linear;
+    
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+}
+
+.hat{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 14%;
+    height: auto;
+    width: 31.5%;
+    top:42.2%;
+    
+    animation: broom_hat-shake 2.5s infinite linear;
+    -webkit-animation: broom_hat-shake 2.5s infinite linear;
+    
+    transform-origin: bottom;
+    -webkit-transform-origin: bottom;
+}
+
+.smoke{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    width: 35%;
+    height: 19%;
+    top: 58%;
+    left: 50%;
+}
+
+.smoke .smokeContainer{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.smoke .smokeContainer .smokeParticle{
+    width: 38%;
+    bottom: 0;
+    opacity: 0;
+    position: absolute;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.smoke .smokeContainer .smokeFirstAni{
+    -webkit-animation: smoke2 1.2s 1 linear;
+    animation: smoke2 1.2s 1 linear;
+}
+
+.smoke .smokeContainer .smokeSecontAni{
+    -webkit-animation: smoke 2.5s infinite linear;
+    animation: smoke 2.5s infinite linear;
+}
+
+
+.smoke .smokeContainer .smokeParticle img{visibility: hidden;}
+.smoke .smokeContainer .smokeParticle:nth-child(1){
+    width: 40%;
+    left: 5%;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+}
+.smoke .smokeContainer .smokeParticle:nth-child(2){
+    left: 5%;
+    left: 30%;
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+}
+.smoke .smokeContainer .smokeParticle:nth-child(3){
+    left:55%;
+    width: 40%;
+    animation-delay: 0.5s;
+    -webkit-animation-delay: 0.5s;
+}
+/*.smoke .smokeContainer .smokeParticle:nth-child(4){
+   left: 55%;
+    animation-delay: 1.23s;
+    -webkit-animation-delay: 1.23s;
+}*/
+/*
+.smoke .smokeContainer .smokeParticle:nth-child(5){
+    left: 50%;
+    width: 35%;
+    animation-delay: 2.1s;
+    -webkit-animation-delay: 2.1s;
+}
+.smoke .smokeContainer .smokeParticle:nth-child(6){
+    left: 55%;
+    animation-delay: 0.7s;
+    -webkit-animation-delay: 0.7s;
+}
+.smoke .smokeContainer .smokeParticle:nth-child(7){
+    left: 53%;
+    width: 45%;
+    animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+}
+*/
+
+.smoke .smokeContainer .smokeParticleFirst:nth-child(4){
+   left: 10%;
+    width: 40%;
+     animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+}
+.smoke .smokeContainer .smokeParticleFirst:nth-child(5){
+    left: 37%;
+     width: 38%;
+     animation-delay: 0.3s;
+    -webkit-animation-delay: 0.3s;
+}
+.smoke .smokeContainer .smokeParticleFirst:nth-child(6){
+    left: 54%;
+    width: 35%;
+     animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+}
+.smoke .smokeContainer .smokeParticleFirst:nth-child(7){
+   left: 37%;
+     width: 40%;
+     animation-delay: 0.1s;
+    -webkit-animation-delay: 0.1s;
+}
+
+
+.bubble{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    width: 35%;
+    height: 14%;
+    top: 56%;
+    left: 50%;
+}
+.bg-bubbles {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.bg-bubbles li{
+    position: absolute;
+    list-style: none;
+    display: block;
+    bottom: 0;
+    background: #f75b32;
+    border-radius: 50%;
+    background-image: radial-gradient(farthest-corner at 10px 0, #ea4f16 0%, #f75b32 95%);
+}
+
+.start-bubble-up{
+    -webkit-animation: start-bubble-up 2s;
+    animation: start-bubble-up 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+.fire-stop{
+    -webkit-animation: fire-stop 3s linear;
+    animation: fire-stop 3s;
+    
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-delay: 1s;
+}
+
+.bubble-up{  
+    -webkit-animation: bubble 1.5s infinite linear;
+    animation: bubble 1.5s infinite linear;
+}
+
+.bubble-shake{  
+    -webkit-animation: bubble-shake 0.5s infinite;
+    animation: bubble-shake 0.5s infinite;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+
+.bg-bubbles li:nth-child(1) {
+    left: 15%;
+    width: 14.6%;
+    height: auto;
+}
+.bg-bubbles li:nth-child(2) {
+    left: 20%;
+    width: 11.9%;
+    height: auto;
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+
+}
+.bg-bubbles li:nth-child(3) {
+    left: 40%;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+    width: 13.2%;
+    height: auto;
+}
+.bg-bubbles li:nth-child(4) {
+    left: 50%;
+    width: 17.5%;
+    height: auto;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+.bg-bubbles li:nth-child(5) {
+    left: 70%;
+    width: 14.6%;
+    height: auto;
+}
+.bg-bubbles li:nth-child(6) {
+    left: 15%;
+    width:20.5%;
+    height: auto;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+.bg-bubbles li:nth-child(7) {
+    left: 25%;
+    width: 26.3%;
+    height: auto;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+}
+.bg-bubbles li:nth-child(8) {
+    left: 44%;
+    width:20.5%;
+    height:auto;
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+    
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+}
+.bg-bubbles li:nth-child(9) {
+    left: 60%;
+    width: 17.5%;
+    height: auto;
+}
+
+.bg-bubbles li:nth-child(10) {
+    left: 70%;
+    width: 20.5%;
+    height: auto;
+    -webkit-animation-delay:0.3s;
+    animation-delay: 0.3s;
+    
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+}
+
+.light-bowl{    
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: 66%;
+    top: 72.7%;
+}
+
+.bowl{    
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: 60%;
+    top: 73%;
+}
+
+/*.bowl {fill: url(img_source01.svg#grad1) gray;}*/
+.soup{
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: 32%;
+    top: 64.3%;
+}
+.log{    
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    position: absolute;
+    left: 50%;
+    height: auto;
+    width: 50%;
+    top: 82%;
+}
+
+.fire {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 15%;
+    width: 50%;
+    
+}
+
+.stopAni{animation-play-state: paused;}
+
+.fireScale{
+    transform-origin: bottom; 
+    animation: fireScale 2s cubic-bezier(0.53, 0.53, 0.54, 0.53) !important;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards;
+    
+    -webkit-transform-origin: bottom; 
+    -webkit-animation: fireScale 2s cubic-bezier(0.53, 0.53, 0.54, 0.53) !important;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: backwards;
+}
+.fireScale2{
+    animation: fireScale2 2s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: fireScale2 2s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: backwards;
+}
+.fireScale3{
+    animation: fireScale2 3s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: fireScale2 3s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: backwards;
+}
+.fireScale4{
+    animation: fireScale2 4s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    animation-iteration-count: 1;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: fireScale2 4s cubic-bezier(0.69, 0.93, 1, 1) !important;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: backwards;
+}
+
+.fire .click-div{position: relative;width: 100%;height: 100%;}
+.fire .fire-div{
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 35%;
+    height: 50%;
+    top: 55%;
+    left: 50%;
+}
+/*가운데 불*/
+.fire-main {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    
+    animation: scaleUpDown 3s ease-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: scaleUpDown 3s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+.fire-main .main-fire {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(farthest-corner at 10px 0, #d43300 0%, #ef5a00 95%);
+    
+    transform: scaleX(0.8) rotate(45deg);
+    -webkit-transform: scaleX(0.8) rotate(45deg);
+    
+    border-radius: 0 40% 60% 40%;
+    filter: drop-shadow(0 0 10px #d43322);
+}
+
+.fire-main .particle-fire {
+    position: absolute;
+    top: 60%;
+    left: 45%;
+    width: 6%;
+    height: 6%;
+    background-color: #ef5a00;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #d43322);
+    animation: particleUp 2s ease-out 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 2s ease-out 0;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+
+/*오른쪽 불*/
+.fire-right {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    animation: shake 2s ease-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: shake 2s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+
+.fire-right .main-fire {
+    position: absolute;
+    top: 15%;
+    right: -35%;
+    width: 80%;
+    height: 80%;
+    background-color: #ef5a00;
+    
+    transform: scaleX(0.8) rotate(55deg);
+    -webkit-transform: scaleX(0.8) rotate(55deg);
+    
+    border-radius: 0 40% 60% 40%;
+    filter: drop-shadow(0 0 10px #d43322);
+}
+
+.fire-right .particle-fire {
+    position: absolute;
+    top: 45%;
+    right: 10%;
+    width: 7%;
+    height: 7%;
+    background-color: #ef5a00;
+    
+    transform: scaleX(0.8) rotate(45deg);
+    -webkit-transform: scaleX(0.8) rotate(45deg);
+    
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #d43322);
+    
+    animation: particleUp 3s ease-out 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 3s ease-out 0;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+.fire-right .particle-fire2 {
+    position: absolute;
+    top: 45%;
+    right:24%;
+    width: 6%;
+    height: 6%;
+    background-color: #ef5a00;
+    
+    transform: scaleX(0.8) rotate(45deg);
+    -webkit-transform: scaleX(0.8) rotate(45deg);
+    
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #d43322);
+    
+    animation: particleUp 2s cubic-bezier(0, 0, 0.69, 0.41);
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 2s cubic-bezier(0, 0, 0.69, 0.41);
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+/*왼쪽불*/
+.fire-left {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    animation: shake 3s ease-out;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: shake 3s ease-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+
+.fire-left .main-fire {
+    position: absolute;
+    top: 11%;
+    left: -43%;
+    width: 85%;
+    height: 100%;
+    background-color: #ef5a00;
+    
+    -webkit-transform: scaleX(0.8) rotate(38deg);
+    transform: scaleX(0.8) rotate(38deg);
+    
+    border-radius: 0 40% 60% 40%;
+    filter: drop-shadow(0 0 10px #d43322);
+}
+
+.fire-left .particle-fire {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 5%;
+    height: 5%;
+    background-color: #ef5a00;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #d43322);
+    
+    animation: particleUp 3s infinite ease-out;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 3s infinite ease-out;
+    animation-fill-mode: backwards;
+}
+.fire-left .particle-fire2 {
+    position: absolute;
+    top: 45%;
+    left:24%;
+    width: 6%;
+    height: 6%;
+    background-color: #ef5a00;
+    
+    transform: scaleX(0.8) rotate(45deg);
+    -webkit-transform: scaleX(0.8) rotate(45deg);
+    
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #d43322);
+    
+    animation: particleUp 3s cubic-bezier(0, 0, 0.69, 0.41) 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 3s cubic-bezier(0, 0, 0.69, 0.41) 0;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+/*왼쪽 끝 작은 불*/
+.fire-left-edge {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    animation: scaleUpDownShake 1.5s cubic-bezier(0.44, 0.31, 0.57, 0.86) infinite;
+    animation-fill-mode: backwards;
+
+    -webkit-animation: scaleUpDownShake 1.5s cubic-bezier(0.44, 0.31, 0.57, 0.86) infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+.fire-left-edge .main-fire {
+    position: absolute;
+    top: 52%;
+    left: -59%;
+    width: 50%;
+    height: 55%;
+    background-color: #f58b0d;
+    
+    transform: scaleX(0.8) rotate(30deg);
+    -webkit-transform: scaleX(0.8) rotate(30deg);
+    
+    border-radius: 0 40% 60% 40%;
+    filter: drop-shadow(0 0 10px #d43322);
+}
+
+.fire-left-edge .particle-fire {
+    position: absolute;
+    top: 10%;
+    left: -41%;
+    width: 8%;
+    height: 8%;
+    background-color: #ef5a00;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #f58b0d);
+    
+    animation: particleUp 1s infinite ease-out;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 1s infinite ease-out;
+    -webkit-animation-fill-mode: backwards;
+}
+
+/*오른쪽 끝 작은 불*/
+.fire-right-edge {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    
+    animation:   scaleUpDownShake 2s cubic-bezier(0.44, 0.31, 0.57, 0.86);
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation:   scaleUpDownShake 2s cubic-bezier(0.44, 0.31, 0.57, 0.86);
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+.fire-right-edge .main-fire {
+    position: absolute;
+    top: 45%;
+    right: -57%;
+    width: 50%;
+    height: 55%;
+    background-color: #f58b0d;
+    
+    transform: rotate(56deg);
+    -webkit-transform: rotate(56deg);
+    
+    border-radius: 0 40% 60% 40%;
+    filter: drop-shadow(0 0 10px #d43322);
+}
+
+.fire-right-edge .particle-fire {
+    position: absolute;
+    top: 10%;
+    right: -36%;
+    width: 7%;
+    height: 7%;
+    background-color: #ef5a00;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 10px #f58b0d);
+    
+    animation: particleUp 1.5s infinite ease-out;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: particleUp 1.5s infinite ease-out;
+    -webkit-animation-fill-mode: backwards;
+}
+
+
+/*가운데불의 가운데 그라데이션불*/
+.fire-bottom{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.fire-bottom .main-fire {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 75%;
+    height: 75%;
+    background-color: #ff7800;
+    
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    
+    border-radius: 0 40% 100% 40%;
+    filter: blur(10px);
+    
+    animation: glow 2s ease-out 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+    
+    -webkit-animation: glow 2s ease-out 0;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-fill-mode: backwards;
+}
+
+.fireHot1{
+    animation: hot1 3s cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+    -webkit-animation: hot1 3s cubic-bezier(0, 0, 1, 1);
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+}
+.fireHot2{
+    animation: hot2 3s cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+    -webkit-animation: hot2 3s cubic-bezier(0, 0, 1, 1);
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+}
+.fireHot3{
+    animation: hot3 3s cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+    -webkit-animation: hot3 3s cubic-bezier(0, 0, 1, 1);
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.rowhot2{
+    animation: rowhot2 3s cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+    -webkit-animation: rowhot2 3s cubic-bezier(0, 0, 1, 1);
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+}
+.rowhot3{
+    animation: rowhot3 3s cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    
+    -webkit-animation: rowhot3 3s cubic-bezier(0, 0, 1, 1);
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+}
+
+/*main fire*/
+@keyframes scaleUpDown {
+    0%,
+    100% {
+        transform: scaleY(1) scaleX(1);
+        -webkit-transform: scaleY(1) scaleX(1);
+    }
+    50%,
+    90% {
+        transform: scaleY(1.1);
+        -webkit-transform: scaleY(1.1);
+    }
+    75% {
+        transform: scaleY(0.95);
+        -webkit-transform: scaleY(0.95);
+    }
+    80% {
+        transform: scaleX(0.95);
+        -webkit-transform: scaleX(0.95);
+    }
+}
+@keyframes glow {
+    0%,
+    100% {
+        background-color: #ef5a00;
+        -webkit-background-color: #ef5a00;
+    }
+    50% {
+        background-color: #ff7800;
+        -webkit-background-color: #ff7800;
+    }
+    }
+/*왼쪽 오른쪽 불꽃 흔들림*/
+@keyframes shake {
+    0%,
+    100% {
+        transform: skewX(0) scale(1);
+        -webkit-transform: skewX(0) scale(1);
+    }
+    50% {
+        transform: skewX(5deg) scale(0.9);
+        -webkit-transform: skewX(5deg) scale(0.9);
+    }
+}
+/*불꽃 불씨*/
+@keyframes particleUp {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        top: -100%;
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+    }
+}
+
+@keyframes scaleUpDownShake {
+    0%,
+    100% {
+        transform: scaleY(1)scaleX(1);
+        -webkit-transform: scaleY(1)scaleX(1);
+    }
+    50%,
+    90% {
+        transform: scaleY(1.05);
+        -webkit-transform: scaleY(1.05);
+    }
+    25%,
+    75% {
+        transform: scaleY(0.95);
+        -webkit-transform: scaleY(0.95);
+    }
+ 
+}
+
+@keyframes fireScale{
+    0%{
+        transform: scale(0.4);
+        -webkit-transform: scale(0.4);
+    }
+    50%{
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+    }
+    100%{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes fireScale2{
+    0%{
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    25%{
+        transform: scale(0.4);
+        -webkit-transform: scale(0.4);
+    }
+    50%{
+        transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+    }
+    100%{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+@keyframes fireScale3{
+    0%{
+        transform: scale(0);
+        -webkit-transform: scale(0);
+    }
+    50%{
+        transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+    }
+    
+    100%{
+        transform: scale(1);
+        -webkit-transform: scale(1);
+    }
+}
+
+@keyframes hot1{
+    0%,100%{
+        stop-color:#001A31;
+    }
+}
+@keyframes hot2{
+    0%{
+        stop-color:#001A31;
+    }
+    25%{
+        stop-color:#001A31;
+    }
+    50%{
+        stop-color:#69180f
+    }
+    75%{
+        stop-color:#771212;
+    }
+    100%{
+        stop-color:#860909;
+    }
+    
+}
+@keyframes hot3{
+    0%{
+        stop-color:#001A31;
+    }
+    25%{
+        stop-color:#bf4721;
+    }
+    50%{
+        stop-color:#ea4109;
+    }
+    75%{
+        stop-color:#fb3301;
+    }
+    100%{
+        stop-color:#d30606;
+    }
+    
+}
+
+@keyframes rowhot2{
+    0%{
+        stop-color:#860909;
+    }
+    25%{
+        stop-color:#771212;
+    }
+    50%{
+        stop-color:#69180f;
+    }
+    75%{
+        stop-color:#001A31;
+    }
+    100%{
+        stop-color:#001A31;
+    }
+    
+}
+@keyframes rowhot3{
+    0%{
+        stop-color:#d30606;
+    }
+    25%{
+        stop-color:#fb3301;
+    }
+    50%{
+        stop-color:#ea4109;
+    }
+    75%{
+        stop-color:#bf4721;
+    }
+    100%{
+        stop-color:#001A31;
+    }
+    
+}
+
+
+@keyframes smoke{
+    0% {
+    /*opacity: 0;*/
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    background: #ff6102;
+    }
+    10%{
+        opacity: 1;
+    }
+    100% {
+    -webkit-transform: translateY(-200%)translateZ(0) scale(3, 3);
+            transform: translateY(-200%)translateZ(0) scale(3, 3);
+   /* opacity: 0;*/
+    background: rgba(255, 255, 255, 0.7);
+    }
+}
+
+@keyframes smoke2{
+    0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+        background: #ff6102;
+    }
+    50%{
+        opacity: 1;
+    }
+    100% {
+   -webkit-transform: translateY(-300%)translateZ(0) scale(3, 3);
+        transform: translateY(-300%)translateZ(0) scale(3, 3);
+   /* opacity: 0;*/
+    background: rgba(255, 255, 255, 0.7);
+    }
+}
+
+@keyframes bubble {
+    0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    }
+    100% {
+    -webkit-transform: translateY(-310%)translateZ(0) scale(1.2, 1.2);
+            transform: translateY(-310%)translateZ(0) scale(1.2, 1.2);
+      opacity: 0;
+
+    }
+}
+
+
+@keyframes bubble-shake{
+    0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    }
+    50% {
+    -webkit-transform: translateY(-20%)translateZ(0) scale(1.2, 1.2);
+            transform: translateY(-20%)translateZ(0) scale(1.2, 1.2);
+        opacity: 0.9;
+    }
+    100% {
+    -webkit-transform: translateY(0)translateZ(0) scale(1, 1);
+            transform: translateY(0)translateZ(0) scale(1, 1);
+    }
+}
+
+@keyframes start-bubble-up{
+    0%{opacity: 0;} 
+    100%{opacity:1;}
+}
+@keyframes fire-stop{
+    0%{opacity: 1;} 
+    100%{opacity:0;}
+}
+
+@keyframes broom_hat-shake{
+    0%{
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+    } 
+    50%{
+        transform: rotate(-5deg);
+        -webkit-transform: rotate(-5deg);
+    }
+    100%{
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+    }
+}
+@keyframes ghost-shake{
+    0%{
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+    } 
+    50%{
+        transform: rotate(5deg)translateY(5%);
+        -webkit-transform: rotate(5deg)translateY(5%);
+    }
+    100%{
+        transform: rotate(0);
+        -webkit-transform: rotate(0);
+    }
+}
+
+
+/* calendar */
+.l-calendar{position: absolute; top: 0; left: 6.5%; width:87%; height: 100%;}
+.l-calendar ul{width:100%; height:100%;}
+.l-calendar ul li{float:left;width:29%; height: 33%; margin: 0 6.5% 0 0; list-style: none;}
+
+.l-calendar ul li:nth-of-type(3n+1){clear: both;}
+/*.l-calendar ul li.first{height: 24.5%; margin: 0 6.5% 0 0;}*/
+.lastchild{ margin:0 !important;}
+.l-calendar ul li .l-icon{width:100%;} 
+.l-calendar ul li .txt{width:80%; margin: 0 auto;}
