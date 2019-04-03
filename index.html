@@ -5,23 +5,25 @@
 		<link rel="stylesheet" href="common/common.css">
 	</head>
 	<style>
-		.WebView{min-height:900px; height:100%;background: #eee;}
-		.phone{padding:0 20px 40px 20px;width:360px;border: 2px solid #bfbfbf;border-radius: 20px;background-color: #fff;}
+		.WebView{/* min-height:900px;  */height:100%;background: #eee; padding: 3% 0;box-sizing: border-box;}																																																																																																																																																																																																																																																																																																																																		
+		.phone{padding:0 20px 40px 20px;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 20px;background-color: #fff;}
 		.phone .phone_head{height:40px;}
 		.phone .phone_head .speaker{width: 100px;height: 5px;border-radius: 3px;background: #bfbfbf;}
-		.phone .device_view{height:640px;border: 1px solid #bfbfbf;}
+		.phone .device_view{height:1; border: 1px solid #bfbfbf;}
 	</style>
 	<body>
 	
-		<div class="WebView flex center">
-			<div class="phone">
+		<div class="WebView flexColumn center">
+			<div class="phone flexGrow flexColumn">
 				<div class="phone_head flex center">
 					<p class="speaker"></p>
 				</div>
-				<div class="device_view" data-device-name="Samsung Galaxy S8, S8+, Note8">
+				<div class="device_view flexGrow" data-device-name="Samsung Galaxy S8, S8+, Note8">
 					<div id="mainPage">
 						<p class="linkBtn" data-event="sakura">벚꽃 잡기</p>
 						<p class="linkBtn" data-event="ice">얼음녹이기</p>
+						<p class="linkBtn" data-event="baseball">홈런왕</p>
+						<p class="linkBtn" data-event="diffrentfind">틀린그림찾기</p>
 					</div>
 					<iframe id="eventShow" src="" frameborder="0" scrolling="yes" width="100%" height="100%;" style="display:none;"></iframe>
 				</div>
@@ -32,12 +34,21 @@
 		<script>
 		var $eventShow = $("#eventShow");
 		var $mainPage = $("#mainPage");
+		var $phone = $(".phone");
+		$(document).ready(function(){
+			var flexHeight = $phone.height();
+			var flexWidth = flexHeight*0.55;
+			$phone.width(flexWidth);
+			
 			$(".linkBtn").on("click",function(){
 				var link = $(this).data("event")+"/index.html";
 				$eventShow.attr("src",link);
 				$eventShow.show();
 				$mainPage.hide();
 			});
+		});
+		
+			
 		</script>
 		
 	</body>
