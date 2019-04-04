@@ -90,6 +90,9 @@ $(window).load(function(){
     bloom.addEventListener('touchstart', handleMouseDown, false);
     bloom.addEventListener('touchend', handleMouseUp, false);
     
+    bloom.addEventListener('mousedown', handleMouseDown, false);
+    bloom.addEventListener('mouseup', handleMouseUp, false);
+    
     start_snowPouring('l');
     start_snowPouring('r');
     function start_snowPouring(snow_place){
@@ -110,21 +113,27 @@ $(window).load(function(){
         }
     }
 
-    var varUA = navigator.userAgent.toLowerCase();
-    var scrollT;
-    if (varUA.match('android') != null) {
-        //안드로이드 일때 처리
-        scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
-        $(window).scroll(function () {
-            scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
-        });
-        
-    } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
-        //IOS 일때 처리
-        scrollT=$(document).scrollTop();
-        $(window).scroll(function () {
-            scrollT = $(".event").scrollTop();
-        });
+	var scrollT;
+    var filter = "win16|win32|win64|mac|macintel";
+    if ( navigator.platform ) { 
+        if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
+        	var varUA = navigator.userAgent.toLowerCase();
+            if (varUA.match('android') != null) {
+                //안드로이드 일때 처리
+                scrollT=Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+                $(window).scroll(function () {
+                    scrollT =Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+                });
+            } else if (varUA.indexOf("iphone")>-1||varUA.indexOf("ipad")>-1||varUA.indexOf("ipod")>-1) { 
+                //IOS 일때 처리
+                scrollT=$(document).scrollTop();
+                $(window).scroll(function () {
+                    scrollT = $(".event").scrollTop();
+                });
+            } 
+        } else { 
+        	scrollT = $(".event").scrollTop();
+        }
     }
     
     $(".start_btn").on("click",function(){
@@ -188,6 +197,7 @@ $(window).load(function(){
             alert("90%");
             canvas.parentNode.removeChild(canvas);
             container.removeEventListener('touchmove', handleMouseMove, false);
+            container.removeEventListener('mousemove', handleMouseMove, false);
             $("#moveCursor").hide();
         }
     }
@@ -201,7 +211,7 @@ $(window).load(function(){
             isDrawing = true;
             lastPoint = getMouse(e, canvas);
             container.addEventListener('touchmove', handleMouseMove, false);
-            
+            container.addEventListener('mousemove', handleMouseMove, false);
         }, 1000);
     }
 
@@ -256,6 +266,7 @@ $(window).load(function(){
         }
 
         lastPoint = currentPoint;
+        handlePercentage(getFilledInPixels(10));
        /* var totalPixels = ((canvasHeight/bloom_W) * (canvasWidth/bloom_W))*0.5;
         var array = pastPoint.reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]);
         var percent = (array.length/totalPixels)*100;
@@ -277,6 +288,7 @@ $(window).load(function(){
         var clickTime = Math.round((endTime - startTime)/1000);
         clearTimeout(startMove);
         container.removeEventListener('touchmove', handleMouseMove, false);
+        container.removeEventListener('mousemove', handleMouseMove, false);
         isDrawing = false;
         $(".movebloom").removeClass("movebloom_right")
         $(".movebloom").removeClass("movebloom_left")

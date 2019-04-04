@@ -1,9 +1,11 @@
-﻿* {margin: 0px; padding: 0px;}
+* {margin: 0px; padding: 0px;}
+body{ -ms-overflow-style: none; }
+body::-webkit-scrollbar { display:none; }
 img {vertical-align: top;}
 .event {background: #fff;}
 .event .img {position: relative;}
 .event .img img {width: 100%;}
-.event .img .btn{position:absolute; top:5%; height:77%; width: 86%; left:7%;}
+.event .img .btn{position:absolute; top:5%; height:77%; width: 86%; left:7%;cursor: pointer;}
 
 /* 팝업 */
 .event-pop{
@@ -23,7 +25,7 @@ img {vertical-align: top;}
 .event-pop .event-inner{position: relative; width: 80%;}
 .event-pop .event-inner > p{width: 100%;}
 .event-pop .event-inner > p img{width: 100%;}
-.event-pop .event-inner .close-btn{position: absolute;width: 84.8%; height: 11.6%;bottom: 5.6%;left: 7.5%;}
+.event-pop .event-inner .close-btn{position: absolute;width: 84.8%; height: 11.6%;bottom: 5.6%;left: 7.5%;cursor: pointer;}
 
 /*룰렛*/
 .roulette_wrap{width: 100%;}
@@ -31,5 +33,5 @@ img {vertical-align: top;}
 /*.pin{position: absolute; top: 0px; left: 0px; width: 8.5%; height: 100%; padding-left: 46.1%; padding-top: 4.5%;}*/
 .pin{position: absolute; top: 0px; height: 100%; padding: 3.4% 45%; height: 100%;}
 .board1{position: absolute; top: 0; left: 0; width: 100%;}
-.button_start{height: 100%;padding: 36%;}
+.button_start{height: 100%;margin: 36%;cursor: pointer;}
     

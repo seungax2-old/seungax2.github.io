@@ -61,11 +61,12 @@
         </div>
         
         
-        <div class="moon-click" style="z-index: 5; position: absolute; height: 50%; width: 100%; left: 0; bottom: 0;">
+        <div class="moon-click">
             <div style="position: absolute; height: auto; width: 100%; left: 0; bottom: 0; padding: 0 8% 7%;">
                 <img src="resources/text01.png"/>
             </div>
         </div>
+        <div class="noClick" style="display:none;"></div>
     </div>
  <!--   <div class="img">
         <img src="resources/main_02.png"/>
@@ -108,6 +109,15 @@ $('.moon-click').on('touchend', function() {
     }
        
 });
+
+$('.moon-click').on('mouseup', function() {
+    if(percent != 0 && percent != 100){
+        var tabhold="false"
+        clearInterval(interval);
+        move(tabhold);
+    }
+       
+});
     
     
 $(".moon-box").on("taphold", {duration: 1000}, function() {
@@ -124,8 +134,18 @@ $('.moon-box').on('touchend', function() {
         move(tabhold);
     }else{return;}
 });
-   
-    var moonStatus = "fail"
+
+$('.moon-box').on('mouseup', function() {
+    /*땟을때 바닥이거나, 가득찬상태에선 아무 이벤트 하지않는다*/
+    if(percent != 0 && percent != 100){
+        var tabhold="false"
+        clearInterval(interval);
+        move(tabhold);
+    }else{return;}
+});
+  
+var moonStatus = Math.floor(Math.random()*2)+1;
+console.log(moonStatus)
 function move(taphold_status){
         if(taphold_status == "true"){/*누름*/
 
@@ -168,16 +188,17 @@ function move(taphold_status){
 }
     
 function alertFc( getCoupon ){
+	$(".noClick").show();
     $(".moon-face").attr("src","resources/bg_02.png");
     
-    if(getCoupon == "fail"){
+    if(getCoupon == "2"){
         /*당첨 안됬을때*/
         $(".face").attr("src","resources/face01.png");
         msg= "done";
 
         $(".face").addClass("face-shake");
         $(".moon-face").addClass("face-shake2");
-    }else if(getCoupon == "success"){
+    }else if(getCoupon == "1"){
         /*당첨 됨!!*/
         $(".face").attr("src","resources/face03.png");
         msg= "done";

@@ -6,9 +6,9 @@
 	</head>
 	<style>
 		.WebView{/* min-height:900px;  */height:100%;background: #eee; padding: 3% 0;box-sizing: border-box;}																																																																																																																																																																																																																																																																																																																																		
-		.phone{padding:0 20px 40px 20px;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 20px;background-color: #fff;}
-		.phone .phone_head{height:40px;}
-		.phone .phone_head .speaker{width: 100px;height: 5px;border-radius: 3px;background: #bfbfbf;}
+		.phone{padding : 0 3vh 6.1vh 3vh;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 3vh;background-color: #fff;}
+		.phone .phone_head{height:6.1vh;}
+		.phone .phone_head .speaker{width: 15vh;height: 0.7vh;border-radius: 0.5vh;background: #bfbfbf;}
 		.phone .device_view{height:1; border: 1px solid #bfbfbf;}
 	</style>
 	<body>
@@ -23,14 +23,20 @@
 						<p class="linkBtn" data-event="sakura">벚꽃 잡기</p>
 						<p class="linkBtn" data-event="ice">얼음녹이기</p>
 						<p class="linkBtn" data-event="baseball">홈런왕</p>
-						<p class="linkBtn" data-event="diffrentfind">틀린그림찾기</p>
+						<p class="linkBtn" data-event="diffrentfind">숨은 복찾기</p>
+						<p class="linkBtn" data-event="heart">하트그리기</p>
+						<p class="linkBtn" data-event="holloween">마녀의 수프</p>
+						<p class="linkBtn" data-event="loullet">룰렛돌리기</p>
+						<p class="linkBtn" data-event="moon">달 채우기</p>
+						<p class="linkBtn" data-event="snowtree">눈쓸기</p>
 					</div>
 					<iframe id="eventShow" src="" frameborder="0" scrolling="yes" width="100%" height="100%;" style="display:none;"></iframe>
 				</div>
 			</div>
 		</div>
 		
-		<script src="common/jquery-1.12.3.js"></script>
+		<script src="common/js/jquery-1.12.3.js"></script>
+		<script src="common/js/common.js"></script>
 		<script>
 		var $eventShow = $("#eventShow");
 		var $mainPage = $("#mainPage");

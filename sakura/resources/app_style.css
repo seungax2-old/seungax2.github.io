@@ -37,7 +37,7 @@ img {vertical-align: middle;}
 .event-pop .event-inner > p.popup_bt{position:relative;}
 .event-pop .event-inner img{width: 100%;}
 .event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;}
-#single-pop .event-inner .close-btn{position: absolute;bottom: 8.6%;right: 19.1%;width: 63.2%;height: 16.8%;top: auto;}
+#single-pop .event-inner .close-btn{position: absolute;bottom: 8.6%;right: 19.1%;width: 63.2%;height: 16.8%;top: auto;cursor: pointer;}
 .flex{display: flex; display: -webkit-flex;}
 .flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
 .center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */

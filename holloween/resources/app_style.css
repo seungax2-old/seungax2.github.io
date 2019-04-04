@@ -1,9 +1,11 @@
 * {margin: 0px; padding: 0px;}
+body{ -ms-overflow-style: none; }
+body::-webkit-scrollbar { display:none; }
 img {vertical-align: top;}
 .event {background: #fff;}
 .event .img {position: relative;}
 .event .img img {width: 100%;}
-.event .img .btn{position: absolute; bottom: 0; left: 7.8%; width: 84.3%; height:100%;}
+.event .img .btn{position: absolute; bottom: 0; left: 7.8%; width: 84.3%; height:100%;cursor: pointer;}
 .event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
 
 /* 팝업 */
@@ -23,21 +25,21 @@ img {vertical-align: top;}
 }
 .event-pop .event-inner{position: relative; width:85%;}
 .event-pop .event-inner > p{width: 100%;}
-.event-pop .event-inner .popup_mid{box-sizing: border-box; display:flex; display:-webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 8%; width:100%; height:440px; background:#422752;}
+.event-pop .event-inner .popup_mid{box-sizing: border-box; display:flex; display:-webkit-flex; align-items: center; -webkit-align-items: center; padding: 0 8%; width:100%; height:30vh; background:#422752;}
 .event-pop .event-inner .popup_mid.one_con{display:inherit;}
-.event-pop .event-inner .popup_mid.one_con > p{width:50%; margin:0 auto;}
+.event-pop .event-inner .popup_mid.one_con > p{width:50%; margin:0 auto;cursor: pointer;}
 .event-pop .event-inner .popup_mid.one_con .popup_con2{display:none;}
 .event-pop .event-inner .popup_mid > p{position:relative; -webkit-flex: 1; flex: 1;}
 .event-pop .event-inner .popup_mid p:nth-of-type(1){margin-right: 7%;}
 
 .event-pop .event-inner > p.popup_bt{position:relative;}
 .event-pop .event-inner img{width: 100%;}
-.event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;}
-#single-pop .event-inner .close-btn{position:absolute; bottom: 5.3%; right: 6%; width: 88%; height: 11.5%; top: auto;}
+.event-pop .event-inner .close-btn{position:absolute; top: 25%; right: 6%; width: 88%; height: 52%;cursor: pointer;}
+#single-pop .event-inner .close-btn{position:absolute; bottom: 5.3%; right: 6%; width: 88%; height: 11.5%; top: auto;cursor: pointer;}
 
 
 /* 팝업창 상품 선택 */
-label{position:absolute; top:0; left:0; width:100%; height:100%;}
+label{position:absolute; top:0; left:0; width:100%; height:100%;cursor: pointer;}
 label > input{visibility: hidden; position: absolute; width:100%; height:100%;}
 label > input + img{height: 100%;}
 label > input:checked + img{content: attr(changeImg);}
@@ -275,13 +277,13 @@ label > input:checked + img{content: attr(changeImg);}
 
 .bg-bubbles li:nth-child(1) {
     left: 15%;
-    width: 14.6%;
-    height: auto;
+    width: 4vh;
+    height: 4vh;
 }
 .bg-bubbles li:nth-child(2) {
     left: 20%;
-    width: 11.9%;
-    height: auto;
+    width: 2vh;
+    height: 2vh;
     -webkit-animation-delay: 0.5s;
     animation-delay: 0.5s;
 
@@ -290,20 +292,20 @@ label > input:checked + img{content: attr(changeImg);}
     left: 40%;
     -webkit-animation-delay: 1s;
     animation-delay: 1s;
-    width: 13.2%;
-    height: auto;
+    width: 2.5vh;
+    height: 2.5vh;
 }
 .bg-bubbles li:nth-child(4) {
     left: 50%;
-    width: 17.5%;
-    height: auto;
+    width: 5vh;
+    height: 5vh;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
 }
 .bg-bubbles li:nth-child(5) {
     left: 70%;
-    width: 14.6%;
-    height: auto;
+    width: 4vh;
+    height: 4vh;
 }
 .bg-bubbles li:nth-child(6) {
     left: 15%;
@@ -331,7 +333,7 @@ label > input:checked + img{content: attr(changeImg);}
 }
 .bg-bubbles li:nth-child(9) {
     left: 60%;
-    width: 17.5%;
+    width: 5vh;
     height: auto;
 }
 
@@ -438,7 +440,7 @@ label > input:checked + img{content: attr(changeImg);}
     -webkit-animation-fill-mode: backwards;
 }
 
-.fire .click-div{position: relative;width: 100%;height: 100%;}
+.fire .click-div{position: relative;width: 100%;height: 100%;cursor: pointer;}
 .fire .fire-div{
     position: absolute;
     -webkit-transform: translate(-50%, -50%);

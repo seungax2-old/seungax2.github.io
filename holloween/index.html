@@ -48,20 +48,7 @@
         </div>
         
         <div class="smoke">
-            <div class="smokeContainer" style="display: none;">
-                <!--<div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
-                    <img src="resources/smoke.png">
-                </div>
-                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
-                    <img src="resources/smoke.png">
-                </div>
-                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px)">
-                    <img src="resources/smoke.png">
-                </div>
-                <div id="smokeBlur" class="smokeParticleFirst" style="filter: blur(8px);">
-                    <img src="resources/smoke.png">
-                </div>-->
-            </div>
+            <div class="smokeContainer" style="display: none;"> </div>
         </div>
     
         
@@ -202,7 +189,9 @@
     var startTime;
     var endTime;
     var endTouch;
-    var check = "1";
+    /* var check = "1"; */
+    var check = Math.floor(Math.random()*2)+1;
+    console.log(check);	
     var scrollHeight = $(this).scrollTop();
     smokes();
     $("#event-pop .close-btn").on("click", function(){
@@ -211,10 +200,6 @@
     function smokes(){
         for(var i=0;i<7;i++){
             var $smokeParticle;
-            
-            /*$smokeParticle.css('left',Math.floor(Math.random()*80)+1+ '%');*/
-            /*$smokeParticle.css('bottom','0');*/
-            
             if(i<3){
                 $smokeParticle= $('<div id="smokeBlur" class="smokeParticle smokeParticleSecond"><img src="resources/smoke.png"/></div>');
                 
@@ -226,42 +211,17 @@
             var smokeContainer = $(".smokeContainer").width();
             var blur = smokeContainer*0.025;
             var blurpx = 'blur('+Math.floor(blur)+'px)'
-            console.log(blurpx)
             $smokeParticle.css('filter',blurpx);
             $smokeParticle.css('webkitFilter',blurpx);
             
-          
-            /*$smokeParticle.css('filter','bulr('+blur+'px)');*/
-            
-           /* document.getElementById("smokeBlur").style.webkitFilter = blurpx;
-            document.getElementById("smokeBlur").style.Filter = blurpx;*/
         }
-      /*animateSmoke();*/
     }  
-   /* function animateSmoke(){
-         $('.smokeParticle').each(function(){
-             var r =(Math.random() * 2)+1;
-             $(this).css('animation-delay',r+"s");
-             $(this).css('webkitAnimation-delay',r+"s");
-             
-           
-             
-         });
-    }
-    */
     $(document).ready(function(){
-        $(".click-div").on("touchstart", function() {
+        $(".click-div").one("touchstart", function() {
             startTime = new Date().getTime();
             
             $(".touch-img").hide();
             $(".fire-div").show();
-            
-            /*$(".fire-main").addClass("fireScale");
-            $(".fire-bottom").addClass("fireScale");
-            $(".fire-right").addClass("fireScale3");
-            $(".fire-left").addClass("fireScale2");
-            $(".fire-left-edge").addClass("fireScale3");
-            $(".fire-right-edge").addClass("fireScale4");*/
             
             $(".fire-main, .fire-bottom").addClass("fireScale");
             $(".fire-right, .fire-left-edge").addClass("fireScale3");
@@ -277,7 +237,54 @@
                 endAni();
             }, 2000);
         });
-        $('.click-div').on('touchend', function() {
+        
+        $(".click-div").one("mousedown", function() {
+            startTime = new Date().getTime();
+            
+            $(".touch-img").hide();
+            $(".fire-div").show();
+            
+            $(".fire-main, .fire-bottom").addClass("fireScale");
+            $(".fire-right, .fire-left-edge").addClass("fireScale3");
+            $(".fire-left").addClass("fireScale2");
+            $(".fire-right-edge").addClass("fireScale4");
+            
+            $("#fireHot1").addClass("fireHot1");
+            $("#fireHot2").addClass("fireHot2");
+            $("#fireHot3").addClass("fireHot3");
+            
+            /*2초누르면 강제 애니메이션 끝나게*/
+            endTouch = setTimeout(function() {
+                endAni();
+            }, 2000);
+        });
+        $('.click-div').one('touchend', function() {
+            endTime = new Date().getTime();
+            var clickTime = Math.round((endTime - startTime)/1000);
+            clearTimeout(endTouch);
+            if(clickTime < 2){
+                
+                $("#fireHot1").removeClass("fireHot1");
+                $("#fireHot2").removeClass("fireHot2");
+                $("#fireHot3").removeClass("fireHot3");
+                
+                $(".touch-img").show();
+            
+                $(".fire-div").hide();
+
+                $(".fireScale, .fireScale2, .fireScale3, .fireScale4").addClass("stopAni");
+                
+                $(".fire-main, .fire-bottom").removeClass("fireScale");
+                $(".fire-right, .fire-left-edge").removeClass("fireScale3");
+                $(".fire-left").removeClass("fireScale2");
+                $(".fire-right-edge").removeClass("fireScale4");
+            }else{
+                endAni();
+                /*롱클릭 완료*/
+            }
+        });
+        
+        $('.click-div').one('mouseup', function() {
             endTime = new Date().getTime();
             var clickTime = Math.round((endTime - startTime)/1000);
             clearTimeout(endTouch);
@@ -298,16 +305,6 @@
                 $(".fire-left").removeClass("fireScale2");
                 $(".fire-right-edge").removeClass("fireScale4");
                 
-               /* $(".fireScale2").addClass("stopAni");
-                $(".fireScale3").addClass("stopAni");
-                $(".fireScale4").addClass("stopAni");*/
-                
-                /*$(".fire-main").removeClass("fireScale");
-                $(".fire-bottom").removeClass("fireScale");
-                $(".fire-right").removeClass("fireScale3");
-                $(".fire-left").removeClass("fireScale2");
-                $(".fire-left-edge").removeClass("fireScale3");
-                $(".fire-right-edge").removeClass("fireScale4");*/
             }else{
                 endAni();
                 /*롱클릭 완료*/
@@ -345,10 +342,6 @@
     function endAni(){
         /*롱클릭 완료*/
         $('.click-div').unbind('touchstart');
-
-       /* $(".fire-main ").removeClass("fireScale");
-        $(".fire-bottom").removeClass("fireScale");
-        $(".fire-left").removeClass("fireScale2");*/
         $(".fire-main, .fire-bottom").removeClass("fireScale");
         $(".fire-left").removeClass("fireScale2");
 
@@ -371,9 +364,6 @@
             
             setTimeout(function() {
                 $("#event-pop").show();
-                $('body').on('touchmove', function(e){ e.preventDefault()});
-                $('.event').css('top', -scrollHeight);
-                $('html, body').css({'height':$(window).height(),'overflow':'hidden'});
             }, 2000);
         }else{
             $(".bubble ul").hide();
@@ -381,6 +371,7 @@
             $(".smoke").addClass("start-bubble-up");
             
             setTimeout(function() {
+            	 alert("꽝!")
                 $(".smokeParticleFirst").addClass("smokeFirstAni");
                 /*$(".smokeParticle").removeClass('opacity0');*/
                 $(".fire-div").addClass("fire-stop");
@@ -393,15 +384,9 @@
             }, 1000);
             setTimeout(function() {
                 $(".smokeParticleSecond").addClass("smokeSecontAni");
-                
+               
             }, 2500);
             
-          /*  setTimeout(function() {
-                $("#event-pop").show();
-                $('body').on('touchmove', function(e){ e.preventDefault()});
-                $('.event').css('top', -scrollHeight);
-                $('html, body').css({'height':$(window).height(),'overflow':'hidden'});
-            }, 4000);*/
         }
     }
     

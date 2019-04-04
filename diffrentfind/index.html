@@ -11,12 +11,36 @@
 </head>
 
 <body>
-<div class="selectDay flex center" style="padding: 5%; height: inherit;">
-	<select style="background:url('../common/img/down.png'); width: 100%; height: 8vh; border-color: #bfbfbf;padding: 0 2vh;background-color: transparent;background: -webkit-linear-gradient(transparent, transparent);-webkit-appearance: none;">
-		<option>dd</option>
-	</select>
+<div class="selectDay flexColumn center" >
+	<p class="infoTxt"><img src="resources/txt1.png"/></p>
+	<div class="flexGrow" style="width:100%;">
+		<div class="selectBox">
+			<div class="dropdownbox">
+				<p class=""></p>
+			</div>
+			<div class="dropBox_bg">
+				<ul class="menu">
+					<li class="on flex center" data-date="20190124">2019년 01월 24일</li>
+					<li class="flex center" data-date="20190125">2019년 01월 25일</li>
+					<li class="flex center" data-date="20190126">2019년 01월 26일</li>
+					<li class="flex center" data-date="20190127">2019년 01월 27일</li>
+					<li class="flex center" data-date="20190128">2019년 01월 28일</li>
+					<li class="flex center" data-date="20190129">2019년 01월 29일</li>
+					<li class="flex center" data-date="20190130">2019년 01월 30일</li>
+					<li class="flex center" data-date="20190131">2019년 01월 31일</li>
+					<li class="flex center" data-date="20190201">2019년 02월 01일</li>
+					<li class="flex center" data-date="20190202">2019년 02월 02일</li>
+					<li class="flex center" data-date="20190203">2019년 02월 03일</li>
+					<li class="flex center" data-date="20190204">2019년 02월 04일</li>
+					<li class="flex center" data-date="20190205">2019년 02월 05일</li>
+				</ul>
+			</div> 
+		</div>
+	</div>
+	<button class="goFindBtn">이벤트 페이지로 이동</button>   
 </div>
 <div class="event" style="display:none;">
+	
     <div class="img"><img src="resources/main_01.png"/></div>
     <div class="img gameStartWrap" style="display: none;">
         <!--타이머-->
@@ -74,7 +98,39 @@
 </div>
 
 <script>
+	var today;
+	$(".dropdownbox > p").text($(".menu > li.on").text());
+	$(".dropdownbox").click(function(){
+	    $(".dropBox_bg").toggleClass("showMenu");
+	    $(".menu > li").click(function(){
+	        $(".menu > li").removeClass("on")
+	        $(this).addClass("on")
+	        $(".dropdownbox > p").text($(this).text());
+	        $(".dropBox_bg").removeClass("showMenu");
+	    });
+	});
     
+	$(".dropBox_bg").on("click",function(){
+		$(".dropBox_bg").removeClass("showMenu");
+	});
+	
+	$(".goFindBtn").on("click",function(){
+		today = $(".menu > li.on").data("date");
+		$(".selectDay").hide();
+		$(".event").show();
+		
+		console.log("today::"+today);
+        $topImg.attr("src","resources/"+ today +"_1.png");
+        $btmImg.attr("src","resources/"+ today +"_2.png");
+        
+        /*해당 이미지에 대한 틀린부분 좌표 세팅*/
+        $(Pointxy[today]).each(function(i, member) {
+            $pointChk = $(".dft_point"+i).css({"left":Pointxy[today][i].left,"top":Pointxy[today][i].top});
+        });
+        
+	});
+	
+	
     var Pointxy = {
         "20190124": [{"left":"46.3%", "top":"2%"},{"left":"59.4%", "top":"33.7%"},{"left":"39.7%", "top":"84.2%"}],
         "20190125": [{"left":"64.8%", "top":"7.5%"},{"left":"16.4%", "top":"57.7%"},{"left":"77.7%", "top":"82.2%"}],
@@ -112,21 +168,20 @@
     $(document).ready(function(){
         
         /*날짜에 맞는 이미지 세팅*/
-        var strDate = new Date();
+        /* var strDate = new Date();
         var yyyy = strDate.getFullYear();
         var mm = (strDate.getMonth() + 1 >= 10 ? '' : '0') + (strDate.getMonth() + 1);
         var dd = (strDate.getDate() >= 10 ? '' : '0') + strDate.getDate();
-        /*var today = yyyy + '' + mm + '' + dd;*/
-        var today = 20190202;
+        var today = yyyy + '' + mm + '' + dd;*/
 
-        console.log("today::"+today);
+       /*  console.log("today::"+today);
         $topImg.attr("src","resources/"+ today +"_1.png");
-        $btmImg.attr("src","resources/"+ today +"_2.png");
+        $btmImg.attr("src","resources/"+ today +"_2.png"); */
         
         /*해당 이미지에 대한 틀린부분 좌표 세팅*/
-        $(Pointxy[today]).each(function(i, member) {
+        /* $(Pointxy[today]).each(function(i, member) {
             $pointChk = $(".dft_point"+i).css({"left":Pointxy[today][i].left,"top":Pointxy[today][i].top});
-        });
+        }); */
         /*$.getJSON('resources/point_xy.json', function(data) {
             $(data[today]).each(function(i, member) {
                 $pointChk = $(".dft_point"+i).css({"left":data[today][i].left,"top":data[today][i].top});
