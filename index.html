@@ -51,19 +51,20 @@
 			$phone.width(flexWidth);
 			$(".linkBtn").on("click",function(){
 				var link = $(this).data("event")+"/index.html";
+				$eventShow.attr("src",link);
+				$eventShow.show();
+				$mainPage.hide();
 				
-				var filter = "win16|win32|win64|mac|macintel";
+				/* var filter = "win16|win32|win64|mac|macintel";
 			    if ( navigator.platform ) { 
 			        if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
-			        	/* alert("mo"); */
 			        	location.href=link;
 			        } else { 
-			        	/* alert("web"); */
 			        	$eventShow.attr("src",link);
 						$eventShow.show();
 						$mainPage.hide();
 			        }
-			    }
+			    } */
 				
 			});
 		});
