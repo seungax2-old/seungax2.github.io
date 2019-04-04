@@ -12,7 +12,7 @@ img {vertical-align: middle;}
 /* 팝업 */
 .event-pop{position:fixed; top:0; left:0; right:0; bottom:0; box-sizing:border-box; display: flex; -webkit-display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.6); z-index:100;}
 .event-pop .event-inner{position: relative; width: 80%;}
-.event-pop .event-inner > p{width: 100%;}
+.event-pop .event-inner > p{width: 100%;} 
 .event-pop .event-inner > p img{width: 100%;}
 #event-pop .event-inner .close-btn{cursor: pointer;position: absolute; width: 86.5%; height: 10%; bottom: 0%; left: 6.5%;}
 
