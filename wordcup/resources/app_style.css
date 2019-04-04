@@ -1,6 +1,7 @@
 *{margin:0px; padding:0px; box-sizing: border-box;}
 body{ -ms-overflow-style: none; }
 body::-webkit-scrollbar { display:none; }
+img{-webkit-touch-callout:none;}
 .event{position: relative;background:#fff;}
 .event .img{position:relative;}
 .event .img img{width:100%;vertical-align:top;} 

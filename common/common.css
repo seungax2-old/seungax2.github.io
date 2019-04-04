@@ -1,6 +1,6 @@
 *{margin:0; padding:0;}
 iframe::-webkit-scrollbar { display:none; }
-img{-ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
+img{-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 
 .flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
 .flex{display: flex; display: -webkit-flex;}

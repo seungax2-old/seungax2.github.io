@@ -3,7 +3,7 @@ body{ -ms-overflow-style: none; }
 body::-webkit-scrollbar { display:none; }
 .event{position: relative;background:#fff;overflow: hidden;}
 .event .img{position:relative;}
-.event .img img{width:100%;vertical-align:middle;-webkit-touch-callout:none} 
+.event .img img{width:100%;vertical-align:middle;-webkit-touch-callout:none;} 
 .event .img .start_btn{position: absolute;top: 38.8%;left: 18.6%;height: 15.7%;width: 63%;cursor: pointer;}
 .event .img .start_btn span{z-index: -1;height: 0;line-height: 0;font-size: 0;}
 .Pouring{position: absolute;width:100%;height: 100%;right: 0;top: 0;}

@@ -1,5 +1,5 @@
 *, *:before, *:after {box-sizing: border-box; outline: none; margin: 0; padding: 0;}
-
+img{-webkit-touch-callout:none;}
 .event{position: relative;background:#fff;overflow: hidden;}
 .event .img{position:relative;}
 .event .img img{width:100%;vertical-align:middle;} 

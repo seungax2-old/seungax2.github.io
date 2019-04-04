@@ -2,7 +2,7 @@
 body{ -ms-overflow-style: none; }
 body::-webkit-scrollbar { display:none; }
 
-img {vertical-align: middle;}
+img {vertical-align: middle;-webkit-touch-callout:none;}
 .event {background: #fff;}
 .event .img {position: relative;}
 .event .img img {width: 100%;}

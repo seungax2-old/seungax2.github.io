@@ -2,7 +2,7 @@
 img {vertical-align: top;}
 .event {background: #fff;}
 .event .img {position: relative;}
-.event .img img {width: 100%;}
+.event .img img {width: 100%;-webkit-touch-callout:none;}
 .event .img .btn{position: absolute; bottom: 0; left: 7.8%; width: 84.3%; height:100%;}
 .event .img .btn span{position:absolute; font-size: 0; line-height: 0; z-index:-1;}
 
