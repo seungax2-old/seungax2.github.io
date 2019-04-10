@@ -1,6 +1,6 @@
 *{margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 iframe::-webkit-scrollbar { display:none; }
-body{background: #eee;padding:0 3%;}
+body{background: #eee;padding:0 3%;box-sizing: border-box; width:100%; overflow:hidden;}
 .WebView{/* min-height:900px;  */height:100%;width: 100%; padding: 3% 0; box-sizing: border-box;}					
 .phone{padding : 0 3vh 0 3vh;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 3vh;background-color: #fff;}
 .phone .phone_head{height:6.1vh;}
