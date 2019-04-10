@@ -50,7 +50,7 @@
 			var flexWidth = flexHeight*0.55;
 			$phone.width(flexWidth);
 			$(".linkBtn").on("click",function(){
-				var link = $(this).data("event")+"/index.html";
+				var link = "happyEvent/"+$(this).data("event")+"/index.html";
 				$eventShow.attr("src",link);
 				$eventShow.show();
 				$mainPage.hide();
