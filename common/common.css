@@ -1,6 +1,14 @@
-*{margin:0; padding:0;}
+*{margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 iframe::-webkit-scrollbar { display:none; }
-img{-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
+body{background: #eee;padding:0 3%;}
+.WebView{/* min-height:900px;  */height:100%;width: 100%; padding: 3% 0; box-sizing: border-box;}					
+.phone{padding : 0 3vh 0 3vh;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 3vh;background-color: #fff;}
+.phone .phone_head{height:6.1vh;}
+.phone .phone_head .speaker{width: 15vh;height: 0.7vh;border-radius: 0.5vh;background: #bfbfbf;}
+.phone .device_view{height:1; border: 1px solid #bfbfbf;}
+.phone .phone_bottom{height: 9vh; width: 100%; padding: 1vw 0; box-sizing: border-box;}
+.phone .phone_bottom .btn_home{cursor: pointer;}
+.phone .phone_bottom img{height:100%;}
 
 .flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
 .flex{display: flex; display: -webkit-flex;}

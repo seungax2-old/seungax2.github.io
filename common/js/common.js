@@ -8,7 +8,18 @@ var $phone = $(".phone");
 $(document).ready(function(){
     var flexHeight = $phone.height();
     var flexWidth = flexHeight*0.55;
-    $phone.width(flexWidth);
+    var $windowWidth = $(".WebView").width();
+    var flexHeight2 = $windowWidth*1.7;
+    
+    if($windowWidth<flexWidth){
+        $phone.width($windowWidth);
+        $phone.height(flexHeight2);
+        $phone.css("box-sizing","border-box");
+        $phone.removeClass("flexGrow");
+    }else{
+        $phone.width(flexWidth);
+    }
+    
     
     $(".linkBtn").on("click",function(){
         var link = "happyEvent/"+$(this).data("event")+"/index.html";
