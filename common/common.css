@@ -10,6 +10,10 @@ body{background: #eee;padding:0 3%;box-sizing: border-box; width:100%; overflow:
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
 
+.loading{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
+.visibility_hidden{visibility:hidden}
+.visibility_show{visibility:visible}
+
 .flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
 .flex{display: flex; display: -webkit-flex;}
 .flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
