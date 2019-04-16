@@ -6,8 +6,11 @@ body{background: #eee;padding:0 3%;box-sizing: border-box; width:100%; overflow:
 .phone .phone_head{height:6.1vh;}
 .phone .phone_head .speaker{width: 15vh;height: 0.7vh;border-radius: 0.5vh;background: #bfbfbf;}
 .phone .device_view{height:1; border: 1px solid #bfbfbf;}
-.phone .device_view #mainPage{height: 100%; overflow: auto;}	
-.phone .device_view .linkBtn{height: 7vh; border-top: 1px solid #bfbfbf; padding-left: 2vh; cursor:pointer;}
+#mainPage{height: 100%; overflow: auto;}
+#mainPage .topDiv{height: 15vh; padding: 2vh; box-sizing: border-box; background: #ee90b6; color: #fff;}
+#mainPage .topDiv p.tit{font-size:3.5vh}
+#mainPage .topDiv p.count{text-align:right;}	
+#mainPage .linkBtn{height: 7vh; border-top: 1px solid #bfbfbf; padding-left: 2vh; cursor:pointer;}
 .phone .phone_bottom{height: 9vh; width: 100%; padding: 1vw 0; box-sizing: border-box;}
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
