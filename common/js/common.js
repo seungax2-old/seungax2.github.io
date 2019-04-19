@@ -7,9 +7,9 @@ var $device_view = $("#device_view");
 var $WebView = $(".WebView");
 var $mainPage = $(".mainPage");
 var $phone = $(".phone");
-var $loading = $(".loading");
 $(document).ready(function(){
 	$WebView.load("common/loading.html");
+	var $loading = $(".loading");
     var flexHeight = $phone.height();
     var flexWidth = flexHeight*0.55;
     var $windowWidth = $(".WebView").width();
