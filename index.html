@@ -2,15 +2,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no">
-		<link rel="stylesheet" href="common/common.css?version=1.2">
+		<link rel="stylesheet" href="common/common.css?version=1.3">
 	</head>
 	<body>
+		<div class="window_loading comLoadingWrap"></div>
 		<div class="WebView flexColumn center">
-			<div class="phone flexGrow flexColumn">
+			<div class="phone flexGrow flexColumn" style="display:none;">
 				<div class="phone_head flex center">
 					<p class="speaker"></p>
 				</div>
-				<div id="device_view" class="flexGrow" style="display:none;">
+				<div id="device_view" class="flexGrow" >
 					<div class="mainPage">
 						<div class="topDiv flexColumn">
 							<img src="common/img/happy_main_top.png"/>
@@ -31,12 +32,12 @@
 						</div>
 					</div>
 					<iframe id="eventShow" src="" class="visibility_hidden" frameborder="0" scrolling="yes" width="100%" height="100%;" style="display:none;"></iframe>
-					
+					<div class="device_loading comLoadingWrap"></div>
 				</div>
 				<div class="phone_bottom flex center"><p class="btn_home"><img src="common/img/blueHome.png"/></p></div>
 			</div>
 		</div>
 		<script src="common/js/jquery-1.12.3.js"></script>
-		<script src="common/js/common.js?version=1.1"></script>
+		<script src="common/js/common.js?version=1.2"></script>
 	</body>
 </html>

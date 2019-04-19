@@ -15,7 +15,7 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .phone .phone_bottom{height: 9vh; width: 100%; padding: 1vw 0; box-sizing: border-box;}
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
-
+.comLoadingWrap{display:none;}
 .loading{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
 .visibility_hidden{visibility:hidden}
 .visibility_show{visibility:visible}
