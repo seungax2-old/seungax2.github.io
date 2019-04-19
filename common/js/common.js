@@ -7,9 +7,6 @@ var $device_view = $("#device_view");
 var $mainPage = $(".mainPage");
 var $phone = $(".phone");
 var $linkBtn = $(".linkBtn");
-/*
-var $device_loading = $(".device_loading .loading");
-var $window_loading = $(".window_loading .loading");*/
 var $comLoadingWrap = $(".comLoadingWrap");
 $(document).ready(function(){
 	var flexHeight = $phone.height();
