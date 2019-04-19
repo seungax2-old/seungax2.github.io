@@ -21,9 +21,11 @@ $(document).ready(function(){
         $phone.css("box-sizing","border-box");
         $phone.removeClass("flexGrow");
         $device_view.show();
+        $loading.remove();
     }else{
         $phone.width(flexWidth);
         $device_view.show();
+        $loading.remove();
     }
     
     
