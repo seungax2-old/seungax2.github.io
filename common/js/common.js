@@ -3,10 +3,13 @@ $(window).resize(function() {
 });
 
 var $eventShow = $("#eventShow");
-var $mainPage = $("#mainPage");
+var $device_view = $("#device_view");
+var $WebView = $(".WebView");
+var $mainPage = $(".mainPage");
 var $phone = $(".phone");
 var $loading = $(".loading");
-$(window).load(function(){
+$(document).ready(function(){
+	$WebView.load("../loading.html");
     var flexHeight = $phone.height();
     var flexWidth = flexHeight*0.55;
     var $windowWidth = $(".WebView").width();
@@ -17,8 +20,10 @@ $(window).load(function(){
         $phone.height(flexHeight2);
         $phone.css("box-sizing","border-box");
         $phone.removeClass("flexGrow");
+        $device_view.show();
     }else{
         $phone.width(flexWidth);
+        $device_view.show();
     }
     
     
@@ -39,6 +44,7 @@ $(window).load(function(){
     
     $(".btn_home").on("click",function(){
         window.location.reload();
+        $loading.hide();
     });
     
     
