@@ -3,16 +3,16 @@ iframe::-webkit-scrollbar { display:none; }
 
 body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .WebView{/* min-height:900px;  */height:100%;width: 100%; padding: 3%; box-sizing: border-box;}					
-.phone{padding : 0 3vh 0 3vh;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 3vh;background-color: #fff;}
-.phone .phone_head{height:6.1vh;}
-.phone .phone_head .speaker{width: 15vh;height: 0.7vh;border-radius: 0.5vh;background: #bfbfbf;}
+.phone{padding : 0 3% 0 3%;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 2.5vw;background-color: #fff;}
+.phone .phone_head{height:6.6%;}
+.phone .phone_head .speaker{width: 30%;height: 0.7vw;background: #bfbfbf;}
 #device_view{height:1; border: 1px solid #bfbfbf;}
 #device_view .mainPage{height: 100%; overflow: auto;}
 #device_view .mainPage{ -ms-overflow-style: none; }
 #device_view .mainPage::-webkit-scrollbar { display:none; }
 #device_view .mainPage .topDiv img{width:100%; height:auto;}
-#device_view .mainPage .linkBtn{height: 7vh; border-top: 1px solid #bfbfbf; padding-left: 2vh; cursor:pointer;}
-.phone .phone_bottom{height: 9vh; width: 100%; padding: 1vw 0; box-sizing: border-box;}
+#device_view .mainPage .linkBtn{height: 10%; border-top: 1px solid #bfbfbf; padding-left:5%; cursor:pointer; font-size:2.5vw;}
+.phone .phone_bottom{height: 9.5%; width: 100%; padding: 2% 0; box-sizing: border-box;}
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
 .comLoadingWrap{display:none;}
@@ -27,3 +27,4 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
 .right{-webkit-justify-content: right; justify-content: right; -webkit-align-items: right; align-items: right; }
 
+.font16{font-size:16px !important;}
