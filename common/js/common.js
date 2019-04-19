@@ -9,7 +9,7 @@ var $mainPage = $(".mainPage");
 var $phone = $(".phone");
 var $loading = $(".loading");
 $(document).ready(function(){
-	$WebView.load("happyEvent/common/loading.html");
+	$WebView.load("common/loading.html");
     var flexHeight = $phone.height();
     var flexWidth = flexHeight*0.55;
     var $windowWidth = $(".WebView").width();
