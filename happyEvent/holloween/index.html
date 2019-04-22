@@ -217,7 +217,7 @@
         }
     }  
     $(document).ready(function(){
-        $(".click-div").one("touchstart", function() {
+        $(".click-div").on("touchstart", function() {
             startTime = new Date().getTime();
             
             $(".touch-img").hide();
@@ -238,7 +238,7 @@
             }, 2000);
         });
         
-        $(".click-div").one("mousedown", function() {
+        $(".click-div").on("mousedown", function() {
             startTime = new Date().getTime();
             
             $(".touch-img").hide();
@@ -258,7 +258,7 @@
                 endAni();
             }, 2000);
         });
-        $('.click-div').one('touchend', function() {
+        $('.click-div').on('touchend', function() {
             endTime = new Date().getTime();
             var clickTime = Math.round((endTime - startTime)/1000);
             clearTimeout(endTouch);
@@ -284,7 +284,7 @@
             }
         });
         
-        $('.click-div').one('mouseup', function() {
+        $('.click-div').on('mouseup', function() {
             endTime = new Date().getTime();
             var clickTime = Math.round((endTime - startTime)/1000);
             clearTimeout(endTouch);
