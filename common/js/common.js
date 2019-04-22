@@ -27,7 +27,6 @@ $(document).ready(function(){
         $linkBtn.addClass("font16");
     }
     
-    
     $linkBtn.on("click",function(){
         var link = "happyEvent/"+$(this).data("event")+"/index.html";
         $eventShow.attr("src",link);
@@ -47,5 +46,5 @@ $(document).ready(function(){
         window.location.reload();
     });
     
-    
+
 });
