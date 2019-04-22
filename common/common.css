@@ -11,7 +11,8 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 #device_view .mainPage{ -ms-overflow-style: none; }
 #device_view .mainPage::-webkit-scrollbar { display:none; }
 #device_view .mainPage .topDiv img{width:100%; height:auto;}
-#device_view .mainPage .linkBtn{height: 10%; border-top: 1px solid #bfbfbf; padding-left:5%; cursor:pointer; font-size:2.5vw;}
+#device_view .mainPage .linkBtn{height: auto; border-top: 1px solid #bfbfbf;/*  padding-left:5%;  */cursor:pointer; font-size:2.5vw;}
+#device_view .mainPage .linkBtn img{width:100%;}
 .phone .phone_bottom{height: 9.5%; width: 100%; padding: 2% 0; box-sizing: border-box;}
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
