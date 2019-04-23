@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="../../common/common.css?version=1.3">
+	</head>
+	<body>
+		<div class="ContentWrap flexColumn">
+			<div class="header flex center">
+				<p class="backBtn hrefBtn" data-href="../happy_main.html">해피포인트</p>
+				<p class="now flexGrow">해피포인트 이벤트</p>
+				<p class="nextBtn"></p>
+			</div>
+				
+			<div class="WebView flexGrow flexColumn center">
+				
+				<div class="phone flexColumn flexGrow visibility_hidden">
+					<div class="phone_head flex center">
+						<p class="speaker"></p>
+					</div>
+					<div id="device_view" class="flexGrow" >
+						<div class="mainPage">
+							<div class="topDiv flexColumn">
+								<img oncontextmenu="return false" src="../../common/img/happy_main_top.png"/>
+							</div>
+							<div class="eventList">
+								<p class="linkBtn flex centerH" data-event="diffrentfind"><img oncontextmenu="return false" src="../../common/img/banner/findDiffrent.png"/></p>
+								<p class="linkBtn flex centerH" data-event="sakura"><img oncontextmenu="return false" src="../../common/img/banner/sakura.png"/></p>
+								<p class="linkBtn flex centerH" data-event="baseball"><img oncontextmenu="return false" src="../../common/img/banner/homerun.png"/></p>
+								<p class="linkBtn flex centerH" data-event="moon"><img oncontextmenu="return false" src="../../common/img/banner/fullmoon.png"/></p>
+								<p class="linkBtn flex centerH" data-event="holloween"><img oncontextmenu="return false" src="../../common/img/banner/soup.png"/></p>
+								<p class="linkBtn flex centerH" data-event="snowtree"><img oncontextmenu="return false" src="../../common/img/banner/snow.png"/></p>
+								<p class="linkBtn flex centerH" data-event="heart"><img oncontextmenu="return false" src="../../common/img/banner/heart.png"/></p>
+								<p class="linkBtn flex centerH" data-event="loullet"><img oncontextmenu="return false" src="../../common/img/banner/loullet.png"/></p>
+								
+								<p class="linkBtn flex centerH" data-event="ice"><img oncontextmenu="return false" src="../../common/img/banner/ice.png"/></p>
+								<p class="linkBtn flex centerH" data-event="pig"><img oncontextmenu="return false" src="../../common/img/banner/card.png"/></p>
+	 							<!-- <p class="linkBtn flex centerH" data-event="wordcup">축구공차기</p>
+								<p class="linkBtn flex centerH" data-event="selectsun">해비서 커피이상형</p> -->
+							</div>
+						</div>
+						<iframe id="eventShow" src="" class="visibility_hidden" frameborder="0" scrolling="yes" width="100%" height="100%;" style="display:none;"></iframe>
+					</div>
+					<div class="phone_bottom flex center"><img oncontextmenu="return false" class="btn_home" src="../../common/img/blueHome.png"/></div>
+				</div>
+			</div>
+			
+			<div class="loading comLoadingWrap">
+				<div class="loader">
+					<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					   width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+						<path fill="#1697d1" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+						<animateTransform attributeType="xml"
+						  attributeName="transform"
+						  type="rotate"
+						  from="0 25 25"
+						  to="360 25 25"
+						  dur="0.6s"
+						  repeatCount="indefinite"/>
+						</path>
+					</svg>
+				</div>
+			</div>
+		</div>
+		<script src="../../common/js/jquery-1.12.3.js"></script>
+		<script src="../../common/js/common.js?version=1.2"></script>
+		
+		<script>
+		$(window).resize(function() {
+			window.location.reload();
+		});
+
+		var $eventShow = $("#eventShow");
+		var $device_view = $("#device_view");
+		var $mainPage = $(".mainPage");
+		var $phone = $(".phone");
+		var $linkBtn = $(".linkBtn");
+		var $comLoadingWrap = $(".comLoadingWrap");
+		$(document).ready(function(){
+			var flexHeight = $phone.height();
+			var flexWidth = flexHeight*0.5;
+			var $windowWidth = $(".WebView").width();
+			var flexHeight2 = $windowWidth*1.7;
+	    	var filter = "win16|win32|win64|mac|macintel";
+	    	if ( navigator.platform ) { 
+	    		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
+	    			
+	    			$phone.width(windowWidth);
+	    			$phone.removeClass("visibility_hidden");
+    		        $phone.addClass("visibility_show");
+    		        
+	    			$(".WebView").addClass("viewMo");
+	    			$(".phone").addClass("phoneMo");
+	    			
+	    		} else { 
+	    			
+	    			if($windowWidth<flexWidth){
+	    		        $phone.width($windowWidth);
+	    		        $phone.height(flexHeight2);
+	    		        $phone.css("box-sizing","border-box");
+	    		        $phone.removeClass("flexGrow visibility_hidden");
+	    		        $phone.addClass("visibility_show");
+	    		    }else{
+	    		        $phone.width(flexWidth);
+	    		        $phone.removeClass("visibility_hidden");
+	    		        $phone.addClass("visibility_show");
+	    		        $linkBtn.addClass("font16");
+	    		    }
+	    			
+	    			$(".WebView").addClass("viewPc");
+	    			$(".phone").addClass("phonePc");
+	    			
+	    		}
+	    	}
+		    
+		    $linkBtn.on("click",function(){
+		        var link = $(this).data("event")+"/index.html";
+		        $eventShow.attr("src",link);
+		        $mainPage.hide();
+		        $comLoadingWrap.show();
+		        $eventShow.show();
+		        
+		        $eventShow.on('load', function(){
+		        	$eventShow.removeClass("visibility_hidden");
+		        	$comLoadingWrap.hide();
+		        });
+		    });
+		    
+		    $(".btn_home").on("click",function(){
+		        window.location.reload();
+		    });
+
+		});
+		</script>
+	</body>
+</html>

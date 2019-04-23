@@ -1,18 +1,47 @@
 *{margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 iframe::-webkit-scrollbar { display:none; }
-
 body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
-.WebView{/* min-height:900px;  */height:100%;width: 100%; padding: 3%; box-sizing: border-box;}					
-.phone{padding : 0 3% 0 3%;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 2.5vw;background-color: #fff;}
+
+.ContentWrap{height:100%; }
+.header{height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;}
+.header p{text-align:center;}
+.header p.backBtn{width:20%;}
+.header p.nextBtn{width:20%;}
+
+.content{position:relative; display: grid; grid-template-columns: repeat(auto-fill, 300px); grid-gap: 48px 24px; justify-content: center; padding: 5%}
+.content .project{
+	padding: 5%;
+	box-sizing:border-box;
+	background: #fff;
+    height: 100px;
+    position: relative;
+    width: 300px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);
+    box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);
+    /* transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1); */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hrefBtn{cursor:pointer;}
+.WebView{/* min-height:900px;  */height:100%;width: 100%;padding: 3%; box-sizing: border-box;}
+.viewMo{padding: 3%;}
+.viewPc{padding: 1.5%;}			
+.phone{padding : 0 3% 0 3%;box-sizing:border-box;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 2.5vw;background-color: #fff;}
+.phoneMo{padding: 0 3% 0 3%;}
+.phonePc{padding: 0 1.5% 0 1.5%;}	
 .phone .phone_head{height:6.6%;}
-.phone .phone_head .speaker{width: 30%;height: 0.7vw;background: #bfbfbf;}
+.phone .phone_head .speaker{width: 30%;height:9%;background: #bfbfbf;}
 #device_view{height:1; border: 1px solid #bfbfbf;}
 #device_view .mainPage{height: 100%; overflow: auto;}
 #device_view .mainPage{ -ms-overflow-style: none; }
 #device_view .mainPage::-webkit-scrollbar { display:none; }
 #device_view .mainPage .topDiv img{width:100%; height:auto;}
-#device_view .mainPage .linkBtn{height: auto; border-top: 1px solid #bfbfbf;/*  padding-left:5%;  */cursor:pointer; font-size:2.5vw;}
-#device_view .mainPage .linkBtn img{width:100%;}
+#device_view .mainPage p.linkBtn{height: auto; border-top: 1px solid #bfbfbf;/*  padding-left:5%;  */cursor:pointer; font-size:2.5vw;}
+#device_view .mainPage p.linkBtn img{width:100%;}
 .phone .phone_bottom{height: 9.5%; width: 100%; padding: 2% 0; box-sizing: border-box;}
 .phone .phone_bottom .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
@@ -27,5 +56,5 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
 .centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
 .right{-webkit-justify-content: right; justify-content: right; -webkit-align-items: right; align-items: right; }
-
+.position_r{position:relative;}
 .font16{font-size:16px !important;}

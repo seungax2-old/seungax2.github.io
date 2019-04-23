@@ -1,50 +1,18 @@
-$(window).resize(function() {
-	window.location.reload();
-});
-
-var $eventShow = $("#eventShow");
-var $device_view = $("#device_view");
-var $mainPage = $(".mainPage");
-var $phone = $(".phone");
-var $linkBtn = $(".linkBtn");
-var $comLoadingWrap = $(".comLoadingWrap");
 $(document).ready(function(){
-	var flexHeight = $phone.height();
-	var flexWidth = flexHeight*0.55;
-	var $windowWidth = $(".WebView").width();
-	var flexHeight2 = $windowWidth*1.7;
+	var filter = "win16|win32|win64|mac|macintel";
+	if ( navigator.platform ) { 
+		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
+			console.log('mobile 접속'); 
+			$(".header").height("15vw");
+		} else { 
+			console.log('pc 접속');
+			$(".header").height("60px");
+		}
+	}
 	
-    if($windowWidth<flexWidth){
-        $phone.width($windowWidth);
-        $phone.height(flexHeight2);
-        $phone.css("box-sizing","border-box");
-        $phone.removeClass("flexGrow visibility_hidden");
-        $phone.addClass("visibility_show");
-    }else{
-        $phone.width(flexWidth);
-        $phone.removeClass("visibility_hidden");
-        $phone.addClass("visibility_show");
-        $linkBtn.addClass("font16");
-    }
-    
-    $linkBtn.on("click",function(){
-        var link = "happyEvent/"+$(this).data("event")+"/index.html";
-        $eventShow.attr("src",link);
-        $mainPage.hide();
-        $comLoadingWrap.show();
-        $eventShow.show();
-        
-        $eventShow.on('load', function(){
-        	$eventShow.removeClass("visibility_hidden");
-        	$comLoadingWrap.hide();
-        });
-        
-       
+	$(".hrefBtn").on("click",function(){
+        var link = $(this).data("href");
+        location.href=link;
     });
-    
-    $(".btn_home").on("click",function(){
-        window.location.reload();
-    });
-    
-
 });
+
