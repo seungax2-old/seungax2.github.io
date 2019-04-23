@@ -3,12 +3,13 @@ iframe::-webkit-scrollbar { display:none; }
 body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 
 .ContentWrap{height:100%; }
-.header{height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;}
+.header{padding: 0 2%; box-sizing: border-box; height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;}
 .header p{text-align:center;}
-.header p.backBtn{width:20%;}
-.header p.nextBtn{width:20%;}
+.header p.backBtn{width:25px;}
+.header p.backBtn img{height:35%;}
+.header p.nextBtn{width:25px;}
 
-.content{position:relative; display: grid; grid-template-columns: repeat(auto-fill, 300px); grid-gap: 48px 24px; justify-content: center; padding: 5%}
+.content{overflow: auto;position:relative; display: grid; grid-template-columns: repeat(auto-fill, 300px); grid-gap: 40px 25px; justify-content: center; padding: 5%}
 .content .project{
 	padding: 5%;
 	box-sizing:border-box;
