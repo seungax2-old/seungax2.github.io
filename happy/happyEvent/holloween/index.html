@@ -77,12 +77,11 @@
         </div>
         
         <div class="fire" >
+            <div style="position:relative;width:100%;height:100%;">
             <div class="click-div">
-                
                 <div class="touch-img">
                     <img oncontextmenu="return false" src="resources/touch.png"/>
                 </div>
-                
                 <div class="fire-div" style="display: none;">
                     
                     <div class="fire-left-edge">
@@ -113,9 +112,10 @@
                     <div class="fire-bottom">
                         <div class="main-fire "></div>
                     </div>
-                   
                 </div>
             </div>
+	        <div class="noClickDiv" style="display:none; z-index:5; position:absolute; left:0;bottom:0; height:100%; width:100%;"></div>
+	        </div>
         </div>
     </div>
     <div class="img"><img oncontextmenu="return false" src="resources/na_main_02.png"/></div>
@@ -340,6 +340,7 @@
         
     });
     function endAni(){
+    	$(".noClickDiv").show();
         /*롱클릭 완료*/
         $('.click-div').unbind('touchstart');
         $(".fire-main, .fire-bottom").removeClass("fireScale");
