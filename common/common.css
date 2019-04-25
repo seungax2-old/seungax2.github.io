@@ -1,4 +1,17 @@
-*{margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
+@font-face {
+	font-family: NanumSqueare;
+	src: url(font/NanumSquareR.eot?#iefix) format("embedded-opentype"), url(font/NanumSquareR.woff) format("woff"), url(font/NanumSquareR.ttf) format("truetype");
+}
+
+/*ie7/8*/
+@font-face{
+    font-family : ie_nanum;
+    src:url(font/NanumSquareR.eot);
+    src:local(※), url(font/NanumSquareR.woff) format(‘woff’)
+}
+
+
+*{font-family: NanumSqueare, ie_nanum;font-size: 0.99em; font-weight: bold;margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 iframe::-webkit-scrollbar { display:none; }
 body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 
@@ -9,20 +22,22 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .header p.backBtn img{height:35%;}
 .header p.nextBtn{width:25px;}
 
-.content{overflow: auto;position:relative; display: grid; grid-template-columns: repeat(auto-fill, 300px); grid-gap: 40px 25px; justify-content: center; padding: 40px;}
+.content{overflow: auto;position:relative; display: grid; grid-template-columns: repeat(auto-fill, 250px); grid-gap: 40px 25px; justify-content: center; padding: 40px;}
 .content.gallery{grid-template-columns: repeat(auto-fill, 274px) !important;}
 .Conmo{margin-top:15vw}
 .Conpc{margin-top:60px}
 .content .project{
-	padding: 5%;
+    background: url(../common/img/folder.png) no-repeat;
+    background-size: 100% 100%;
+	padding: 12% 5% 5% 5%;
 	box-sizing:border-box;
-	background: #fff;
+	/* background: #fff; */
     height: 100px;
     position: relative;
-    width: 300px;
+    width: 250px;
     cursor: pointer;
-    box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);
-    box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);
+    /* box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);
+    box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5); */
     /* transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1); */
     -webkit-user-select: none;
     -moz-user-select: none;
