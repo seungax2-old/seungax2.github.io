@@ -11,7 +11,7 @@
 				<p class="now flexGrow">해피포인트 이벤트</p>
 				<p class="nextBtn"></p>
 			</div>
-				
+			
 			<div class="WebView flexGrow flexColumn center">
 				
 				<div class="phone flexColumn flexGrow visibility_hidden">
@@ -77,6 +77,9 @@
 		var $linkBtn = $(".linkBtn");
 		var $comLoadingWrap = $(".comLoadingWrap");
 		$(document).ready(function(){
+			$(".WebView").addClass("Conmo");
+			$(".WebView").addClass("Conpc");
+			
 			var flexHeight = $phone.height();
 			var flexWidth = flexHeight*0.5;
 			var $windowWidth = $(".WebView").width();
