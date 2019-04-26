@@ -104,7 +104,8 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 #device_view .mainPage p.linkBtn{height: auto; border-top: 1px solid #bfbfbf;/*  padding-left:5%;  */cursor:pointer; font-size:2.5vw;}
 #device_view .mainPage p.linkBtn img{width:100%;}
 .phone .phone_bottom{height: 9.5%; width: 100%; padding: 2% 0; box-sizing: border-box;}
-.phone .phone_bottom .btn_home{cursor: pointer;}
+.phone .phone_bottom .btnHomeWrap{height: 100%; text-align: center;}
+.phone .phone_bottom .btnHomeWrap .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
 .comLoadingWrap{display:none;}
 .loading{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
