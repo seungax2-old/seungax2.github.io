@@ -30,10 +30,10 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .content .project{
     background: url(../common/img/folder.png) no-repeat;
     background-size: 100% 100%;
-	padding: 12% 5% 5% 5%;
+	padding:15% 7% 9% 7%;
 	box-sizing:border-box;
 	/* background: #fff; */
-    height: 100px;
+    height: auto;
     position: relative;
     width: 250px;
     cursor: pointer;
@@ -45,6 +45,9 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
     -ms-user-select: none;
     user-select: none;
 }
+
+.content .project .tit{font-size:1.2em}
+.content .project .subinfo{padding-top: 6%; font-size: 0.9em; box-sizing: border-box; white-space: inherit; word-break: keep-all; line-height: 1.5em;}
 
 .content .smallView{
 	box-sizing:border-box;
