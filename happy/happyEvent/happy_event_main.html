@@ -77,9 +77,6 @@
 		var $linkBtn = $(".linkBtn");
 		var $comLoadingWrap = $(".comLoadingWrap");
 		$(document).ready(function(){
-			$(".WebView").addClass("Conmo");
-			$(".WebView").addClass("Conpc");
-			
 			var flexHeight = $phone.height();
 			var flexWidth = flexHeight*0.5;
 			var $windowWidth = $(".WebView").width();
@@ -91,7 +88,7 @@
 	    			$phone.width(windowWidth);
 	    			$phone.removeClass("visibility_hidden");
     		        $phone.addClass("visibility_show");
-    		        
+    		        $(".WebView").addClass("Conmo");
 	    			$(".WebView").addClass("viewMo");
 	    			$(".phone").addClass("phoneMo");
 	    			
@@ -109,7 +106,7 @@
 	    		        $phone.addClass("visibility_show");
 	    		        $linkBtn.addClass("font16");
 	    		    }
-	    			
+	    			$(".WebView").addClass("Conpc");
 	    			$(".WebView").addClass("viewPc");
 	    			$(".phone").addClass("phonePc");
 	    			
