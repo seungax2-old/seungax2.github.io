@@ -15,7 +15,7 @@
 iframe::-webkit-scrollbar { display:none; }
 body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 
-.ContentWrap{height:100%; }
+.ContentWrap{height:100%;position:relative; }
 .header{padding: 0 2%; box-sizing: border-box; height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;position: absolute; left: 0; top: 0; width: 100%; z-index: 5;}
 .header p{text-align:center;}
 .header p.backBtn{width:25px;}
@@ -23,6 +23,7 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .header p.nextBtn{width:25px;}
 
 .content{overflow: auto;position:relative; display: grid; grid-template-columns: repeat(auto-fill, 250px); grid-gap: 40px 25px; justify-content: center; padding: 40px;}
+.content.noscroll{overflow:hidden !important;}
 .content.gallery{grid-template-columns: repeat(auto-fill, 274px) !important;}
 .Conmo{margin-top:15vw}
 .Conpc{margin-top:60px}
@@ -108,6 +109,7 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .phone .phone_bottom .btnHomeWrap .btn_home{cursor: pointer;}
 .phone .phone_bottom img{height:100%;}
 .comLoadingWrap{display:none;}
+.comLoadingWrap_Gallery{ z-index: 999; width: 100%; height: 100%; background: rgba(26, 25, 25, 0.51); position: absolute; left: 0; top: 0;}
 .loading{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
 .visibility_hidden{visibility:hidden}
 .visibility_show{visibility:visible}

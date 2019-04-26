@@ -21,3 +21,11 @@ $(document).ready(function(){
 	
 });
 
+function loading_check(){
+	$(document).ready(function() {
+		setTimeout(function(){
+			$(".comLoadingWrap_Gallery").hide();
+			$(".content.gallery").removeClass("noscroll");
+		},2000);
+	});
+}
