@@ -78,7 +78,7 @@
 		var $comLoadingWrap = $(".comLoadingWrap");
 		$(document).ready(function(){
 			var flexHeight = $phone.height();
-			var flexWidth = flexHeight*0.5;
+			var flexWidth = flexHeight*0.41;
 			var $windowWidth = $(".WebView").width();
 			var flexHeight2 = $windowWidth*1.7;
 	    	var filter = "win16|win32|win64|mac|macintel";
@@ -89,7 +89,7 @@
 	    			$phone.removeClass("visibility_hidden");
     		        $phone.addClass("visibility_show");
     		        $(".WebView").addClass("Conmo");
-	    			$(".WebView").addClass("viewMo");
+    		        $phone.addClass("viewMo");
 	    			$(".phone").addClass("phoneMo");
 	    			
 	    		} else { 
@@ -107,7 +107,7 @@
 	    		        $linkBtn.addClass("font16");
 	    		    }
 	    			$(".WebView").addClass("Conpc");
-	    			$(".WebView").addClass("viewPc");
+	    			$phone.addClass("viewPc");
 	    			$(".phone").addClass("phonePc");
 	    			
 	    		}

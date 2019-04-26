@@ -88,9 +88,9 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .content .smallView img{box-sizing: border-box; border: 1px solid rgba(193, 193, 193, 0.49); border-bottom:none; border-top:none; width:100%;box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5); box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);}
 
 .hrefBtn{cursor:pointer;}
-.WebView{/* min-height:900px;  */height:100%;width: 100%;padding: 3%; box-sizing: border-box;}
-.viewMo{padding: 3%;}
-.viewPc{padding: 1.5%;}			
+.WebView{/* min-height:900px;  */height:100%;width: 100%;/* padding: 3%; */ box-sizing: border-box;}
+.viewMo{margin: 3%;}
+.viewPc{margin: 1.5%;}			
 .phone{padding : 0 3% 0 3%;box-sizing:border-box;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 2.5vw;background-color: #fff;}
 .phoneMo{padding: 0 3% 0 3%;}
 .phonePc{padding: 0 1.5% 0 1.5%;}	
