@@ -11,7 +11,7 @@ $(document).ready(function(){
 			$(".content").addClass("Conpc");
 		}
 		var flexGallery = $(".gallery").height()*0.95;
-		$(".content .smallView .imgWrap").css("max-height",flexGallery);
+		$(".content.gallery .smallView .imgWrap").css("max-height",flexGallery);
 	}
 	
 	$(".hrefBtn").on("click",function(){
@@ -25,7 +25,7 @@ function loading_check(){
 	$(document).ready(function() {
 		setTimeout(function(){
 			$(".comLoadingWrap_Gallery").hide();
-			$(".content.gallery").removeClass("noscroll");
+			$(".content").removeClass("noscroll");
 		},2000);
 	});
 }
