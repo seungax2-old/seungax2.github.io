@@ -70,19 +70,31 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 
 
 /* 웹 */
-.content.Wgallery{grid-template-columns: repeat(auto-fill, 80%) !important;}
+.content.Wgallery{grid-template-columns: repeat(auto-fill, 984px) !important;}
 .content.Wgallery .smallView{
 	box-sizing:border-box;
     height: auto;
     position: relative;
-    width: 100%;
+    width: 984px;
+    padding-left : 12px;
 }
 
 .content.Wgallery .smallView .tit{
     height: 40px;
     line-height: 40px;
+	width:960px;
+ 	box-sizing: border-box; border-top: 1px solid rgba(193, 193, 193, 0.49); 
 }
-.content.Wgallery .smallView img{box-sizing: border-box; border: 1px solid rgba(193, 193, 193, 0.49); width:100%;box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5); box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);}
+.content.Wgallery .smallView .border-top{width:960px;box-sizing: border-box; border-top: 1px solid rgba(193, 193, 193, 0.49); }
+
+.content.Wgallery .smallView .imgWrap{
+    max-height: 720px;
+    overflow-y:scroll;
+}
+.content.Wgallery .smallView img{box-sizing: border-box; border: 1px solid rgba(193, 193, 193, 0.49); border-bottom:none; border-top:none; width:100%;box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5); box-shadow: 0 1px 4px 0 rgba(188, 181, 185, 0.5);}
+.content.Wgallery .smallView .imgWrap::-webkit-scrollbar{width: 12px;background: transparent; }
+.content.Wgallery .smallView .imgWrap::-webkit-scrollbar-thumb{background: #d5d5d5; width: 4px !important; border: 4px solid #eee; border-radius: 30px;}
+.content.Wgallery .smallView .imgWrap::-webkit-scrollbar-track{background: transparent;}
 
 
 /* 해피포인트 이벤트 뷰 */

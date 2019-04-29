@@ -2,16 +2,22 @@ $(document).ready(function(){
 	var filter = "win16|win32|win64|mac|macintel";
 	if ( navigator.platform ) { 
 		if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
-			console.log('mobile 접속'); 
+//			console.log('mobile 접속'); 
 			$(".header").height("15vw");
 			$(".content").addClass("Conmo");
+			var flexGallery = $(window).height()*0.8;
+			$(".content.gallery .smallView .imgWrap").css("max-height",flexGallery);
 		} else { 
-			console.log('pc 접속');
+//			console.log('pc 접속');
 			$(".header").height("60px");
 			$(".content").addClass("Conpc");
+			var flexGallery = $(".gallery").height()*0.95;
+			$(".content.gallery .smallView .imgWrap").css("max-height",flexGallery);
+			
+			var flexWGallery = $(".Wgallery").height()*0.95;
+			$(".content.Wgallery .smallView .imgWrap").css("max-height",flexWGallery);
 		}
-		var flexGallery = $(".gallery").height()*0.95;
-		$(".content.gallery .smallView .imgWrap").css("max-height",flexGallery);
+		
 	}
 	
 	$(".hrefBtn").on("click",function(){
@@ -29,3 +35,4 @@ function loading_check(){
 		},2000);
 	});
 }
+
