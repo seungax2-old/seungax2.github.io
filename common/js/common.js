@@ -14,6 +14,10 @@ $(document).ready(function(){
         location.href=link;
     });
 	
+	$(".backBtn").on("click",function(){
+		window.history.back();
+	})
+	
 });
 
 $(window).load(function(){
@@ -26,7 +30,7 @@ $(window).load(function(){
 });
 
 function loading_check(){
-	$(document).ready(function() {
+	$(window).load(function() {
 		setTimeout(function(){
 			$(".comLoadingWrap_Gallery").hide();
 			$(".content").removeClass("noscroll");

@@ -18,7 +18,7 @@ body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 .ContentWrap{height:100%;position:relative; }
 .header{padding: 0 2%; box-sizing: border-box; height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;position: absolute; left: 0; top: 0; width: 100%; z-index: 5;}
 .header p{text-align:center;}
-.header p.backBtn{width:25px;}
+.header p.backBtn{width:25px;cursor:pointer;}
 .header p.backBtn img{height:35%;}
 .header p.nextBtn{width:25px;}
 
