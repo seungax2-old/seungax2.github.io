@@ -100,14 +100,12 @@
 		<script>
 		// 로딩될때
 		$(function() {
-			var filter = "win16|win32|win64|mac|macintel";
-			if ( navigator.platform ) { 
-				if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) { 
-					alert("해당페이지는 pc화면 폴더로 pc웹 으로 확인 부탁드립니다.");
-					location.href="../../index.html";
-				} else { 
-					loading_check();
-				}
+			var checkBrowser_rs = checkBrowser();
+			if ( checkBrowser_rs == "mo" ) { 
+				alert("해당페이지는 pc화면 폴더로 pc웹 으로 확인 부탁드립니다.");
+				location.href="../../index.html";
+			} else { 
+				loading_check();
 			}
 		    
 		}); 
