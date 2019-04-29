@@ -5,8 +5,7 @@ $(document).ready(function(){
 //			console.log('mobile 접속'); 
 			$(".header").height("15vw");
 			$(".content").addClass("Conmo");
-			var flexGallery = $(window).height()*0.8;
-			$(".content.gallery .smallView .imgWrap").css("max-height",flexGallery);
+			$(".content.gallery .smallView .imgWrap").css("max-height","75vh");
 		} else { 
 //			console.log('pc 접속');
 			$(".header").height("60px");
