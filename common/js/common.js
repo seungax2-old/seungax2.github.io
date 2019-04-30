@@ -7,8 +7,8 @@ $(document).ready(function(){
 			$(".header").height("60px");
 			$(".content").addClass("Conpc");
 		}else{
-//			alert("다양한 모바일 애니메이션이 사용된 프로젝트가 있어 크롬환경에서 실행해 주시기 바랍니다.")
-			document.location.href="common/noChrome.html";
+//			document.location.href="common/noChrome.html";
+			document.location.href="https://seungax2.github.io/common/noChrome.html";
 		}
 	}else{
 		$(".header").height("15vw");
