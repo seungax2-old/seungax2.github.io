@@ -13,7 +13,7 @@
 *{font-family: NanumSqueare, ie_nanum;font-size: 0.99em; font-weight: bold;margin:0; padding:0;-webkit-touch-callout:none; -ms-user-select: none; -moz-user-select: -moz-none; -webkit-user-select: none; -khtml-user-select: none; user-select:none;}
 
 iframe::-webkit-scrollbar { display:none; }
-body{background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
+body{visibility:hidden;background: #eee;box-sizing: border-box; width:100%; overflow:hidden;}
 
 .ContentWrap{height:100%;position:relative; }
 .header{padding: 0 2%; box-sizing: border-box; height: 60px; box-shadow: 0 2px 4px 0 rgba(85, 77, 86, 0.2); background: #fff;position: absolute; left: 0; top: 0; width: 100%; z-index: 5;}

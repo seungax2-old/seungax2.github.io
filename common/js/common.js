@@ -1,9 +1,11 @@
 var $checkBrowser = checkBrowser();
+var $body = $("body");
 $(document).ready(function(){
 	if($checkBrowser == "pc"){
 		var $browserKind = checkBrowserKind();
 		console.log($browserKind);
 		if($browserKind == "chrome"){
+			$body.css("visibility","visible");
 			$(".header").height("60px");
 			$(".content").addClass("Conpc");
 		}else{
@@ -11,6 +13,7 @@ $(document).ready(function(){
 			document.location.href="https://seungax2.github.io/common/noChrome.html";
 		}
 	}else{
+		$body.css("visibility","visible");
 		$(".header").height("15vw");
 		$(".content").addClass("Conmo");
 		$(".content.gallery .smallView .imgWrap").css("max-height","75vh");
