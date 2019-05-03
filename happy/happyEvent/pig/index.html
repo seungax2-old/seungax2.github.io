@@ -20,17 +20,17 @@
         <div class="cardWrap">
             <div class="card_Container">
                 <div class="card_line flex">
-                    <div class="card">
+                    <div class="card c1">
                         <div class="front"><img oncontextmenu="return false" src="resources/card01.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card01_fail.png"/></div>
                         <img class="resultImg" src="resources/card01.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c2">
                         <div class="front"><img oncontextmenu="return false" src="resources/card02.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card02_fail.png"/></div>
                         <img class="resultImg" src="resources/card02.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c3">
                         <div class="front"><img oncontextmenu="return false" src="resources/card03.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card03_fail.png"/></div>
                         <img class="resultImg" src="resources/card03.png"/>
@@ -38,17 +38,17 @@
                 </div>
                 
                 <div class="card_line flex">
-                    <div class="card">
+                    <div class="card c4">
                         <div class="front"><img oncontextmenu="return false" src="resources/card04.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card04_fail.png"/></div>
                         <img class="resultImg" src="resources/card04.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c5">
                         <div class="front"><img oncontextmenu="return false" src="resources/card05.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card05_fail.png"/></div>
                         <img class="resultImg" src="resources/card05.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c6">
                         <div class="front"><img oncontextmenu="return false" src="resources/card06.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card06_fail.png"/></div>
                         <img class="resultImg" src="resources/card06.png"/>
@@ -56,17 +56,17 @@
                 </div>
                 
                 <div class="card_line flex">
-                    <div class="card">
+                    <div class="card c7">
                         <div class="front"><img oncontextmenu="return false" src="resources/card07.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card07_fail.png"/></div>
                         <img class="resultImg" src="resources/card07.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c8">
                         <div class="front"><img oncontextmenu="return false" src="resources/card08.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card08_fail.png"/></div>
                         <img class="resultImg" src="resources/card08.png"/>
                     </div>
-                    <div class="card">
+                    <div class="card c9">
                         <div class="front"><img oncontextmenu="return false" src="resources/card09.png"/></div>
                         <div class="back"><img oncontextmenu="return false" src="resources/card09_fail.png"/></div>
                         <img class="resultImg" src="resources/card09.png"/>
@@ -80,12 +80,47 @@
     <div class="img"><img oncontextmenu="return false" src="resources/bottom.png"/></div>
 </div>
 
+<div class="event-pop" id="single-pop" style="display: none;">
+    <div class="event-inner">
+        <img oncontextmenu="return false" src="" id="popImg">
+        <a href="#none" class="close-btn"></a>
+    </div>
+</div>
+
 <script>
-$(".clickWrap").on("click",function(){
-    $(this).remove();
-});
-$('.card').one('click', function () {
-    $(this).toggleClass('flipped');
+$(document).ready(function(){
+	var $popup = $(".event-pop");
+	$(".close-btn").on("click",function(){
+    	$popup.hide();
+    })
+    
+	var checkClick = 0;
+	/* 1~9 랜덤수 */
+	var rn = Math.floor(Math.random()*9)+1;
+	var $cardno = ".c"+rn;
+	var $cardImg = ".c"+rn+" .back img";
+	$(".clickWrap").on("click",function(){
+	    $(this).remove();
+	    $($cardImg).attr("src","resources/card_succes.png");
+	    $($cardno).addClass("sc");
+	});
+	$('.card').one('click', function () {
+		var $clickCard = $(this);
+		$clickCard.toggleClass('flipped');
+		if($clickCard.hasClass("sc")){
+			$("#popImg").attr("src","resources/popup_COUPON_BR1.png");
+			$popup.show();
+			$(".none_click").show();
+			checkClick = 3;
+		}else{
+			checkClick += 1;
+			if(checkClick == 3){
+				$(".none_click").show();
+				$("#popImg").attr("src","resources/fail_20190104.png");
+				$popup.show();
+			}
+		}
+	});
 });
 </script>
 </body>

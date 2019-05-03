@@ -31,14 +31,14 @@ body{visibility:hidden;background: #eee;box-sizing: border-box; width:100%; over
 .content .project{
     background: url(../common/img/folder.png) no-repeat;
     background-size: 100% 100%;
-	padding:15% 7% 9% 7%;
+	padding:0 7% 10% 7%;
 	box-sizing:border-box;
     height: auto;
     position: relative;
     width: 250px;
     cursor: pointer;
 }
-.content .project .tit{font-size:1.2em}
+.content .project .tit{font-size:1.2em;padding-top: 22%;}
 .content .project .subinfo{padding-top: 6%; font-size: 0.9em; box-sizing: border-box; white-space: inherit; word-break: keep-all; line-height: 1.5em;}
 
 /* 모바일 */
