@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>clickObject</title>
+        <style>
+            *{padding: 0; margin: 0;}
+            html, body{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script>
+
+            //https://webdoli.tistory.com/53
+            //https://www.pericror.com/software/creating-3d-objects-with-click-handlers-using-three-js/
+            let container;
+            let camera, controls, scene, renderer;
+            let objects = [];
+            let {
+                Color,
+                Scene,
+                PerspectiveCamera,
+                AmbientLight,
+                SpotLight,
+                BoxBufferGeometry,
+                BoxGeometry,
+                OctahedronGeometry,
+                MeshLambertMaterial,
+                Mesh,
+                WebGLRenderer,
+                PCFShadowMap,
+            } = THREE;
+
+            function init(){
+                window.addEventListener('resize', onWindowResize, false);
+
+                container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //공간
+                scene = new Scene();
+                scene.background = new Color(0xf0f0f0);
+
+                //카메라
+                camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 10000);
+                camera.position.z = 10;
+                scene.add(camera);
+
+                //빛
+                const spotLight = new SpotLight(0xffffff, 1.5);
+                spotLight.position.set(0,10,10);
+
+                spotLight.castShadow = true;
+                spotLight.shadow.mapSize.width = 1024;
+                spotLight.shadow.mapSize.height = 1024;
+                scene.add(spotLight);
+
+                const light = new AmbientLight(0x505050);
+                scene.add(light);
+
+                //물체
+                const geometry_p = new OctahedronGeometry(4);
+                const geometry_b = new BoxGeometry(3,3,3);
+
+                const meterial_p = new MeshLambertMaterial({color:'#A64D79'});
+                const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+
+                const octahedron = new Mesh(geometry_p, meterial_p);
+                const cube = new Mesh(geometry_b, meterial_b);
+
+                octahedron.callback = clickHandler;
+                cube.callback = clickHandler;
+
+                scene.add(octahedron);
+                /*scene.add(cube);*/
+
+                objects.push(octahedron);
+                /*objects.push(cube);*/
+
+                //랜더
+                renderer = new WebGLRenderer({antialias:true});
+                /*renderer = setPixelRatio(window.devicePixelRatio);*/
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.shadowMap.enavled = true;
+                container.appendChild(renderer.domElement);
+
+                function animate(){
+                    const speed = 0.005;
+                    octahedron.rotation.x += speed;
+                    octahedron.rotation.y += speed;
+                    octahedron.rotation.z += speed;
+
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(animate);
+                }
+                requestAnimationFrame(animate);
+            }
+
+            function onWindowResize(){
+                camera.aspect = window.innerWidth/window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            function clickHandler() {
+                alert('클릭클릭클릭');
+            }
+
+
+            window.onload = function(){
+                init();
+                /*
+                    three.js의 raycaster에서 mouse와 camera의 파라미터를 넣으면 각종 메서드(기능)를 사용할 수 있다.
+                    이중에서 intersectObjects는 라이트의 광원과 부딪친 오브젝트들이 있는지 없는지를 체킹하여 그 값을 반환
+                    - THREE.Raycaster()메서드를 사용하려면 반드시 '라이트'가 있어야 한다.
+                    - 라이트의 광원에 부딪치는 오브젝트와의 거리가 곧 z값.
+                */
+                let raycaster = new THREE.Raycaster();
+                let mouse = new THREE.Vector2();
+
+                function onDocumentMouseDown(event) {
+                    event.preventDefault();
+                    /*
+                        - WebGL은 화면을 해석할 때, -1 ~ 1로 인식 그러나 clientX와 clientY와 같은 좌표값에는 마이너스 값 x
+                        - 2를 곱하는 이유는, 마우스의 좌표값은 0 ~ 1 사이로 값이 나오기 때문
+                        - webgl은 -1 ~ 1사이로 마우스 좌표값보다 2배 넓다. 그리고 우측으로 1만큼 튀어나간 부분을 -1을 통해 감산한다. (y값도 동일한 계산)
+                    */
+                    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+                    mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+                    /*
+                        1. setFromCamera(mouse,camera)를 실행해서 raycaster를 활성화
+                        2. intersects변수를 생성하고, 해당 씬의 모든 객체들을 넣어준다. -> let intersects = raycaster.intersectObjects(objects);
+                        3. raycaster.intersectObjects()는 광원과 부딪치는 오브젝트들과 사용자 마우스가 반응하는지 안하는지를 매 프레임마다 체크해서 그 값을 넘겨주는데 마우스와 반응하는 객체가 있다면, 'intersects.length>0'값이 true
+                    */
+                    raycaster.setFromCamera(mouse, camera);
+                    let intersects = raycaster.intersectObjects(objects);
+
+                    if (intersects.length > 0) {
+                        intersects[0].object.callback();
+                    }
+
+                }
+
+                // Using the same logic as above, determine if we are currently mousing over a three.js object,
+                // and adjust the animation to provide visual feedback accordingly
+                function onDocumentMouseMove(event) {
+                    event.preventDefault();
+
+                    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+                    mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+                    raycaster.setFromCamera(mouse, camera);
+
+                    let intersects = raycaster.intersectObjects(objects);
+                    let canvas = document.body.getElementsByTagName('canvas')[0];
+
+                    if (intersects.length > 0) {
+                        intersects[0].object.rotation.x += .005;
+                        canvas.style.cursor = "pointer";
+                    } else {
+                        canvas.style.cursor = "default";
+                    }
+
+                }
+
+                document.addEventListener('mousedown', onDocumentMouseDown, false);
+                document.addEventListener('mousemove', onDocumentMouseMove, false);
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>clickObject</title>
+        <style>
+            *{padding: 0; margin: 0;}
+            html, body{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/DragControls.js"></script>
+        <script src="../js/controls/TrackballControls.js"></script>
+        <script src="../js/libs/stats.min.js"></script>
+
+        <script>
+            let container;
+            let camera, controls, scene, renderer;
+            let objects = [];
+            let {
+                Color,
+                Scene,
+                PerspectiveCamera,
+                AmbientLight,
+                SpotLight,
+                BoxBufferGeometry,
+                BoxGeometry,
+                OctahedronGeometry,
+                MeshLambertMaterial,
+                Mesh,
+                WebGLRenderer,
+                PCFShadowMap,
+                TrackballControls,
+                DragControls,
+                Raycaster,
+                Vector2
+            } = THREE;
+
+            function init(){
+                window.addEventListener('resize', onWindowResize, false);
+
+                container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //공간
+                scene = new Scene();
+                scene.background = new Color(0xf0f0f0);
+
+                //카메라
+                camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 10000);
+                camera.position.z = 10;
+                scene.add(camera);
+
+                //빛
+                const spotLight = new SpotLight(0xffffff, 1.5);
+                spotLight.position.set(0,10,10);
+
+                spotLight.castShadow = true;
+                spotLight.shadow.mapSize.width = 1024;
+                spotLight.shadow.mapSize.height = 1024;
+                scene.add(spotLight);
+
+                const light = new AmbientLight(0x505050);
+                scene.add(light);
+
+                //물체
+                const geometry_p = new OctahedronGeometry(4);
+                const geometry_b = new BoxGeometry(3,3,3);
+
+                const meterial_p = new MeshLambertMaterial({color:'#A64D79'});
+                const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+
+                const octahedron = new Mesh(geometry_p, meterial_p);
+                const cube = new Mesh(geometry_b, meterial_b);
+
+                octahedron.callback = clickHandler;
+                cube.callback = clickHandler2;
+
+                scene.add(octahedron);
+                scene.add(cube);
+
+                objects.push(octahedron);
+                objects.push(cube);
+
+                //랜더
+                renderer = new WebGLRenderer({antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                renderer.shadowMap.enabled = true;
+                container.appendChild(renderer.domElement);
+
+                //컨트롤러
+                controls = new TrackballControls(camera, renderer.domElement);
+                controls.rotateSpeed = 1.0;
+				controls.zoomSpeed = 1.2;
+				controls.panSpeed = 0.8;
+				controls.noZoom = false;
+				controls.noPan = false;
+				controls.staticMoving = true;
+				controls.dynamicDampingFactor = 0.3;
+
+                //스탯
+                stats = new Stats();
+                container.appendChild(stats.dom);
+
+                const dragControls = new DragControls(objects, camera, renderer.domElement);
+
+                /*드래그시작하면 trackballControls 작동x*/
+                dragControls.addEventListener('dragstart', function(){
+                    controls.enabled = false;
+                });
+
+                /*드래그끝나면 trackballControls 작동*/
+                dragControls.addEventListener('dragend', function(){
+                    controls.enabled = true;
+                });
+
+                function animate(){
+                    const speed = 0.005;
+                    octahedron.rotation.x += speed;
+                    octahedron.rotation.y += speed;
+                    octahedron.rotation.z += speed;
+                    render();
+                    requestAnimationFrame(animate);
+                }
+                requestAnimationFrame(animate);
+            }
+
+            /* 컨트롤에 의한 줌,아웃,마우스 컨트롤과 드래그컨트롤에 의한 이동을 위한 애니메이션 */
+            function DragAnimate(){
+                requestAnimationFrame( DragAnimate );
+                /*다시 그려야함으로!*/
+				render();
+                /*스탯 업데이트*/
+                stats.update();
+            }
+            function render(){
+                controls.update();
+				renderer.render( scene, camera );
+            }
+
+            function onWindowResize(){
+                camera.aspect = window.innerWidth/window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            function clickHandler() {
+                alert('정팔면체');
+            }
+
+            function clickHandler2() {
+                alert('큐브');
+            }
+
+            window.onload = function(){
+                init();
+                DragAnimate()
+
+                let raycaster = new Raycaster();
+                let mouse = new Vector2();
+
+                function onDocumentDbclick(event) {
+                    event.preventDefault();
+                    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+                    mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+                    raycaster.setFromCamera(mouse, camera);
+                    let intersects = raycaster.intersectObjects(objects);
+
+                    if (intersects.length > 0) {
+                        intersects[0].object.callback();
+                    }
+                }
+
+                renderer.domElement.addEventListener('dblclick', onDocumentDbclick, false);
+            }
+        </script>
+    </body>
+</html>

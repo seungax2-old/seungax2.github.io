@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<htmle>
+    <head>
+        <meta charset="utf-8">
+        <title>Three_cube</title>
+        <style>
+            *{padding: 0; margin: 0;}
+            #three{width: 100%; height:100%;}
+            html, body, canvas{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <div id="three"></div>
+        <script src="js/build/three.js"></script>
+        <script>
+            /*
+            Scene :: 공간
+            Mesh = Geometry + Material :: 피사체(물체) = 부피 + 질감 (기하학적 형태, 뼈대를 담당하는 부분) + (특정한 질감, 색, 반사율 등을 갖는 물체의 표면)
+            Camera :: 카메라
+            Light :: 빛
+            renderer :: 그림을 그릴 때 같은 풍경을 그리더라도 유화로 그릴 수도, 수채화로 그릴 수도 있을 것이다. 또한 종이에 그릴 수도 있고, 점토에, 철판에, 아크릴 판 에 그릴 수 있다. 이처럼 같은 그림을 그리더라도 다양한 재료와 캔버스에 그릴 수 있듯, (거칠게 비유하자면) 같은 공간Scene도 다양한 기술을 이용해 그려낼 수 있다.
+            */
+
+            const {
+                Scene,
+                WebGLRenderer,
+                GridHelper,
+                AxisHelper,
+                CameraHelper,
+                PerspectiveCamera,
+                PointLight,
+                SpotLight,
+                MeshLambertMaterial,
+                Mesh,
+                BoxGeometry
+            } = THREE;
+
+            const ThreeConTainer = document.querySelector("#three");
+            const window_w = ThreeConTainer.clientWidth;
+            const window_h = ThreeConTainer.clientHeight;
+            const cubeSize = window_w/8;
+            const scene = new Scene();
+            const renderer = new WebGLRenderer({alpha:true, antialias:true});
+            renderer.shadowMap.enabled = true;
+
+            renderer.setSize(window_w, window_h);
+            ThreeConTainer.appendChild(renderer.domElement);
+
+            const gridHelper = new GridHelper(window_w, window_w/45 ,0xE8E8E8);
+            scene.add(gridHelper)
+
+            const axisHelper = new AxisHelper(window_h);
+            axisHelper.position.y -= 0.1;  // The axis helper should not intefere with the grid helper
+            scene.add(axisHelper);
+
+            const camera = new PerspectiveCamera(
+                window_h,
+                window_w/window_h,
+                0.1,
+                10000
+            );
+            scene.add(camera);
+            camera.position.set(0,window_h,window_h);
+            camera.lookAt( 0,cubeSize,0 );
+
+            const pointLight = new SpotLight(0xFFFFFF, 1.5);
+            pointLight.position.copy(camera.position);
+            pointLight.castShdow = true;
+
+            var light = new THREE.AmbientLight( 0x404040 );
+            scene.add(light)
+
+            scene.add(pointLight);
+
+            /*재질 종류 1 :: 노란색 2 :: 파란색*/
+            const meterial_y = new MeshLambertMaterial({color:'#E69138'});
+            const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+
+            /*큐브1*/
+            const cube1 = new Mesh(new BoxGeometry(cubeSize,cubeSize,cubeSize), meterial_y);
+            cube1.position.y = cubeSize;
+            cube1.position.x = -window_w/6;
+
+            cube1.castShadow = true; //default is false
+
+            /*큐브2*/
+            const cube2 = new Mesh(new BoxGeometry(cubeSize,cubeSize,cubeSize), meterial_b)
+            cube2.position.y = cubeSize;
+            cube2.position.x = window_w/6;
+
+            scene.add(cube1);
+            scene.add(cube2);
+
+            //Create a plane that receives shadows (but does not cast them)
+            var planeGeometry = new THREE.PlaneBufferGeometry(window_w,window_w);
+            var planeMaterial = new THREE.MeshPhongMaterial( { color: 0xCCCCCC } )
+            var plane = new THREE.Mesh( planeGeometry, planeMaterial );
+            plane.rotation.x -= Math.PI /2;
+            plane.position.y = -1
+            plane.receiveShadow = true; //default is false
+            scene.add( plane );
+
+            /*빛들어오는 방향 알려줌*/
+         /*   const helper = new CameraHelper( pointLight.shadow.camera );
+            scene.add( helper );*/
+
+            function update () {
+                const speed = 0.005
+                cube1.rotation.x += speed
+                cube1.rotation.y += speed
+                cube1.rotation.z += speed
+
+                cube2.rotation.x += speed
+                cube2.rotation.y += speed
+                cube2.rotation.z += speed
+
+                //6. 그리다 :: 우리가 지금까지 만들어놓은 장면과 카메라를 이용해 화면을 실제로 그리라는 명령
+                renderer.render(scene, camera)
+                requestAnimationFrame(update)
+            }
+
+            requestAnimationFrame(update)
+        </script>
+    </body>
+</htmle>

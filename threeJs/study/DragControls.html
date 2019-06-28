@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>DragControls</title>
+        <style>
+            *{padding:0; margin: 0;}
+            html,body{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/DragControls.js"></script>
+        <script src="../js/controls/TrackballControls.js"></script>
+        <script src="../js/libs/stats.min.js"></script>
+
+        <script>
+            let container, stats;
+            let camera, controls, scene, renderer;
+            let objects = [];
+
+            let {
+                Color,
+                Scene,
+                PerspectiveCamera,
+                AmbientLight,
+                SpotLight,
+                BoxBufferGeometry,
+                BoxGeometry,
+                MeshLambertMaterial,
+                Mesh,
+                WebGLRenderer,
+                PCFShadowMap,
+                TrackballControls,
+                DragControls
+            } = THREE;
+
+            init();
+            animate();
+
+            function init(){
+                /*윈도우 사이즈 변하면 사이즈 다시 설정*/
+                window.addEventListener('resize', onWindowResize, false);
+
+                container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //공간-----------------------------------------
+                scene = new Scene();
+                scene.background = new Color(0xf0f0f0);
+
+                //카메라----------------------------------------
+                camera = new PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1 , 10000);
+                camera.position.z = 10;
+                scene.add(camera)
+
+                //빛-------------------------------------------
+                const spotLight = new SpotLight(0xffffff,1.5);
+                spotLight.position.set(0,10,10);
+
+                spotLight.castShadow = true;
+				spotLight.shadow.mapSize.width = 1024;
+				spotLight.shadow.mapSize.height = 1024;
+                scene.add(spotLight);
+
+                const light = new AmbientLight(0x505050);
+                scene.add(light);
+
+                //물체--------------------------------------------
+
+                /*뼈대*/
+                const geometry_cube_r = new BoxGeometry(2,2,2);
+                const geometry_cube_b = new BoxGeometry(3,3,3);
+
+                /*재질 종류 MeshLambertMaterial :: 무광택 */
+                const meterial_r = new MeshLambertMaterial({color:'#FF0000'});
+                const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+
+                /*물체 = 뼈대+재질*/
+                const cube_r = new Mesh(geometry_cube_r, meterial_r);
+                const cube_b = new Mesh(geometry_cube_b, meterial_b);
+
+                const geometry = new BoxBufferGeometry( 5, 5, 5 );
+                const material = new MeshLambertMaterial({color:'#A64D79'})
+                const cube = new Mesh(geometry,material);
+                cube.castShadow = true;
+                scene.add(cube);
+                scene.add(cube_r);
+                scene.add(cube_b);
+
+                objects.push(cube);
+                objects.push(cube_r);
+                objects.push(cube_b);
+
+                //renderer-----------------------------------------
+                renderer = new WebGLRenderer({antialias:true});
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                renderer.shadowMap.enabled = true;
+                /*default:: 그림자맵핑*/
+                renderer.shadowMap.type = PCFShadowMap;
+
+                container.appendChild(renderer.domElement);
+
+                //controls------------------------------------------
+                controls = new TrackballControls(camera, renderer.domElement);
+                controls.rotateSpeed = 1.0;
+                /*1zoom 에 얼만큼 땡기는지*/
+				controls.zoomSpeed = 1.2;
+				controls.panSpeed = 0.8;
+				controls.noZoom = false;
+				controls.noPan = false;
+				controls.staticMoving = true;
+				controls.dynamicDampingFactor = 0.3;
+
+                const dragControls = new DragControls(objects, camera, renderer.domElement);
+                /*드래그시작하면 trackballControls 작동x*/
+                dragControls.addEventListener('dragstart', function(){
+                    controls.enabled = false;
+                });
+
+                /*드래그끝나면 trackballControls 작동*/
+                dragControls.addEventListener('dragend', function(){
+                    controls.enabled = true;
+                });
+
+                //스탯----------------------------------------------
+                stats = new Stats();
+                container.appendChild(stats.dom);
+
+            }
+
+            //화면 사이즈 변경됬을시 resize
+            function onWindowResize(){
+                camera.aspect = window.innerWidth / window.innerHeight;
+                /*카메라에대한 effect 바꿔주는 함수*/
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            /* 컨트롤에 의한 줌,아웃,마우스 컨트롤과 드래그컨트롤에 의한 이동을 위한 애니메이션 */
+            function animate(){
+                requestAnimationFrame( animate );
+                /*다시 그려야함으로!*/
+				render();
+                /*스탯 업데이트*/
+				stats.update();
+            }
+            function render(){
+                controls.update();
+				renderer.render( scene, camera );
+            }
+
+        </script>
+    </body>
+</html>

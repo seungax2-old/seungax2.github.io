@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Three_octahedron</title>
+        <style>
+            *{padding: 0; margin: 0;}
+            #three{width: 100%; height:100%;}
+            html, body, canvas{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <div id="three"></div>
+
+        <script src="js/build/three.js"></script>
+		<script>
+            /*
+            Scene :: 공간
+            Mesh = Geometry + Material :: 피사체(물체) = 부피 + 질감 (기하학적 형태, 뼈대를 담당하는 부분) + (특정한 질감, 색, 반사율 등을 갖는 물체의 표면)
+            Camera :: 카메라
+            Light :: 빛
+            renderer :: 그림을 그릴 때 같은 풍경을 그리더라도 유화로 그릴 수도, 수채화로 그릴 수도 있을 것이다. 또한 종이에 그릴 수도 있고, 점토에, 철판에, 아크릴 판 에 그릴 수 있다. 이처럼 같은 그림을 그리더라도 다양한 재료와 캔버스에 그릴 수 있듯, (거칠게 비유하자면) 같은 공간Scene도 다양한 기술을 이용해 그려낼 수 있다.
+            */
+
+            /*Destructuring assignment(구조분해 할당) => const renderer = new THREE.WebGLRenderer() -> const renderer = new WebGLRenderer() */
+            const {
+                WebGLRenderer,
+                PerspectiveCamera,
+                Scene,
+                PointLight,
+                MeshLambertMaterial,
+                Mesh,
+                OctahedronGeometry,
+                GridHelper,
+                AxisHelper
+            } = THREE
+
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            /*공간 올릴 영역*/
+            const container = document.querySelector('#three');
+
+            //1.공간
+            const scene = new Scene();
+            /*공간안에 그리는 작업을 하는 부분 */
+            const renderer = new WebGLRenderer({
+                /*투명한배경*/
+                alpha : true,
+                /*안티얼라이어스 :: 그래픽이 계단형식으로 깨지는것을 막아주는 기능*/
+                antialias : true
+            });
+
+            /*
+            공간 사이즈 설정하기
+            앱의 크기를 유지하면서 해상도를 낮추려면 setSize 를 false로 호출 하여 updateStyle (세 번째 인수) 을 호출
+            ex) <canvas>의 너비와 높이가 100 % 인 경우 setSize (window.innerWidth / 2, window.innerHeight / 2, false) 는 절반의 해상도로 응용 프로그램을 렌더링
+            */
+
+            renderer.setSize(width,height);
+            container.appendChild(renderer.domElement);
+
+            /*GridHelper( size : number, divisions : Number, colorCenterLine : Color, colorGrid : Color )*/
+            const gridHelper = new GridHelper(width/2, 30);
+            gridHelper.colorGrid = 0xE8E8E8;
+            scene.add( gridHelper );
+            // Add an axis helper
+            const ah = new AxisHelper(height);
+            ah.position.y -= 0.1;  // The axis helper should not intefere with the grid helper
+            scene.add( ah );
+
+            //2.카메라
+            /*
+            three.js 다양한 카메라 있음. 지금은 PerspectiveCamera(원근감있는 카메라)를 사용
+
+            FIELDOFVIEW: 카메라의 시야각을 의미한다. 커질 수록 카메라가 바라보는 시야각이 넓어짐을 의미한다. 단위는 degree(각도).
+            ASPECT: 시야의 가로세로비를 의미한다. 컨테이너의 가로세로비와 동일한 값을 넣어주는게 좋다. 단위 없음.
+            NEAR: 렌더링 할 물체 거리의 하한값으로, 너무 가까이 있는 물체를 그리는 것을 막기 위해 사용한다. 카메라로부터의 거리가 이 값보다 작은 물체는 화면에 그리지 않는다. 0보다 크고 FAR 보다 작은 값을 가질 수 있다.
+            FAR: 렌더링 할 물체 거리의 상한값으로, 너무 멀리 있는 물체를 그리는 것을 막기 위해 사용한다. 카메라로부터의 거리가 이 값보다 큰 물체는 화면에 그리지 않는다.
+
+             **공부를 위해 따로 변수로 확인 실제코딩시 바로 값 넣어서 사용해도 됨!
+            */
+            const FIELDOFVIEW = width/2;
+            const ASPECT = width / height;
+            const NEAR = 0.1;
+            const FAR = 10000;
+
+            const camera = new PerspectiveCamera(
+                FIELDOFVIEW,
+                ASPECT,
+                NEAR,
+                FAR
+            );
+            /*공간에 카메라올리고*/
+            scene.add(camera);
+            /* x좌표를 음수로해야 오른쪽으로갈수록 + , 그리드헬퍼를 한눈에 보기위한 위치선정*/
+            camera.position.set(-width/2,height/4,width/8);
+            camera.lookAt( 0,0,0 );
+
+            //3.빛
+            /*
+            모든 광원의 생성자는 기본적으로 색깔(color)와 세기(intensity)의 두 인자를 받음
+            three.js는 공간 전체를 밝히는 AmbientLight, 특정 방향으로 뻗어나가는 DirectionalRight 등 다양한 종류의 광원을 제공
+            이 코드에서는 가장 기본적인 광원 중 하나인 PointLight를 사용
+
+            Light( color : Integer, intensity : float )
+            color - 빛의 (선택 사항) 16 진수 색상. 기본값은 0xffffff (흰색)
+            intensity (강도) - (선택 사항) 빛의 강도의 숫자 값. 기본값은 1
+            */
+            const pointLight = new PointLight(0xFFFFFF, 1);
+            /*조명위치*/
+            pointLight.position.x = -width/2
+            pointLight.position.y = height/4
+            pointLight.position.z = width/2
+
+            /*공간에 조명올리고!*/
+            scene.add(pointLight);
+
+            //4.피사체
+            /*
+            정팔면체
+            OctahedronGeometry(radius : Float, detail : Integer)
+            radius :: Radius of the octahedron. Default is 1. 1밑으로는 작아지고 1 이상은 커짐 반지름!!
+            detail :: Default is 0. Setting this to a value greater than zero add vertices making it no longer an octahedron.(이 값을 0보다 큰 값으로 설정하면 정점이 추가-> 팔면체 아니게됨.)
+            */
+
+            /*
+            코드가 const material = new THREE.MeshBasicMaterial({ color: '#ff3030' }); 일때 화면에 아무런 변화가 없는데, 이는 아직까지도 팔면체의 표면이 빛과 상호작용을 전혀 하지 않기 때문
+            three.js 에서는 빛과 상호작용하는 표면 중 자주 쓰이는 표면 모델 몇 가지를 기본적으로 제공
+            그 중 이 코드에서는 람베르트 반사율(무광택)을 갖는 물체의 표면을 나타내는 MeshLambertMaterial를 이용
+            const material = new THREE.MeshBasicMaterial({ color: '#ff3030' }) -> const material = new THREE.MeshLambertMaterial({ color: 0xFF3030 });
+            */
+            const radius = width/8;
+            const meterial = new MeshLambertMaterial({color:'#BDCABD'});
+            const octahedron = new Mesh(new OctahedronGeometry(radius), meterial)
+            /*octahedron.position.z = -radius;*/
+            octahedron.position.y = radius
+            /*octahedron.position.x = -width;*/
+            /*공간에 피사체 올리고*/
+            scene.add(octahedron);
+
+            //5.애니메이션
+            /*
+            매 프레임마다 0 ~ 0.05 사이의 값을 임의로 정한 뒤, x, y, z 축마다 해당 값만큼의 회전
+            그 뒤에  scene을 다시 그리고, 자기 자신을 requestAnimationFrame 함수의 인자로 다시 넘겨 호출
+            */
+            function update () {
+                const speed = 0.005
+                octahedron.rotation.x += speed
+                octahedron.rotation.y += speed
+                octahedron.rotation.z += speed
+
+                //6. 그리다 :: 우리가 지금까지 만들어놓은 장면과 카메라를 이용해 화면을 실제로 그리라는 명령
+                renderer.render(scene, camera)
+                requestAnimationFrame(update)
+            }
+
+            requestAnimationFrame(update)
+		</script>
+    </body>
+</html>

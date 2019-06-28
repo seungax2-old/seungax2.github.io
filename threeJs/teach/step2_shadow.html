@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Teach_RotaionCube</title>
+        <style>
+            *{margin: 0; padding: 0;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script>
+            const init = function(){
+                const container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //1.공간,장면
+                const scene = new THREE.Scene();
+
+                //2.랜더러
+                const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+                /*
+                공간에 그림자를 사용하겠다는 선언 defalut : false
+                선언후 그림자를 내는 객채에는 (객체.castShadow = true;) 그림자를 받아서 보여주는 부분에는 (객체.receiveShadow = true;)
+                */
+                renderer.shadowMap.enabled = true;
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                //3.카메라
+                const cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
+                cam.position.set(0,2,-4);
+                cam.lookAt(0,0,0);
+
+                //4.빛
+                const light = new THREE.PointLight(0xFFFFFF, 1);
+                light.position.set(2,3,-4);
+                scene.add(light);
+                light.castShadow = true;
+
+                /*
+                mapSize : Vector2
+                그림자 맵의 폭과 높이를 정의 하는 Vector2
+                값이 높을수록 계산 시간이 오래 걸리지 만 더 좋은 음영을 얻을 수 있다.
+                값은 2의 거듭 제곱이어야하며 폭과 높이가 동일하지 않아도 (예 : (512, 1024)가 유효 함)
+                주어진 장치에 대한 WebGLRenderer.capabilities .maxTextureSize까지 허용 기본값은 (512, 512)
+                */
+                light.shadow.mapSize.width = 1556;
+                light.shadow.mapSize.height = 1556;
+
+
+                const ambientLight = new THREE.AmbientLight(0x808080);
+                scene.add(ambientLight);
+
+                //5.물체
+                const cube_Geometry = new THREE.BoxGeometry(2,2,2);
+                const cube_Meterial = new THREE.MeshLambertMaterial({color:'#3666d3'});
+                const cube = new THREE.Mesh(cube_Geometry,cube_Meterial);
+                scene.add(cube);
+                cube.castShadow = true;
+
+                const plane_Geometry = new THREE.PlaneGeometry(20,20,20);
+                const plane_meterial = new THREE.MeshPhongMaterial({color:'#45818E'});
+                const plane = new THREE.Mesh(plane_Geometry, plane_meterial);
+                scene.add(plane);
+                plane.rotation.x = - Math.PI / 2
+                plane.position.set(0,-5,0);
+                plane.receiveShadow = true;
+
+                const animation = function(){
+                    const speed = 0.005;
+                    cube.rotation.y += speed;
+
+                    //카메라를 사용하여 장면을 렌더링
+                    renderer.render(scene,cam);
+                    requestAnimationFrame(animation);
+                }
+                requestAnimationFrame(animation);
+            }
+            window.onload = init();
+        </script>
+    </body>
+</html>

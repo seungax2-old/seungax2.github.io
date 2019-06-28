@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>THREE_shadowTest</title>
+        <style>
+            *{padding: 0; margin: 0;}
+            #three{width: 100%; height:100%;}
+            \
+            html, body, canvas{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <div id="three"></div>
+        <script src="js/build/three.js"></script>
+        <script>
+            function init(){
+                const {
+                    Scene,
+                    WebGLRenderer,
+                    AxisHelper,
+                    PerspectiveCamera,
+                    PointLight,
+                    SpotLight,
+                    MeshLambertMaterial,
+                    MeshBasicMaterial,
+                    MeshPhongMaterial,
+                    Mesh,
+                    BoxGeometry,
+                    PlaneGeometry,
+                    GridHelper,
+                    CameraHelper
+                } = THREE;
+
+                const scene = new Scene();
+                const renderer = new WebGLRenderer({alpha:true, antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.shadowMap.enabled = true;
+                document.querySelector("#three").appendChild(renderer.domElement);
+
+                const camera = new PerspectiveCamera(80, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+                /*카메라 포지션(가이드라인 노랑),빛 포지션 잡을때 x > 좌우 y > 위아래 z> 앞뒤*/
+                camera.position.set(-10,15,-15);
+                camera.lookAt(scene.position);
+                scene.add(camera)
+
+                const planeGeometry = new PlaneGeometry(60,60,1,1);
+                const planeMaterial = new MeshPhongMaterial({color: 0xCCCCCC});
+                const plane = new Mesh(planeGeometry, planeMaterial);
+                plane.rotation.x = -0.5 * Math.PI;
+                plane.receiveShadow = true;
+                scene.add(plane);
+
+                /*피사체*/
+
+                /*재질 종류 1 :: 노란색 2 :: 파란색*/
+                const meterial_y = new MeshLambertMaterial({color:'#E69138'});
+                const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+
+                const cube = new Mesh(new BoxGeometry(6,6,6),meterial_b);
+                cube.position.y = 6
+                cube.position.x = -6
+                cube.castShadow = true;
+                scene.add(cube);
+
+                const cube2 = new Mesh(new BoxGeometry(6,6,6),meterial_y);
+                cube2.position.y = 6
+                cube2.position.x = 6
+                cube2.castShadow = true;
+                scene.add(cube2);
+
+                /*빛*/
+                var light = new THREE.AmbientLight( 0x404040 );
+                scene.add(light)
+
+                var spotLight = new SpotLight(0xFFFFFF,1);
+                spotLight.position.set(0,30,-10);
+                spotLight.shadow.mapSize.width = 5120;
+                spotLight.shadow.mapSize.height = 5120;
+                spotLight.castShadow = true;
+                scene.add(spotLight);
+
+                const axisHelper = new AxisHelper(10);
+                scene.add(axisHelper);
+
+                const gridHelper = new GridHelper(60, 60,0xE8E8E8);
+                scene.add(gridHelper)
+
+               /* const cameraHelper = new CameraHelper(spotLight.shadow.camera );
+                scene.add( cameraHelper );*/
+
+                function update () {
+                    const speed = 0.005
+                    cube.rotation.x += speed
+                    cube.rotation.y += speed
+                    cube.rotation.z += speed
+
+                    cube2.rotation.x += speed
+                    cube2.rotation.y += speed
+                    cube2.rotation.z += speed
+
+                    //6. 그리다 :: 우리가 지금까지 만들어놓은 장면과 카메라를 이용해 화면을 실제로 그리라는 명령
+                    renderer.render(scene, camera)
+                    requestAnimationFrame(update)
+                }
+
+                requestAnimationFrame(update)
+            }
+            window.onload = init();
+        </script>
+    </body>
+</html>

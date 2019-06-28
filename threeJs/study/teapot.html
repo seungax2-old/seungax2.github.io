@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>teapot</title>
+        <style>
+            *{padding:0; margin:0;}
+            html, body{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/OrbitControls.js"></script>
+		<script src="../js/WebGL.js"></script>
+		<script src='../js/libs/dat.gui.min.js'></script>
+		<script src='../js/geometries/TeapotBufferGeometry.js'></script>
+
+        <script>
+            //WEBGL 가능한 브라우저인지 확인
+            if(WEBGL.isWebGLAvailable() === false){
+                document.body.appendChild(WEBGL.getWebGLErrorMessage());
+            }
+            let {
+                //-------------------
+                Color,
+                Scene,
+                WebGLRenderer,
+                PerspectiveCamera,
+                AmbientLight,
+                DirectionalLight,
+                OrbitControls,
+                //-------------------
+                TextureLoader,
+                RepeatWrapping,
+                CubeTextureLoader,
+                //-------------------
+                MeshBasicMaterial,
+                MeshPhongMaterial,
+                MeshLambertMaterial,
+                DoubleSide,
+                //-------------------
+                TeapotBufferGeometry,
+                Mesh
+            } = THREE;
+
+            let scene, renderer, camera, light, ambientLight;
+            let cameraControls, effectController;
+
+            let textureCube;
+            let flatMaterial,gouraudMaterial,phongMaterial,texturedMaterial,reflectiveMaterial;
+
+            /*명암컬러*/
+            let diffuseColor = new Color();
+            /*하이라이트컬러*/
+            let specularColor = new Color();
+
+            /*기본세팅 base주전자*/
+            let teapot;
+            let teapotSize = 400;
+
+            let tess = - 1;	// force initialization(강제초기화)
+			let bBottom;
+			let bLid;
+			let bBody;
+			let bFitLid;
+			let bNonBlinn;
+			let shading;
+
+            let init = function(){
+                //기본틀 START --------------------------------------------------------------------------------------------------
+
+                window.addEventListener('resize', onWindowResize, false);
+
+                const container = document.createElement('div');
+                document.body.appendChild(container);
+
+                const canvasWidth = window.innerWidth;
+                const canvasHeight = window.innerHeight;
+
+                //scene
+                scene = new Scene();
+                scene.background = new Color(0xAAAAAA);
+
+                //renderer
+                renderer = new WebGLRenderer({antialias:true});
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(canvasWidth,canvasHeight);
+                //TODO :: 찾아보기 일단 지금까진 색이 더 밝아짐
+                renderer.gammaInput = true;
+                renderer.gammaOutput = true;
+                container.appendChild(renderer.domElement);
+
+                //camera
+                camera = new PerspectiveCamera(45, canvasWidth/canvasHeight, 1, 80000);
+                camera.position.set(-600,550,1300);
+                scene.add(camera);
+
+                //light
+                ambientLight = new AmbientLight(0x333333);
+                light = new DirectionalLight(0xFFFFFF, 1.0);
+                scene.add(ambientLight);
+                scene.add(light);
+
+                //controls
+                cameraControls = new OrbitControls(camera, renderer.domElement);
+                cameraControls.addEventListener('change', render);
+
+                //기본틀 END --------------------------------------------------------------------------------------------------
+
+                //textureMap -------------------------------------------------------------------------------------------------
+                /*
+                    UV 매핑이란!
+                    삼각형 위에 이미지를 입히려면 어떻게 해야 할까요? '이 삼각형의 왼쪽 꼭짓점에 저 이미지의 오른쪽 귀퉁이 픽셀을 출력할 것'과 같은 지시를 내릴 수 있어야겠죠? (이렇게 다른 두 점을 서로 대응시키는 것을 영어로 매핑(mapping)이라고 합니다.)
+
+                    삼각형은 이미 정점 3개로 이루어져 있으니 각 정점을 텍스처 위에 있는 한 픽셀에 대응시켜 주면 되겠군요. 그럼 텍스처 위에서 한 픽셀을 어떻게 가리킬까요? 텍스처란 결국 이미지 파일이니까 'x = 30, y = 101에 있는 픽셀'이라는 식으로 정의하면 될까요? 만약 이렇게 정의를 해버리면 나중에 이미지 파일의 크기를 2배로 늘리면 이것을 다시 x = 60, y = 202로 바꿔야겠네요. 별로 바람직하지 않죠?
+
+                    x = 0이 텍스처의 제일 왼쪽 열을, x = 1은 제일 오른쪽 열을 나타낸다고 하면 되겠죠? 마찬가지로 y = 0은 텍스처의 제일 처음 행을, y = 1은 마지막 행을 나타냅니다. 참고로 텍스처매핑을 사용할 때는 XY대신에 UV를 사용하는 게 보통입니다. 특별한 이유는 없고 그냥 위치를 표현할 때 흔히 xy를 사용하니 그와 혼돈을 피하기 위해서!!!!!
+                */
+
+
+                const textureMap = new TextureLoader().load('../textures/UV_Grid_Sm.jpg');
+                /*
+                    wrapS :: 텍스처가 수평으로 감싸는 방법을 정의 하고 UV 매핑에서 U 에 해당
+                    wrapT :: 텍스처가 수직으로 감싸는 방법을 정의 하고 UV 매핑에서 V 에 해당
+
+                */
+                textureMap.wrapS = textureMap.wrapT = RepeatWrapping;
+                /*
+                가장 높은 텍셀(텍스처에서의 화소) 밀도를 갖는 픽셀을 통해 축을 따라 취해진 샘플의 수. 기본적으로이 값은 1입니다. 값이 높을수록 기본 밉맵보다 흐릿한 결과를 얻을 수 있습니다. 사용되는 텍스처 샘플이 많아집니다. renderer.getMaxAnisotropy ()를 사용 하여 GPU의 최대 이방성 값을 찾습니다. 이 값은 일반적으로 2의 거듭 제곱입니다.
+                */
+                textureMap.anisotropy = 16;
+
+
+                //REFLECTION MAP ---------------------------------------------------------------------------------------------
+                /*:: https://lifeisforu.tistory.com/375(이해참고)*/
+                const path = "../textures/cube/skybox/";
+                const urls = [
+                    path + "px.jpg", path + "nx.jpg"  ,
+                    path + "py.jpg", path + "ny.jpg",
+                    path + "pz.jpg", path + "nz.jpg"
+                ];
+                textureCube = new CubeTextureLoader().load(urls);
+
+
+                //meterials 질감 -----------------------------------------------------------------------------------------------
+
+                /*1.질감색 => 검정*/
+                const meterialColor = new Color();
+                meterialColor.setRGB(1.0, 1.0, 1.0);
+
+                /*삼각형기본으로 물체의 프레임보여줌*/
+                wireMaterial = new MeshBasicMaterial({color:0xFFFFFF, wireframe:true});
+
+                /*
+                    - specular::Specular reflection 은 표면으로부터의 거울 같은 빛의 반사( 또는 다른 종류의 wave 에 대한 반사 )이다. 여기선 재질의 반사 색상입니다. 기본값은 0x111111 (매우 어두운 회색)으로 설정된 색 입니다 . 이것은 물질이 얼마나 빛나는 지와 빛의 색깔을 정의합니다
+
+                    - flatShading::재질이 평면 음영으로 렌더링되는지 여부를 정의 기본값은 false
+
+                    - side::
+                        <Material.side>     <Side casting shadows>
+                        THREE.FrontSide     back side
+                        THREE.BackSide      front side
+                        THREE.DoubleSide	both sides
+
+                */
+
+                /*납짝한 양면으로 그림자 들어갈 수있는 재질*/
+                flatMaterial = new MeshPhongMaterial({color:meterialColor, specular:0x000000, flatShading : true, side:DoubleSide});
+
+                /*둥근 부분 재질 :: https://en.wikipedia.org/wiki/Gouraud_shading*/
+                gouraudMaterial = new MeshLambertMaterial({color:meterialColor, side:DoubleSide})
+
+                /*반사 하이라이트가있는 반짝이는 표면을위한 소재. */
+                phongMaterial = new MeshPhongMaterial({color:meterialColor, side:DoubleSide});
+
+                /*텍스쳐*/
+                texturedMaterial = new MeshPhongMaterial({color:meterialColor, map:textureMap, side:DoubleSide});
+
+                /*반사텍스쳐 envMap:The environment map. Default is null.*/
+                reflectiveMaterial = new MeshPhongMaterial({color:meterialColor, envMap:textureCube, side:DoubleSide});
+
+                // GUI
+				setupGui();
+
+            }
+
+            function onWindowResize() {
+				let chage_canvasWidth = window.innerWidth;
+				let chage_canvasHeight = window.innerHeight;
+				renderer.setSize( chage_canvasWidth, chage_canvasHeight );
+				camera.aspect = chage_canvasWidth / chage_canvasHeight;
+				camera.updateProjectionMatrix();
+
+				render();
+			}
+
+            let setupGui = function(){
+                /*
+                    이미지적 확인 :: http://rapapa.net/?p=2525
+
+                    3D Graphics에서 물체가 가지는 최종적인 색상을 이야기할 때 네가지로 구분
+
+                    <Ambient Color>
+                    https://m.blog.naver.com/PostView.nhn?blogId=zinblue&logNo=140196677300&proxyReferer=https%3A%2F%2Fwww.google.com%2F > ambient 자세히
+
+                    환경에 산란하여 물체가 발하는 평균 색상 혹은 고정 색상이다. 그러므로 물체에 비치는 특정 빛에 의해서 영향을 받지 않고 모든 버텍스에 대해서 동일한 강도를 가진다. 이 색상은 물체의 모든 면에 닿는 강도가 같고 방향이 없다. 그래서 Ambient Color만 적용하여 렌더링한 물체는 아래 그림처럼 Flat한 2D Object처럼 보이게 된다. 그래서 Ambient Color를 물체가 빛을 받지 않는 영역인 어두운 쪽의 색상이라고도 한다.
+
+                    <Diffuse Color>
+                    하나의 방향성이 있는 빛에 의한 물체 표면의 색깔이다. 이 Diffuse Color는 빛의 방향과 물체의 Normal Vector와의 관계에 따라 색상의 강도가 달라진다. 즉 빛이 밝은 곳에서는 강한 Diffuse 색상이 나오고, 어두운쪽으로 갈 수록 약한 Diffuse 색상이 나온다. 이 Diffuse Color와 Ambient Color가 합쳐지면 우리가 평상 시에 보는 3D 공간에서의 물체의 색깔과 거의 흡사하게 된다.
+
+                    <Specular Color>
+                    밝게 하이라이트 되는 부분의 빛의 색상이다. Specular Color는 물체의 Normal과 카메라, 즉 View Direction(보는 방향)과 연관되어 강도가 결정된다. Ambient, Diffuse, Specular Color를 합치면 사실적인 물체에 근접한다.
+
+                    <Emissive Color>
+                    위의 세 가지 타입의 빛의 색상과 달리 Emissive Color는 물체의 표면 속성 자체에서 뿜어 나오는 색상이다. 즉 외부 빛에 의한 색상이라기보다는 오브젝트 자체로부터 발산하는 Glow 색상이다. 실제로 빛을 발생하지는 않지만 빛이 발생하는 느낌의 색상이며 3D Graphics에서는 램프나 발광 물체, 큐브 매핑 등을 만들 때 쓴다.
+
+                    여기서 접두어 K는 RGB로 이뤄진 값을 의미한다.
+                    mtl 파일은 RGB를 0-1의 실수로 정의한다.
+
+                    Ka (r g b) : ambient를 나타낸다.
+                    kd (r g b) : diffuse를 나타낸다.
+                    ks (r g b) : specular를 나타낸다.
+                    ke (r g b) : coeficient를 나타낸다. 주의) 1995년 표준에는 적혀있지 않는 이후 추가된 feature다.
+
+                    -----------------------------------------------
+
+                    색상(hue), 명도(lightness), 채도(saturation)
+
+                    -----------------------------------------------
+                    https://namu.wiki/w/%ED%85%8C%EC%85%80%EB%A0%88%EC%9D%B4%EC%85%98
+                    테셀레이션(Tessellation) ::
+                    원래 게임 그래픽은 요구 사양에 대한 낮은 진입 장벽을 위해 주로 자잘한 디테일은 생략하고 평면적인 껍데기(메쉬)에다가 색칠(텍스처)을 하는 식으로 구성된다. 이 메쉬를 구성하는 단위는 폴리곤인데 폴리곤은 전부 삼각형 모양이기 때문에 메쉬를 구성하는 폴리곤 숫자가 적으면 자연스레 겉면이 울퉁불퉁해지고 어색해진다. 옛날 3D 게임의 바퀴가 원형이 아닌 육각형으로 구성되어 있는 이유는 폴리곤 숫자가 적기 때문이다.
+
+                    이는 바위나 자갈 같은 것에서도 마찬가지인데, 사실 바위의 거친 표면이나 자갈 하나하나를 폴리곤으로 구성하려면 굉장히 힘이 들고 사양 또한 무지막지하게 잡아먹는다. 그래서 그래픽 엔지니어들은 자잘한 디테일은 생략하고 평면을 깔아 그 위에 울퉁불퉁하게 보이기 위해 범프매핑이나 노말 매핑, 패럴랙스 매핑, 패럴랙스 오클루젼 매핑[2] 등의 기법을 이용하여 눈속임을 했었다.
+
+                    테셀레이션은 이런 눈속임이 아니라 말 그대로 자잘한 것까지 모조리 폴리곤으로 구성하는 기술
+                */
+
+                effectController = {
+                    /*표면 속성*/
+                    shininess : 40.0,
+                    ka : 0.17,
+                    kd : 0.51,
+                    ks : 0.2,
+                    metallic : true,
+
+                    /*물체의 색상,명도,채도*/
+                    hue : 0.121,
+                    saturation : 0.73,
+                    lightness : 0.66,
+
+                    /*빛의 색상,명도,채도*/
+                    lhue : 0.04,
+                    lsaturation : 0.01,
+                    llightness : 1.0,
+
+                    /*빛의위치*/
+                    lx : 0.32,
+                    ly : 0.39,
+                    lz : 0.7,
+
+                    /*테셀레이션*/
+                    newTess : 15,
+                    bottom : true,
+                    lid : true,
+                    body : true,
+                    fitLid : false,
+                    nonblinn : false,
+                    newShading : "glossy"
+                }
+
+                let remote;
+                let gui = new dat.GUI({width:500});
+
+                /*
+                    remote.add(컨트롤러데이터모여둔데는 여기고, "이속성 데이터 가져오고", 최저값, 최고값, 여기 단위로 값의 증가, 감소).name("이 리모컨 속성이름은 이거고").onChange(바뀌면 다시 그려야지이);
+
+                    ** 여기 단위로 값의 증가, 감소 ex ) 1.0 -> 2.0 -> 3.0
+                */
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("표면속성");
+
+                remote.add(effectController, "shininess", 1.0, 400.0, 1.0).name("shininess : 광택").onChange(render);
+
+                remote.add(effectController, "ka", 0.0, 1.0, 0.025).name("ambient : 환경광").onChange(render);
+
+                remote.add(effectController, "kd", 0.0, 1.0, 0.025).name("diffuse strength : 명암").onChange(render);
+
+                remote.add(effectController, "ks", 0.0, 1.0, 0.025).name("specular strength : 하이라이트").onChange(render);
+
+                remote.add(effectController, "metallic").onChange(render);
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("질감 색");
+
+                remote.add(effectController, "hue", 0.0, 1.0, 0.025).name("hue : 색상").onChange(render);
+
+                remote.add(effectController, "saturation", 0.0, 1.0, 0.025).name("saturation : 명도").onChange(render);
+
+                remote.add(effectController, "lightness", 0.0, 1.0, 0.025).name("lightness : 채도").onChange(render);
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("빛");
+
+                remote.add(effectController, "lhue", 0.0, 1.0, 0.025).name("hue : 색상").onChange(render);
+
+                remote.add(effectController, "lsaturation", 0.0, 1.0, 0.025).name("saturation : 명도").onChange(render);
+
+                remote.add(effectController, "llightness", 0.0, 1.0, 0.025).name("lightness: 채도").onChange(render);
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("빛 위치");
+
+                remote.add(effectController, "lx", -1.0, 1.0, 0.025).name("x").onChange(render);
+
+                remote.add(effectController, "ly", -1.0, 1.0, 0.025).name("y").onChange(render);
+
+                remote.add(effectController, "lz", -1.0, 1.0, 0.025).name("z").onChange(render);
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("테셀레이션");
+
+                remote.add(effectController, "newTess", [2,3,4,5,6,7,8,9,10,11,12,13,15,20]).name("Tessellation Level : 테셀레이션 레벨").onChange(render);
+
+                remote.add(effectController, "lid").name("display lid : 뚜껑").onChange(render);
+
+                remote.add(effectController, "body").name("display body : 몸체").onChange(render);
+
+                remote.add(effectController, "bottom").name("display bottom : 주전자 바닥").onChange(render);
+
+                remote.add(effectController, "fitLid").name("snug lid : 뚜껑 딱 맞는 사이즈").onChange(render);
+
+                remote.add(effectController, "nonblinn").name("original scale").onChange(render);
+
+                //-----------------------------------------------------------
+
+                remote = gui.addFolder("음영");
+                remote.add(effectController, "newShading", ["wireframe", "flat", "smooth", "glossy", "textured", "reflective"]).name("Shading").onChange(render);
+
+                //-----------------------------------------------------------
+
+            }
+
+            let render = function(){
+                //1. 만약 effectController 기본설정과 기본 주전자 값이 다르면 새로 주전자 만들어라. -> 첫시작시 값 x -> 값다름 주전자 만들기!
+                if(
+                    effectController.newTess !== tess ||
+                    effectController.bottom !== bBottom ||
+                    effectController.lid !== bLid ||
+                    effectController.body !== bBody ||
+                    effectController.fitLid !== bFitLid ||
+                    effectController.nonblinn !== bNonBlinn ||
+                    effectController.newShading !== shading
+                ){
+                    tess = effectController.newTess;
+                    bBottom = effectController.bottom;
+                    bBody = effectController.body;
+                    bFitLid = effectController.fitLid;
+                    bNonBlinn = effectController.nonblinn;
+                    shading = effectController.newShading;
+
+                    createNewTeapot();
+                }
+
+                /*
+                스칼라곱>
+                http://dirac.daegu.ac.kr/bjmin/MathematicalPhysics/Vectors/scalarProduct.html
+                RGB 벡터>
+                https://m.blog.naver.com/PostView.nhn?blogId=ratoa&logNo=220436411040&proxyReferer=https%3A%2F%2Fwww.google.com%2F
+                */
+
+                phongMaterial.shininess = effectController.shininess;
+                texturedMaterial.shininess = effectController.shininess;
+
+                /*setHSL(색상,채도, 밝기)*/
+                diffuseColor.setHSL(effectController.hue, effectController.saturation, effectController.lightness);
+
+                /*메탈 이면 하이라이트에 지정된 색의 명암을 넣어주고 아니면 그냥 백색*/
+                if(effectController.metallic){
+                    specularColor.copy(diffuseColor);
+                }else{
+                    specularColor.setRGB(1,1,1);
+                }
+
+                /*
+                    multiplyScalar : 이 색상의 RGB 값에 s를 곱합니다
+                */
+                diffuseColor.multiplyScalar(effectController.kd);
+                flatMaterial.color.copy(diffuseColor);
+                gouraudMaterial.color.copy(diffuseColor);
+                phongMaterial.color.copy(diffuseColor);
+                texturedMaterial.color.copy(diffuseColor);
+
+                specularColor.multiplyScalar(effectController.ks);
+                phongMaterial.specular.copy(specularColor);
+                texturedMaterial.specular.copy(specularColor);
+
+                ambientLight.color.setHSL(effectController.hue, effectController.saturation, effectController.lightness*effectController.ka);
+
+                light.position.set(effectController.lx, effectController.ly, effectController.lz);
+                light.color.setHSL(effectController.lhue, effectController.lsaturation, effectController.llightness);
+
+                if(shading == "reflective"){
+                    scene.background = textureCube;
+                }else{
+                    scene.background = null;
+                }
+
+                renderer.render( scene, camera );
+
+            }
+
+            //설정값 바뀔때마다 생성하게 됨으로
+            let createNewTeapot = function(){
+                //teapot이 이미 생성되있다면 지워라! 새로만들꺼니까
+                if(teapot !== undefined){
+                    teapot.geometry.dispose();
+                    scene.remove(teapot);
+                }
+
+                let teapotGeometry = new TeapotBufferGeometry(
+                    teapotSize,
+                    tess,
+                    effectController.bottom,
+                    effectController.lid,
+                    effectController.body,
+                    effectController.fitLid,
+                    !effectController.nonblinn
+                );
+
+                /*삼항연산자*/
+                let teapotMeterial;
+                if(shading === "wireframe"){
+                    teapotMeterial = wireMaterial
+                }else if(shading === "flat"){
+                    teapotMeterial = flatMaterial
+                }else if(shading === "smooth"){
+                    teapotMeterial = gouraudMaterial
+                }else if(shading === "glossy"){
+                    teapotMeterial = phongMaterial
+                }else if(shading === "textured"){
+                    teapotMeterial = texturedMaterial
+                }else{
+                    teapotMeterial = reflectiveMaterial
+                }
+
+                teapot = new Mesh(
+                    teapotGeometry,
+                    teapotMeterial
+                );
+                scene.add(teapot);
+            }
+
+            init();
+            render();
+        </script>
+    </body>
+</html>

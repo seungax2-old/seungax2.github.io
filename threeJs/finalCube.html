@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>THREE_Cube_demo</title>
+        <style>
+            *{margin: 0; padding: 0;}
+            /*body,html,canvas{width: 100%; height: 100%;}*/
+        </style>
+    </head>
+    <body>
+        <div id="three"></div>
+        <script src="js/build/three.js"></script>
+        <script>
+            function init(){
+                /*
+                - Scene :: 공간
+                - Camera :: 카메라
+                - Light :: 빛
+                - Mesh = Geometry + Material :: 피사체(물체) = 부피 + 질감 (기하학적 형태, 뼈대를 담당하는 부분) + (특정한 질감, 색, 반사율 등을 갖는 물체의 표면)
+                - renderer :: 그림을 그릴 때 같은 풍경을 그리더라도 유화로 그릴 수도, 수채화로 그릴 수도 있을 것이다. 또한 종이에 그릴 수도 있고, 점토에, 철판에, 아크릴 판 에 그릴 수 있다. 이처럼 같은 그림을 그리더라도 다양한 재료와 캔버스에 그릴 수 있듯, (거칠게 비유하자면) 같은 공간Scene도 다양한 기술을 이용해 그려낼 수 있다.
+                */
+
+                /*Destructuring assignment(구조분해 할당) => const renderer = new THREE.WebGLRenderer() -> const renderer = new WebGLRenderer() */
+                const {
+                    Scene,
+                    WebGLRenderer,
+                    PerspectiveCamera,
+                    PointLight,
+                    AmbientLight,
+                    MeshLambertMaterial,
+                    MeshPhongMaterial,
+                    PlaneGeometry,
+                    BoxGeometry,
+                    Mesh,
+                    GridHelper,
+                    AxisHelper,
+                    CameraHelper
+                } = THREE
+
+                //1.공간------------------------------------------------
+
+                /*공간을 만들고*/
+                const scene = new Scene();
+                /*공간에 그려줄 renderer 생성 - alpha : 투명한배경, antialias : 계단형으로 깨짐 막아줌*/
+                const renderer = new WebGLRenderer({alpha:true, antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                /*
+                공간에 그림자를 사용하겠다는 선언 defalut : false
+                선언후 그림자를 내는 객채에는 (객체.castShadow = true;) 그림자를 받아서 보여주는 부분에는 (객체.receiveShadow = true;)
+                */
+                renderer.shadowMap.enabled = true;
+                document.querySelector("#three").appendChild(renderer.domElement);
+
+
+                //2.카메라-----------------------------------------------
+                /*
+                원근감 있는카메라
+                PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
+
+                fov: 카메라의 시야각을 의미한다. 커질 수록 카메라가 바라보는 시야각이 넓어짐을 의미한다. 단위는 degree(각도).
+                aspect: 시야의 가로세로비를 의미한다. 컨테이너의 가로세로비와 동일한 값을 넣어주는게 좋다. 단위 없음.
+                near: 렌더링 할 물체 거리의 하한값으로, 너무 가까이 있는 물체를 그리는 것을 막기 위해 사용한다. 카메라로부터의 거리가 이 값보다 작은 물체는 화면에 그리지 않는다. 0보다 크고 FAR 보다 작은 값을 가질 수 있다.
+                far: 렌더링 할 물체 거리의 상한값으로, 너무 멀리 있는 물체를 그리는 것을 막기 위해 사용한다. 카메라로부터의 거리가 이 값보다 큰 물체는 화면에 그리지 않는다.
+                */
+                const camera = new PerspectiveCamera(70,window.innerWidth/window.innerHeight,0.1, 10000);
+
+                camera.position.set(0,4,-6);
+                camera.lookAt(0,3,0);
+                scene.add(camera);
+
+                //3.빛-----------------------------------------------------
+                /*
+                모든 광원의 생성자는 기본적으로 색깔(color)와 세기(intensity)의 두 인자를 받음
+                three.js는 공간 전체를 밝히는 AmbientLight, 특정 방향으로 뻗어나가는 DirectionalRight 등 다양한 종류의 광원을 제공
+                이 코드에서는 가장 기본적인 광원 중 하나인 PointLight를 사용
+
+                Light( color : Integer, intensity : float )
+                color - 빛의 (선택 사항) 16 진수 색상. 기본값은 0xffffff (흰색)
+                intensity (강도) - (선택 사항) 빛의 강도의 숫자 값. 기본값은 1
+                */
+                const pointLight = new PointLight(0xFFFFFF, 1);
+                pointLight.position.set(8,8,-10);
+                pointLight.castShadow = true;
+
+                /*
+                mapSize : Vector2
+                그림자 맵의 폭과 높이를 정의 하는 Vector2
+                값이 높을수록 계산 시간이 오래 걸리지 만 더 좋은 음영을 얻을 수 있다.
+                값은 2의 거듭 제곱이어야하며 폭과 높이가 동일하지 않아도 (예 : (512, 1024)가 유효 함)
+                주어진 장치에 대한 WebGLRenderer.capabilities .maxTextureSize까지 허용 기본값은 (512, 512)
+
+                ** Vector2 :: 2D 벡터를 나타내는 클래스
+                           :: 2D 벡터는 숫자의 순서쌍 (x 및 y로 표시됨)
+                           :: 2D 공간의 한 점 (즉, 평면상의 위치).
+                           :: 평면을 가로 지르는 방향과 길이
+                           :: three.js에서 길이는 항상 (0, 0)에서 (x, y)까지 의 직선 거리이며 방향은 (0, 0)에서 (x, y) 방향으로 측정
+                */
+                pointLight.shadow.mapSize.width = 1556;
+                pointLight.shadow.mapSize.height = 1556;
+
+                scene.add(pointLight);
+
+                /*전체를 환하게 비춤*/
+                var light = new AmbientLight( 0x404040 );
+                scene.add(light)
+
+                //4.피사체---------------------------------------------------
+                /*뼈대*/
+                const geometry_plane = new PlaneGeometry(20,20,20);
+                const geometry_cube_r = new BoxGeometry(2,2,2);
+                const geometry_cube_b = new BoxGeometry(2,2,2);
+
+                /*재질 종류 MeshLambertMaterial :: 무광택 */
+                const meterial_r = new MeshLambertMaterial({color:'#FF0000'});
+                const meterial_b = new MeshLambertMaterial({color:'#45818E'});
+                const meterial_plane = new MeshLambertMaterial({color:0xCCCCCC});
+
+                /*물체 = 뼈대+재질*/
+                const plane = new Mesh(geometry_plane, meterial_plane);
+                const cube_r = new Mesh(geometry_cube_r, meterial_r);
+                const cube_b = new Mesh(geometry_cube_b, meterial_b);
+
+                plane.receiveShadow = true;
+                cube_r.castShadow = true;
+                cube_b.castShadow = true;
+
+                plane.rotation.x = - Math.PI / 2
+                scene.add(plane);
+                cube_r.position.set(-2,3,0)
+                scene.add(cube_r);
+                cube_b.position.set(2,3,0);
+                scene.add(cube_b);
+
+                function update(){
+                    const speed = 0.005;
+
+                    /*x : x축 기준 위로 돔, y : y축 기준 세로로 돔(제자리 회전), z : 옆으로 굴러가는 모션 */
+                    cube_r.rotation.x += speed
+                    cube_r.rotation.y += speed
+                    cube_r.rotation.z += speed
+
+                    cube_b.rotation.x += speed
+                    cube_b.rotation.y += speed
+                    cube_b.rotation.z += speed
+                    //5. 그리다 :: 우리가 지금까지 만들어놓은 장면과 카메라를 이용해 화면을 실제로 그리라는 명령
+
+                    /*plane.rotation.z += speed*/
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(update);
+                }
+                requestAnimationFrame(update);
+
+                const gridHelper = new GridHelper(20,20);
+                scene.add(gridHelper);
+
+                const axisHelper = new AxisHelper(10);
+                scene.add(axisHelper);
+
+                /*
+                카메라 헬퍼
+                const cameraHelper = new CameraHelper(camera);
+                scene.add( cameraHelper );
+                */
+            }
+            window.onload = init();
+        </script>
+    </body>
+</html>

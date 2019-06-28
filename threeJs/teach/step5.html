@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Teach_RotaionCube</title>
+        <style>
+            *{margin: 0; padding: 0;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script>
+            let renderer, cam, cube
+            const init = function(){
+                const container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //1.공간,장면
+                const scene = new THREE.Scene();
+
+                //2.랜더러
+                renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                //3.카메라
+                cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
+                cam.position.set(0,2,-4);
+                cam.lookAt(0,0,0);
+
+                //4.빛
+                const light = new THREE.PointLight(0xFFFFFF, 1);
+                light.position.set(2,3,-4);
+                scene.add(light);
+
+                const ambientLight = new THREE.AmbientLight(0x808080);
+                scene.add(ambientLight);
+
+                //5.물체
+                const cube_Geometry = new THREE.BoxGeometry(2,2,2);
+                const cube_Meterial = new THREE.MeshLambertMaterial({color:'#3666d3'});
+                cube = new THREE.Mesh(cube_Geometry,cube_Meterial);
+
+                //click1 :: 오브젝트에 클릭시 부를 함수 선언
+                cube.callback = clickHandler;
+                scene.add(cube);
+
+
+                const animation = function(){
+                    const speed = 0.005;
+                    cube.rotation.y += speed;
+
+                    //카메라를 사용하여 장면을 렌더링
+                    renderer.render(scene,cam);
+                    requestAnimationFrame(animation);
+                }
+                requestAnimationFrame(animation);
+            }
+
+            const clickHandler = function(){
+                alert('click!click!click!click!');
+            }
+
+            //click1 :: window.onload = init() 이였으나 init과 동시에 클릭이벤트또한 필요함으로 function(){}으로 수정
+            window.onload = function(){
+                init();
+
+                //click2 :: Vector2 : 2D 좌표, Raycaster : z좌표
+                const mouse = new THREE.Vector2();
+                const raycaster = new THREE.Raycaster();
+
+                const onDocumentMouseDown = function(event){
+
+                    //click3 :: 클릭한 마우스 좌표구하기
+                    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+                    mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+                    //click2 :: raycaster 사용
+                    raycaster.setFromCamera(mouse, cam);
+                    const intersects = raycaster.intersectObjects([cube]);
+
+                    if(intersects.length > 0){
+                        console.log(intersects)
+                        intersects[0].object.callback();
+                    }
+
+                }
+                const onDocumentMouseMove = function(event){
+                    mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+                    mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+                    raycaster.setFromCamera(mouse, cam);
+
+                    let intersects = raycaster.intersectObjects([cube]);
+                    let canvas = document.body.getElementsByTagName('canvas')[0];
+
+                    if (intersects.length > 0) {
+                        canvas.style.cursor = "pointer";
+                    } else {
+                        canvas.style.cursor = "default";
+                    }
+                }
+
+                //click1 :: 클릭이벤트 등록
+                document.addEventListener('mousedown', onDocumentMouseDown,false); // 클릭
+                document.addEventListener('mousemove', onDocumentMouseMove,false); // 커서
+            }
+        </script>
+    </body>
+</html>

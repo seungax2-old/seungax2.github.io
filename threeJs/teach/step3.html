@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Teach_RotaionCube</title>
+        <style>
+            *{margin: 0; padding: 0;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/TrackballControls.js"></script>
+        <script>
+
+            const init = function(){
+                const container = document.createElement('div');
+                document.body.appendChild(container);
+
+                //1.공간,장면
+                const scene = new THREE.Scene();
+
+                //2.랜더러
+                const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                container.appendChild(renderer.domElement);
+
+                //3.카메라
+                const cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
+                cam.position.set(0,2,-4);
+                cam.lookAt(0,0,0);
+
+                //4.빛
+                const light = new THREE.PointLight(0xFFFFFF, 1);
+                light.position.set(2,3,-4);
+                scene.add(light);
+
+                const ambientLight = new THREE.AmbientLight(0x808080);
+                scene.add(ambientLight);
+
+                //5.물체
+                const cube_Geometry = new THREE.BoxGeometry(2,2,2);
+                const cube_Meterial = new THREE.MeshLambertMaterial({color:'#3666d3'});
+                const cube = new THREE.Mesh(cube_Geometry,cube_Meterial);
+                scene.add(cube);
+
+                //6.화면 컨트롤러 추가
+                const controls = new THREE.TrackballControls(cam, renderer.domElement);
+
+                const animation = function(){
+                    const speed = 0.005;
+                    cube.rotation.y += speed;
+
+                    //카메라를 사용하여 장면을 렌더링
+                    renderer.render(scene,cam);
+                    //드래그컨트롤에 의한 이동을 update함으로서 화면 무빙
+                    controls.update();
+                    requestAnimationFrame(animation);
+                }
+                requestAnimationFrame(animation);
+            }
+
+            window.onload = init();
+        </script>
+    </body>
+</html>
