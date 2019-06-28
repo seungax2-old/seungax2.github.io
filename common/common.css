@@ -98,7 +98,7 @@ body{visibility:hidden;background: #eee;box-sizing: border-box; width:100%; over
 
 
 /* 해피포인트 이벤트 뷰 */
-.WebView{/* min-height:900px;  */height:100%;width: 100%;/* padding: 3%; */ box-sizing: border-box;}
+.WebView{/* min-height:900px; height:100%; */width: 100%;/* padding: 3%; */ box-sizing: border-box;}
 .viewMo{margin: 3%;}
 .viewPc{margin: 1.5%;}			
 .phone{padding : 0 3% 0 3%;box-sizing:border-box;/* width:360px; */border: 2px solid #bfbfbf;border-radius: 15px;background-color: #fff;}
