@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>rabbit</title>
+        <style>
+            #rabbit {
+                /*background: #ebe5e7;*/
+                position:absolute;
+                width:100%;
+                height:100%;
+                overflow:hidden;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id = "rabbit"></div>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/TrackballControls.js"></script>
+        <script>
+            let isBlowing;
+            let scene, renderer, camera;
+            let light, shadowLight, backLight;
+            let controls;
+            const init = function(){
+                scene = new THREE.Scene();
+                renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize(window.innerWidth,window.innerHeight);
+                renderer.shadowMap.enabled = true;
+                /*renderer.shadowMapEnabled = true;*/
+
+                camera = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,1,2000);
+                camera.position.set(0,50,300);
+                camera.lookAt(new THREE.Vector3(0,0,0));
+
+                const container = document.getElementById('rabbit');
+                container.appendChild(renderer.domElement);
+
+                const ambientLight = new THREE.AmbientLight(0xffffff,.8);
+                scene.add(ambientLight);
+                const light = new THREE.PointLight(0xFFFFFF, .2);
+                light.position.set(0,100,100);
+                scene.add(light);
+                light.castShadow = true;
+
+                floor = new THREE.Mesh(new THREE.PlaneGeometry(1000,500), new THREE.MeshLambertMaterial({color: '#ebe5e7'}));
+                floor.rotation.x = -Math.PI/2;
+                floor.position.y = -100;
+                floor.receiveShadow = true;
+                scene.add(floor);
+
+                controls = new THREE.TrackballControls(camera, renderer.domElement);
+
+
+                document.addEventListener('mousemove', handleMouseMove, false);
+                document.addEventListener('mosedown', handleMouseDown, false);
+                document.addEventListener('mouseup', handleMouseUp, false);
+            }
+
+            const handleMouseMove = function(event){
+                const mousePos = {x:event.clientX, y:event.clientY};
+            }
+
+            const handleMouseDown = function(event){
+                isBlowing = true;
+            }
+
+            const handleMouseUp = function(event){
+                isBlowing = false;
+            }
+
+            let rabbit;
+            const createRabbit = function(){
+                rabbit = new Rabbit();
+                scene.add(rabbit.threegroup);
+            }
+
+            Rabbit = function(){
+                this.threegroup = new THREE.Group();
+
+                this.pinkMat = new THREE.MeshLambertMaterial({color: 0xffa6cf});
+                this.whiteMat = new THREE.MeshLambertMaterial ({color: 0xffffff});
+                this.blackMat = new THREE.MeshLambertMaterial ({color: 0x302925});
+                this.redkMat = new THREE.MeshLambertMaterial ({color: 0x8e0010});
+                ///////////////////////////////////////////////////////
+
+                const faceGeom = new THREE.BoxGeometry(80,80,40);
+                this.face = new THREE.Mesh(faceGeom, this.pinkMat);
+                this.face.position.set(0,0,0);
+
+                ///////////////////////////////////////////////////////
+
+                const mousefaceGeom = new THREE.BoxGeometry(60,40,20);
+                this.mouseface = new THREE.Mesh(mousefaceGeom, this.pinkMat);
+                this.mouseface.position.set(0,-20,30);
+
+                ///////////////////////////////////////////////////////
+
+                const earGeom = new THREE.BoxGeometry(20,100,20);
+
+                this.leftEar = new THREE.Mesh(earGeom, this.pinkMat);
+                this.leftEar.position.set(-30,80,-10);
+
+                this.rightEar = new THREE.Mesh(earGeom, this.pinkMat);
+                this.rightEar.position.set(30,80,-10);
+
+                ///////////////////////////////////////////////////////
+
+                this.eyeGroup = new THREE.Group();
+
+                const eyeGeom = new THREE.BoxGeometry(20,20,3);
+
+                this.leftEye = new THREE.Mesh(eyeGeom,this.whiteMat);
+                this.leftEye.position.set(-20,0,20.5);
+
+                this.rightEye = new THREE.Mesh(eyeGeom,this.whiteMat);
+                this.rightEye.position.set(20,0,20.5);
+
+                const bkEyeGeom = new THREE.BoxGeometry(10,10,3);
+
+                this.leftBkEye = new THREE.Mesh(bkEyeGeom,this.redkMat);
+                this.leftBkEye.position.set(-17,0,21);
+
+                this.rightBkEye = new THREE.Mesh(bkEyeGeom,this.redkMat);
+                this.rightBkEye.position.set(17,0,21);
+
+                const smWhiteEyeGeo = new THREE.BoxGeometry(3,3,3);
+
+                this.leftSmWhiteEye = new THREE.Mesh(smWhiteEyeGeo,this.whiteMat);
+                this.leftSmWhiteEye.position.set(-15,2,21.5);
+
+
+                this.rightSmWhiteEye = new THREE.Mesh(smWhiteEyeGeo,this.whiteMat);
+                this.rightSmWhiteEye.position.set(19,2,21.5);
+
+
+                this.eyeGroup.add(this.leftEye);
+                this.eyeGroup.add(this.rightEye);
+                this.eyeGroup.add(this.leftBkEye);
+                this.eyeGroup.add(this.rightBkEye);
+                this.eyeGroup.add(this.leftSmWhiteEye);
+                this.eyeGroup.add(this.rightSmWhiteEye);
+                ///////////////////////////////////////////////////////
+
+                this.threegroup.add(this.face);
+                this.threegroup.add(this.leftEar);
+                this.threegroup.add(this.rightEar);
+                this.threegroup.add(this.eyeGroup);
+
+                this.threegroup.traverse( function ( object ) {
+                    if ( object instanceof THREE.Mesh ) {
+                        object.castShadow = true;
+                        object.receiveShadow = true;
+                    }
+                });
+            }
+
+            const render = function(){
+                renderer.render(scene, camera);
+                controls.update();
+                requestAnimationFrame(render);
+            }
+
+            init();
+            createRabbit();
+            render();
+        </script>
+    </body>
+</html>

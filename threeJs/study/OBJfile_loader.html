@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>OBJ file loader</title>
+        <style>
+            *{padding: 0; margin: 0;}
+        </style>
+    </head>
+    <body>
+        <canvas id="three"></canvas>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/loaders/OBJLoader.js"></script>
+        <script>
+            const myCanvas = document.getElementById('three');
+            const scene = new THREE.Scene();
+            const renderer = new THREE.WebGLRenderer({
+                canvas : myCanvas,
+                antialias : true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 1000);
+
+            const light = new THREE.PointLight(0xffffff, 0.5);
+            const light2 = new THREE.AmbientLight(0xffffff, 0.5);
+
+            scene.add(light);
+            scene.add(light2);
+
+            let mesh;
+            const handle_load = function(obj){
+                console.log(obj);
+                obj.traverse(function(child){
+                    if(child instanceof THREE.Mesh){
+                        mesh = child;
+                        child.material = new THREE.MeshNormalMaterial();
+                        child.geometry.center();
+                        child.position.set(0,0,-5);
+                    }
+                });
+                scene.add(obj);
+            }
+
+            const loader = new THREE.OBJLoader();
+            loader.load('../loadFile/tree.obj',handle_load,undefined, function(error){
+                console.log(error);
+            });
+
+            const prevTime = Date.now();
+            const render = function(){
+                if(mesh){
+                    mesh.rotation.y += 0.01;
+                }
+                renderer.render(scene,camera);
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+
+        </script>
+    </body>
+</html>
