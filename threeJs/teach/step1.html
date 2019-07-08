@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Teach_RotaionCube</title>
         <style>
-            *{margin: 0; padding: 0;}
+            *{margin: 0; padding: 0; overflow: hidden;}
         </style>
     </head>
     <body>
@@ -18,8 +18,8 @@
                 const scene = new THREE.Scene();
 
                 //2.랜더러
-                const renderer = new THREE.WebGLRenderer({antialias:true});
-                renderer.setClearColor(0xcece41)
+                const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+                /*renderer.setClearColor(0xcece41)*/
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 container.appendChild(renderer.domElement);
 

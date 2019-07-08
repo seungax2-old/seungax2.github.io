@@ -132,10 +132,8 @@
                 this.leftSmWhiteEye = new THREE.Mesh(smWhiteEyeGeo,this.whiteMat);
                 this.leftSmWhiteEye.position.set(-15,2,21.5);
 
-
                 this.rightSmWhiteEye = new THREE.Mesh(smWhiteEyeGeo,this.whiteMat);
                 this.rightSmWhiteEye.position.set(19,2,21.5);
-
 
                 this.eyeGroup.add(this.leftEye);
                 this.eyeGroup.add(this.rightEye);
@@ -145,10 +143,19 @@
                 this.eyeGroup.add(this.rightSmWhiteEye);
                 ///////////////////////////////////////////////////////
 
+                const noseGeom = new THREE.BoxGeometry(10,4,2);
+
+                this.nose = new THREE.Mesh(noseGeom,this.blackMat);
+                this.nose.position.set(0,-5,22);
+
+
+                ///////////////////////////////////////////////////////
+
                 this.threegroup.add(this.face);
                 this.threegroup.add(this.leftEar);
                 this.threegroup.add(this.rightEar);
                 this.threegroup.add(this.eyeGroup);
+                this.threegroup.add(this.nose);
 
                 this.threegroup.traverse( function ( object ) {
                     if ( object instanceof THREE.Mesh ) {
