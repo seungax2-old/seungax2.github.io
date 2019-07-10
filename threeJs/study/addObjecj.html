@@ -4,12 +4,22 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <title>addObject</title>
+        <script src="../../common/js/jquery-1.12.3.js"></script>
         <style>
             *{padding: 0;margin: 0;}
-            html, body{width: 100%; height: 100%;}
+            html, body{width: 100%; height: 100%; overflow: hidden;}
+            .clickInfo{position: absolute;top: 1%;right: 1%;text-align: right;}
+            .clickInfo p.active{font-weight: bold;color:#a72424;}
         </style>
     </head>
     <body>
+        <div class="clickInfo" style="">
+            <p class="ctrl">Ctrl+드래그, 휠 움직임 : 화면 컨트롤</p>
+            &nbsp;
+            <p>**우클릭으로 오브젝트 이벤트 변경**</p>
+            <p class="on active">ON : 오브젝트 추가</p>
+            <p class="off">OFF : 오브젝트 이동</p>
+        </div>
         <script src="../js/build/three.js"></script>
         <script src="../js/controls/DragControls.js"></script>
         <script src="../js/controls/TrackballControls.js"></script>
@@ -19,7 +29,10 @@
             let scene, renderer, camera, light, sphere;
             let raycaster, mouse;
             let controls, dragControls;
-            let dbClickCheck = 'add';
+            let clickCheck = 'add';
+            let $ctrl = $(".ctrl");
+            let $on = $(".on");
+            let $off = $(".off");
 
             let objects = [];
             let {
@@ -104,12 +117,25 @@
             /*Ctrl 제어*/
             document.addEventListener("keydown", function(event) {
                 if(event.which=="17"){
+                    $ctrl.addClass("active");
+
+                    if(clickCheck == 'add'){
+                        $on.removeClass("active");
+                    }else{
+                        $off.removeClass("active");
+                    }
                     controls.enabled = true;
                 }
             }, false);
 
             document.addEventListener("keyup", function(event) {
                 if(event.which=="17"){
+                    $ctrl.removeClass("active");
+                    if(clickCheck == 'add'){
+                        $on.addClass("active");
+                    }else{
+                        $off.addClass("active");
+                    }
                     controls.enabled = false;
                 }
             }, false);
@@ -123,27 +149,25 @@
                     mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
                     mouse.y =  - (event.clientY / renderer.domElement.clientHeight) * 2 + 1;
                     raycaster.setFromCamera(mouse, camera);
-                    console.log(intersects)
+                    /*console.log(intersects)*/
                     createSphere(raycaster.ray.at(50))
                 }
             }
 
             let onDocumentRightclick = function(event){
                 event.preventDefault();
-                if(dbClickCheck == 'add'){
-                    dbClickCheck = 'move';
+                if(clickCheck == 'add'){
+                    clickCheck = 'move';
+                    $on.removeClass("active");
+                    $off.addClass("active");
+
                     renderer.domElement.removeEventListener('click',onMouseClick,false);
                     dragControls.enabled = true;
-                  /*
-                    dragControls.addEventListener('dragstart', function(){
-                        controls.enabled = false;
-                    });
-                    dragControls.addEventListener('dragend', function(){
-                        controls.enabled = true;
-                    });*/
-
                 }else{
-                    dbClickCheck = 'add';
+                    clickCheck = 'add';
+                    $off.removeClass("active");
+                    $on.addClass("active");
+
                     dragControls.enabled = false;
                     renderer.domElement.addEventListener('click',onMouseClick,false);
                 }
