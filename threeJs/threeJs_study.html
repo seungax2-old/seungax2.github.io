@@ -49,13 +49,10 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide" data-title="큐브생성" data-iframe="A"><iframe id="A" src="../threeJs/teach/step1.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
                 <div class="swiper-slide" data-title="큐브 회전" data-iframe="B"><iframe id="B" src="../threeJs/teach/step2.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
-                <!--<div class="swiper-slide" data-title="큐브 그림자"><iframe id="" src="../threeJs/teach/step2_shadow.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>-->
+                <div class="swiper-slide shadow" data-title="큐브 그림자" data-iframe="S"><iframe id="S" src="../threeJs/teach/step2_shadow.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
                 <div class="swiper-slide" data-title="화면 컨트롤" data-iframe="C"><iframe id="C" src="../threeJs/teach/step3.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
                 <div class="swiper-slide" data-title="직접 큐브 이동" data-iframe="D"><iframe id="D" src="../threeJs/teach/step4.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
                 <div class="swiper-slide" data-title="큐브 클릭이벤트 등록" data-iframe="E"><iframe id="E" src="../threeJs/teach/step5.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe></div>
-                <div class="swiper-slide" data-title="종합" data-iframe="F">
-                    <iframe id="F" src="../threeJs/study/addObjecj.html" frameborder="0" scrolling="yes" width="100%" height="100%;"></iframe>
-                </div>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-button-prev"></div>
@@ -96,8 +93,10 @@
                 if ( navigator.platform ) {
                     if ( filter.indexOf( navigator.platform.toLowerCase() ) < 0 ) {
                         $(".swiper-pagination").addClass("moFont");
+                        $(".shadow").hide();
                     } else {
                         $(".swiper-pagination").addClass("pcFont");
+                        $(".shadow").show();
                     }
                 }
             });
