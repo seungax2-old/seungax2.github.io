@@ -1,0 +1,34 @@
+﻿비동기 프로그래밍이란, 어떤 작업을 요청한 후 다른 작업을 수행하다가 이벤트가 발생하면 그에 대한 응답을 받아 처리하는 것
+async : ES8 비동기 함수
+- resolve : 비동기 성공하면 실행되는 함수
+- reject : 비동기 실패하면 실행되는 함수
+
+await를 사용하면 Promise(async)가 종료 될 때까지 함수 실행이 일시 정지
+그후 Promise(async)가 종료 되면 함수 실행이 다시 진행
+await 사용하면 Promise에서 resolve 된 값을 반환
+
+navigator.mediaDevices.enumerateDevices 
+:: 사용(또는 접근)이 가능한 미디어 입력장치나 출력장치들의 리스트를 가져옴
+ex>마이크, 카메라, 헤드셋 등의 미디어 입/출력 장치 리스트
+이 메서드는 Promise를 반환하는데, 이 Promise가 resolve되면 장치(device)정보가 들어있는 MediaDeviceInfo 배열(array)을 확인
+장치 리스트를 가져오는 것이 실패하면, promise는 rejected처리
+
+canvas>>>>>>>>>>>>>>>>>>>>
+
+>getContext : 캔버스의 드로잉 컨텍스트를 반환--------------------------------------------
+-webgl(experimental-webgl) : 3차원 렌더링 컨텍스트를 나타내는 WebGLRenderingContext 객체를 생성합니다. 이 컨텍스트는 WebGL 버전 1 (OpenGL ES 2.0)을 구현하는 브라우저에서만 사용가능
+-webgl2 : 3차원 렌더링 컨텍스트를 나타내는 WebGL2RenderingContext 객체를 생성합니다. 이 컨텍스트는 WebGL 버전 2 (OpenGL ES 3.0)를 구현하는 브라우저에서만 사용가능
+
+>getExtension : 확장기능--------------------------------------------
+-EXT_color_buffer_float : https://developer.mozilla.org/en-US/docs/Web/API/EXT_color_buffer_float
+--이 확장은 WebGL 1 컨텍스트에서 작동하지 않습니다.
+--컬러 랜더링 가능하게 해준다.
+
+-OES_texture_float : https://developer.mozilla.org/en-US/docs/Web/API/OES_texture_float
+--WebGL API의 일부이며 텍스처의 부동 소수점 픽셀 유형을 노출
+--파라미터 타입 gl.FLOAT.
+--pixels매개 변수 ArrayBufferView는 유형 중 하나 를 허용
+
+>.BLEND : https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFunc
+--블렌드 함수를 사용하려면 먼저 WebGLRenderingContext.enable()인수 와 함께 블렌딩을 활성화필요
+--혼합 색상의 공식은 color (RGBA) = (sourceColor * sfactor ) + (destinationColor * dfactor ) 와 같이 설명 할 수 있습니다 . RBGA 값은 0과 1 사이

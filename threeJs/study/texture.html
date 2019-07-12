@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>teapot</title>
+        <style>
+            *{padding:0; margin:0;}
+            html, body{width: 100%; height: 100%;}
+        </style>
+    </head>
+    <body>
+        <script src="../js/build/three.js"></script>
+        <script src="../js/controls/OrbitControls.js"></script>
+		<script src="../js/WebGL.js"></script>
+		<script src='../js/libs/dat.gui.min.js'></script>
+
+        <script>
+            if(WEBGL.isWebGLAvailable() === false){
+                document.body.appendChild(WEBGL.getWebGLErrorMessage());
+            }
+
+            let scene, renderer, camera, light, ambientLight;
+            let cameraControls, effectController;
+
+            const init = function(){
+                window.addEventListener('resize', onWindowResize, false);
+
+                const container = document.createElement('div');
+                document.body.appendChild(container);
+
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xAAAAAA);
+
+                renderer = new THREE.WebGLRenderer({antialias:true});
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(window.innerWidth,window.innerHeight);
+
+                container.appendChild(renderer.domElement);
+
+                camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
+                camera.position.set(0,2,-4);
+                camera.lookAt(0,0,0);
+
+                ambientLight = new THREE.AmbientLight(0x333333);
+                light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
+
+                scene.add(ambientLight);
+                scene.add(light);
+
+                cameraControls = new THREE.OrbitControls(camera, renderer.domElement);
+                cameraControls.addEventListener('change', render);
+
+            }
+
+            const render = function(){
+                createCube();
+                renderer.render( scene, camera );
+            }
+
+            const createCube = function(){
+
+            }
+
+            const onWindowResize = function(){
+                render.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = change_canvasWidht / change_canvasHeight ;
+                camera.updateProjectionMatrix();
+
+                render();
+            }
+
+            init();
+            render();
+
+        </script>
+    </body>
+</html>
