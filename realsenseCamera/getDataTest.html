@@ -11,14 +11,21 @@
         <div>
             <!--rgb 데이터-->
             <canvas id="c1" width="160" height="96"></canvas>
+            <!--d 데이터-->
+            <canvas id="c2" width="640" height="480"></canvas>
         </div>
     </body>
 
     <script>
         function doLoad() {
             this.video = document.getElementById('video');
+
             this.c1 = document.getElementById('c1');
-            this.ctx1 = this.c1.getContext('2d');
+            this.c2 = document.getElementById('c2');
+
+            this.ctx_rgb = this.c1.getContext('2d');
+            this.ctx_d = this.c2.getContext('2d');
+
             let self = this;
             this.video.addEventListener('play', function() {
                 self.width = self.video.videoWidth / 2;
@@ -32,9 +39,9 @@
             if (this.video.paused || this.video.ended) {
                 return;
             }else{
-                this.ctx1.drawImage(this.video, 0, 0, this.width, this.height);
+                this.ctx_rgb.drawImage(this.video, 0, 0, this.width, this.height);
                 //각 픽셀에 대한 이미지 데이터(rgb 값 반환)
-                let frame = this.ctx1.getImageData(0, 0, this.width, this.height);
+                let frame = this.ctx_rgb.getImageData(0, 0, this.width, this.height);
                 let l = frame.data.length / 4;
 
                 let frameOj = new Object();
@@ -66,8 +73,10 @@
         }
         async function main() {
             "use strict";
+            //캘리브레이션
             var cameraParameters = await setupCamera();
             doLoad();
         }
+
     </script>
 </html>
