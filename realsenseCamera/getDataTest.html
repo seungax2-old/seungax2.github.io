@@ -3,78 +3,171 @@
     <head>
         <meta charset="utf-8"/>
         <script type="text/javascript" src="js/depth-camera.js"></script>
+        <style>
+            body{margin: 0 20px; padding: 0;}
+            #btn_getData{width: 200px;height: 50px;text-align: center;line-height: 50px;box-sizing: border-box;background: #4e86ef;margin: 20px 0;color: #fff;cursor: pointer;}
+            canvas{visibility: hidden;}
+        </style>
     </head>
     <body onload="main()">
+        <p id="btn_getData">데이터읽기</p>
         <div>
-            <video id="video" src="" controls="true"/>
+            <video id="video_C" src="" width="300" autoplay="true"/>
+        </div>
+        <div>
+            <video id="video_D" src="" width="300" autoplay="true"/>
         </div>
         <div>
             <!--rgb 데이터-->
             <canvas id="c1" width="160" height="96"></canvas>
             <!--d 데이터-->
-            <canvas id="c2" width="640" height="480"></canvas>
+            <canvas id="c2" width="160" height="96"></canvas>
         </div>
     </body>
 
     <script>
+        let btn_status = "stop";
         function doLoad() {
-            this.video = document.getElementById('video');
+            this.video = document.querySelector('video');
+            this.video_C = document.getElementById('video_C');
+            this.video_D = document.getElementById('video_C');
 
             this.c1 = document.getElementById('c1');
             this.c2 = document.getElementById('c2');
 
             this.ctx_rgb = this.c1.getContext('2d');
-            this.ctx_d = this.c2.getContext('2d');
+            this.ctx_d = this.c2.getContext('webgl2');
+            ctx_d.getExtension('EXT_color_buffer_float');
 
             let self = this;
-            this.video.addEventListener('play', function() {
+
+            let btn_getData = document.getElementById('btn_getData');
+            btn_getData.addEventListener('click',function(){
+                if(btn_status == "stop"){
+                    btn_status = "ing"
+                    btn_getData.innerHTML='데이터읽기 중지';
+                }else{
+                    btn_status = "stop"
+                    btn_getData.innerHTML='데이터읽기';
+                }
+                console.log(btn_status)
                 self.width = self.video.videoWidth / 2;
                 self.height = self.video.videoHeight / 2;
                 self.computeFrame();
-            }, false);
+            });
+
+            /*this.video.addEventListener('play', function() {
+                self.width = self.video.videoWidth / 2;
+                self.height = self.video.videoHeight / 2;
+            }, false);*/
+
         }
-       let frameNo = 1;
+
+        let frameNo = 1;
         function computeFrame() {
-            let rgbArray = new Array();
-            if (this.video.paused || this.video.ended) {
+            if (btn_status == "stop") {
                 return;
             }else{
-                this.ctx_rgb.drawImage(this.video, 0, 0, this.width, this.height);
-                //각 픽셀에 대한 이미지 데이터(rgb 값 반환)
-                let frame = this.ctx_rgb.getImageData(0, 0, this.width, this.height);
-                let l = frame.data.length / 4;
+                let DataArray = new Array();
 
                 let frameOj = new Object();
                 frameOj.frameNo = frameNo;
-                let rgbdata = new Array();
-                for (let i = 0; i < l; i++) {
-                    let r = frame.data[i * 4 + 0];
-                    let g = frame.data[i * 4 + 1];
-                    let b = frame.data[i * 4 + 2];
-                    let rgb = {r:r , g:g, b:b};
-                    rgbdata.push(rgb);
-                }
-                frameOj.rgbData = rgbdata;
-                rgbArray.push(frameOj);
 
-                console.log(rgbArray);
+                const rgbData = getRGBdata();
+                const depthData = getDEPTHdata();
+
+                frameOj.rgbData = rgbData;
+                frameOj.depthBuffer = depthData;
+
+                DataArray.push(frameOj);
+                console.log(DataArray)
+
                 frameNo++;
                 window.requestAnimationFrame(computeFrame);
             }
         }
 
+        function getDEPTHdata(){
+            let depthTexture = ctx_d.createTexture();
+            ctx_d.bindTexture(ctx_d.TEXTURE_2D, depthTexture);
+            ctx_d.texParameteri(ctx_d.TEXTURE_2D, ctx_d.TEXTURE_WRAP_T, ctx_d.CLAMP_TO_EDGE);
+            ctx_d.texParameteri(ctx_d.TEXTURE_2D, ctx_d.TEXTURE_WRAP_S, ctx_d.CLAMP_TO_EDGE);
+            ctx_d.texParameteri(ctx_d.TEXTURE_2D, ctx_d.TEXTURE_MAG_FILTER, ctx_d.NEAREST);
+            ctx_d.texParameteri(ctx_d.TEXTURE_2D, ctx_d.TEXTURE_MIN_FILTER, ctx_d.NEAREST);
+
+            let framebuffer = ctx_d.createFramebuffer();
+            ctx_d.bindFramebuffer(ctx_d.FRAMEBUFFER, framebuffer);
+            ctx_d.framebufferTexture2D(
+                ctx_d.FRAMEBUFFER,
+                ctx_d.COLOR_ATTACHMENT0,
+                ctx_d.TEXTURE_2D,
+                depthTexture,
+                0);
+
+            ctx_d.bindTexture(ctx_d.TEXTURE_2D, depthTexture);
+            ctx_d.texImage2D(
+                ctx_d.TEXTURE_2D,
+                0,
+                ctx_d.R32F,
+                ctx_d.RED,
+                ctx_d.FLOAT,
+                video_D);
+
+            let buffer;
+            if (!buffer) {
+                buffer =
+                new Float32Array(video_D.videoWidth * video_D.videoHeight);
+            }
+
+            let depth = ctx_d.readPixels(
+                0,
+                0,
+                video_D.videoWidth,
+                video_D.videoHeight,
+                ctx_d.RED,
+                ctx_d.FLOAT,
+                buffer);
+
+            return buffer;
+        }
+
+        function getRGBdata(){
+            this.ctx_rgb.drawImage(this.video_C, 0, 0, this.width, this.height);
+            //각 픽셀에 대한 이미지 데이터(rgb 값 반환)
+            let frame = this.ctx_rgb.getImageData(0, 0, this.width, this.height);
+            let l = frame.data.length;
+
+            let rgbdata = new Array();
+            for (let i = 0; i < l; i++) {
+                let r = frame.data[i * 4 + 0];
+                let g = frame.data[i * 4 + 1];
+                let b = frame.data[i * 4 + 2];
+                let rgb = {r:r , g:g, b:b};
+                rgbdata.push(rgb);
+            }
+            return rgbdata;
+        }
+
         async function setupCamera() {
             var depth_stream = await DepthCamera.getDepthStream();
             var color_stream = await DepthCamera.getColorStreamForDepthStream(depth_stream);
-            var video = document.getElementById("video");
-            video.srcObject = color_stream;
+
+            var video_C = document.getElementById("video_C");
+            video_C.srcObject = color_stream;
+
+            var video_D = document.getElementById("video_D");
+            video_D.srcObject = depth_stream;
+
             var parameters = DepthCamera.getCameraCalibration(depth_stream);
+
             return parameters;
         }
+
         async function main() {
             "use strict";
             //캘리브레이션
             var cameraParameters = await setupCamera();
+            console.log(cameraParameters)
             doLoad();
         }
 
