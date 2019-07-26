@@ -24,19 +24,15 @@
                 container.appendChild(renderer.domElement);
 
                 //3.카메라
-                const cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,10000);
+                const cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
                 /*cam.position.set(0,2,-4);*/
                 cam.position.x = 30;
                 cam.position.z = 5;
-                cam.lookAt(scene.position);
 
                 //4.빛
-                const light = new THREE.PointLight(0xFFFFFF, 1);
-                light.position.set(2,3,-4);
+                const light = new THREE.DirectionalLight(0xffffff);
+                light.position.set(-10,10,30).normalize();
                 scene.add(light);
-
-                const ambientLight = new THREE.AmbientLight(0x808080);
-                scene.add(ambientLight);
 
                 //5.물체
                 const geometry = new THREE.Geometry(5,50,50);
@@ -55,13 +51,13 @@
                     const transparent = Math.round(i,0,count,0,100);
                     const highlight = Math.round(i,0,count,0,100) + '%';
 
-                    /*let color = new THREE.Color(`hsla(${colorRange}, 100%, ${highlight}, ${transparent})`);*/
-                    let color = new THREE.Color('#d86767');
-                    let material = new THREE.PointsMaterial({size:0.3, vertexColors:THREE.VertexColors});
-                    let points = new THREE.Points(geometry, material);
-                    console.log("여기여기여기역이겨이")
-                    scene.add(points);
+                    let color = new THREE.Color(`hsla(${colorRange}, 100%, ${highlight}, ${transparent})`);
+                    //let color = new THREE.Color('#d86767');
                 }
+                let material = new THREE.PointsMaterial({size:0.1, vertexColors:THREE.VertexColors});
+
+                let points = new THREE.Points(geometry, material);
+                scene.add(points);
 
                 const animation = function(){
                     const speed = 0.005;
