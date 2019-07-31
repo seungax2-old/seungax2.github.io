@@ -29,6 +29,11 @@
                 cam.position.x = 30;
                 cam.position.z = 5;
 
+                var controls = new THREE.OrbitControls( cam, renderer.domElement );
+                controls.update();
+                controls.maxDistance = 500
+                controls.minDistance = 10
+
                 //4.빛
                 const light = new THREE.DirectionalLight(0xffffff);
                 light.position.set(-10,10,30).normalize();
@@ -47,12 +52,13 @@
                     point.z = THREE.Math.randFloatSpread(20);
 
                     geometry.vertices.push(point);
-                    const colorRange = Math.round(THREE.Math.mapLinear(i,0,count,0,360));
-                    const transparent = Math.round(i,0,count,0,100);
-                    const highlight = Math.round(i,0,count,0,100) + '%';
+                    var colorRange = Math.round(THREE.Math.mapLinear(i, 0, count, 0, 360)),
+                    transparent = Math.round(THREE.Math.mapLinear(i, 0, count, 0, 100)),
+                    highlight = Math.round(THREE.Math.mapLinear(i, 0, count, 0, 100)) + '%';
 
-                    let color = new THREE.Color(`hsla(${colorRange}, 100%, ${highlight}, ${transparent})`);
-                    //let color = new THREE.Color('#d86767');
+                    // cololist 0~255 사이 숫자 - cr1, cg1, cb1
+                    var color = new THREE.Color(`hsla(${colorRange}, 100%, ${highlight}, ${transparent})`)
+                    geometry.colors.push(color)
                 }
                 let material = new THREE.PointsMaterial({size:0.1, vertexColors:THREE.VertexColors});
 
@@ -60,11 +66,16 @@
                 scene.add(points);
 
                 const animation = function(){
-                    const speed = 0.005;
-                    points.rotation.y += speed;
+                    points.rotation.y += 0.001
+                    points.rotation.z += 0.002
+
+                    renderer.render(scene, cam)
+                    controls.update()
                     requestAnimationFrame(animation);
+
                     cam.lookAt(scene.position);
                 }
+                requestAnimationFrame(animation);
             }
             window.onload = init();
         </script>
