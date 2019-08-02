@@ -12,6 +12,14 @@
         <script src="../js/controls/OrbitControls.js"></script>
         <script>
             const init = function(){
+                let onWindowResize = function(){
+                    cam.aspect = window.innerWidth/window.innerHeight;
+                    cam.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+
+                window.addEventListener('resize', onWindowResize, false);
+
                 const container = document.createElement('div');
                 document.body.appendChild(container);
 
@@ -76,7 +84,10 @@
                     cam.lookAt(scene.position);
                 }
                 requestAnimationFrame(animation);
+
             }
+
+
             window.onload = init();
         </script>
     </body>
