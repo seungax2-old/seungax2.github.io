@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html id="indexHtml" class="flex">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <style>
+            *{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans', sans-serif;}
+            html,body{height: 100%; width: 100%;}
+            dl, ol, ul, div, p, a, input, button, li {margin: 0; padding: 0;}
+
+            /*공통*/
+            .menulist ul{list-style: none; font-weight: bold; color: #fff;}
+            div.search .searchIc img{height: 100%;}
+            div.search input{width: 100%; height: 100%; border-radius: 5px; border: none;padding: 0 2%;}
+
+            .head{width:100%; height: 11.8%; background : #0F7AF4;padding:0 7.2%;}
+            .head p.logo{height: 54%; width: auto;margin: 0; cursor: pointer;}
+            .head p.logo img{height: 100%; transition: all ease 1s;}
+            .head p.logo img:hover{transform: scale(1.1);}
+            .head .menuButtonWrap{display: none; height: 50%}
+            .head .menuButtonWrap *{height: 100%}
+            .head .menulistWrap{display: block; height: 50%;}
+            .head .menulistWrap .menu{height: 100%; height: 100%;}
+            .head .menulistWrap .menu .menulist{width: 76%; height: 100%;}
+            .head .menulistWrap .menu .menulist ul{height: 100%;}
+            .head .menulistWrap .menu .menulist ul li{width: 30%;text-align: center; }
+            .head .menulistWrap .menu .menulist ul li:last-child{margin-right: 0;width: 36%; padding-left: 3%;}
+            .head .menulistWrap .menu .menulist ul li p.btnPublish{background: rgba(0,0,0,0.4);height: 3vw;width: 100%;box-sizing: border-box;line-height: 3vw;text-align: center;border-radius: 5vw;}
+            .head .menulistWrap .menu div.search{width: 100%; height: 100%; margin-right: 5%; margin: 0 0 0 24%; background: #fff;border-radius: 5px;padding: 0.5%;}
+            .head .menulistWrap .menu div.search .searchIc{height: 100%;padding: 1%;}
+
+            .slideMenuWrap{display: none; height: 45%;}
+            .slideMenuWrap .slideMenu{background: #0F7AF4;height: 100%; padding: 2.2% 7%; font-size: 2.5vh;}
+            .slideMenuWrap .slideMenu div.search{margin: 0; padding: 0;width: 100%; height: 20%;background: #fff;border-radius: 5px;padding: 0.5%;}
+            .slideMenuWrap .slideMenu div.search .searchIc{height: 100%;padding: 2%;}
+            .slideMenuWrap .slideMenu ul{padding: 2% 0; height: 100%;}
+            .slideMenuWrap .slideMenu .menulist ul li{height: 33.3%; display: flex; display: -webkit-flex;-webkit-align-items: center; align-items: center;}
+            .slideMenuWrap .slideMenu .menulist ul li p.btnPublish{background: rgba(0,0,0,0.4);height: 66%;width: 50%;box-sizing: border-box;border-radius: 5vw;}
+
+            .conWrap{padding: 7% 12.6%;}
+
+            @media(max-width:1024px){
+                .head .menulistWrap{display: none;}
+                .head .menuButtonWrap{display: block;}
+            }
+
+            @media(min-width:1025px){
+                .slideMenuWrap{display: none !important;}
+            }
+
+            .positionR{position: relative;}
+            .flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
+            .flex{display: flex; display: -webkit-flex;}
+            .flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
+            .center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
+            .centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
+            .rightR{-webkit-justify-content: flex-end; justify-content: flex-end; }
+            .rightC{-webkit-align-items: flex-end; align-items: flex-end;}
+        </style>
+    </head>
+    <body class="flexGrow flexColumn" >
+
+        <div class="head flex centerH" >
+            <p class="logo"><img src="../common/img/doubleme-holoportal.png"/></p>
+
+            <div class="menuButtonWrap flexGrow">
+                <div class="flex flexGrow rightR"><p id="hamburger"><img src="../common/img/menuImg.svg"/></p></div>
+            </div>
+
+            <div class="menulistWrap flexGrow">
+                <div class="menu flex centerH right flexGrow rightR" >
+                    <div class="search flexGrow flex centerH"><p class="searchIc"><img src="../common/img/ic_search_b.png"></p><input type="text" placeholder="Search"></div>
+                    <div class="menulist">
+                        <ul class="flex centerH">
+                            <li>sign in</li>
+                            <li>sign out</li>
+                            <li><p class="btnPublish">publish</p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slideMenuWrap">
+            <div class="slideMenu flexColumn">
+                <div class="search flex centerH"><p class="searchIc"><img src="../common/img/ic_search_b.png"></p><input type="text" placeholder="Search"></div>
+                <div class="menulist flexGrow">
+                    <ul class="">
+                        <li>sign in</li>
+                        <li>sign out</li>
+                        <li><p class="btnPublish flex center">publish</p></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="conWrap">
+            <div class="submenu">
+
+            </div>
+        </div>
+
+        <div class="footer">
+
+        </div>
+
+        <script src="../common/js/jquery-1.12.3.js"></script>
+        <script>
+            $(function() {
+                var $slideMenuWrap = $('.slideMenuWrap')
+                var $hbgrBtn = $('#hamburger')
+                $hbgrBtn.on("click",function(){
+                    if($slideMenuWrap.hasClass('open')){
+                        //닫기
+                        $slideMenuWrap.removeClass('open');
+                        $slideMenuWrap.slideUp();
+                    }else{
+                        //열기
+                        $slideMenuWrap.addClass('open')
+                        $slideMenuWrap.slideDown();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
