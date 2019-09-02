@@ -34,8 +34,14 @@
             }
 
             function plyParse(Data){
-                var ply = new PLY();
-                let ply_parse_data = ply.parsePly(Data);
+                const ply = new PLY();
+                const ply_parse_data = ply.parsePly(Data);
+                console.log(ply_parse_data);
+
+                const container = document.createElement('div');
+                container.append(JSON.stringify(ply_parse_data));
+
+                //document.body.appendChild(container);
             }
 
         </script>

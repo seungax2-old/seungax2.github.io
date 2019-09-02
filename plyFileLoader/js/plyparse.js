@@ -42,9 +42,7 @@ PLY.prototype.parsePly = function(data){
         face_vertex_indices : this.face_vertex_indices,
         face_texcoord : this.face_texcoord
     }
-
-    console.log(ply);
-
+    return ply
 }
 
 PLY.prototype.parseHeader = function(data){
