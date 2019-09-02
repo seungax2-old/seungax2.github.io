@@ -32,3 +32,6 @@ canvas>>>>>>>>>>>>>>>>>>>>
 >.BLEND : https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFunc
 --블렌드 함수를 사용하려면 먼저 WebGLRenderingContext.enable()인수 와 함께 블렌딩을 활성화필요
 --혼합 색상의 공식은 color (RGBA) = (sourceColor * sfactor ) + (destinationColor * dfactor ) 와 같이 설명 할 수 있습니다 . RBGA 값은 0과 1 사이
+
+.shift() :
+배열에서 맨앞에있는 인자 가져오고 그거 제거
