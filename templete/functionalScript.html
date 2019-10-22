@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html>
+
+<head>스크립트클래스</head>
+
+<body>
+	<script>
+		(function () {
+			let initializing = false
+			//함수 직렬화 : 어떤 함수를 받아서 단순히 그 함수 내용을 텍스트로 돌려받는것
+			//함수가 직렬화 될수 있는지를 판단하는 정규식 (함수 직렬화 검사) : /xyz/.test(function () { xyz; })
+			// ->문자열 "xyz" 를 가진 함수생성 -> 그함수를 문자열 "xyz"를 테스트하는 정규표현식의 test() 메서드에 전달 -> 정상적 직렬화 시 true
+			//어떤 함수가 "_super" 문자열을 포함하고 있는지를 검사하는데 사용할수 있는 패턴변수 : superPattern
+			// ---------- > 함수 직렬화를 허용하는지 체크 ? 어떤 함수가 "_super" 문자열을 포함하고 있는지를 검사 : 모든 문자열과 매치하는 패턴으로 대채
+			let superPattern = /xyz/.test(function () { xyz; }) ? /\b_super\b/ : /.*/;
+
+			//하위클래스를 만드는 메서드를 선언 (하위클래스는 상위클래스를 재정의한다고 생가가ㅏ!)
+			//properties: 하위클래스에 추가될 프로퍼티들 (ex : text객체 생성 하면 init, console)
+			//subClass라 해도 되고 extends 해도되고 암거나 해도됨
+			Object.subClass = function (properties) {
+				//프로토타입 상속을 따라하기 위해, 상위클래스의 인스턴스를 생성하고 이를 프로토타입에할당하는 기법 사용
+				//즉! 여기선 object가 가지고 있는 프로퍼티!!
+				let _super = this.prototype;
+
+				//하위클래스를 개발할 시 상위클래스의 코드를 또 작성하지 않고 코드에 영향력을 생사할 수 있도록하는 기능 
+				//하위클래스를 확장시 subClass() 메서드에 전달한 properties + 상위 클래스의 프로퍼티를 합치지만 하면됨!
+
+				//프로토타입 용도로만 사용할 클래스의 인스턴스를 생성할 때만 true
+				initializing = true;
+				//프로토타입으로 사용할 상위클래스의 인스턴스 여기서 Object
+				let proto = new this();
+				//인스턴스를 생성하여  사용할 때가 되면 false -> 하위 클래스를 정의하는 작업 끝났다 확신 -> init()메서드 실행하거나 또는 건너뛸수있다.
+				initializing = false;
+
+				//상위클래스의 함수를 사용하지 않겠다면 프로퍼티를 합치는 작업은 : for (var name in properties) proto[name] = properties[name];
+				//but!!, 상위클래스 함수를 호출할 것을 염두함으로 _super 프로퍼티가 상위 클래스의 함수를 참조하도록 포장작업 필요
+
+				//어떤 함수를 포장할것인지 조건검사필요
+				//1. 하위 클래스의 프로퍼티가 함수? typeof properties[name] == "function"
+				//2. 상위클래스의 프로퍼티도 함수? typeof _super[name] == "function"
+				//3. 하위클래스의 함수가 _super()에 대한 참조를 포함? superPattern.test(properties[name])
+				for (var name in properties) {
+					proto[name] = typeof properties[name] == "function" && typeof _super[name] == "function" && superPattern.test(properties[name]) ?
+						//즉시실행 함수 : 하위클래스의 함수를 실행하도록 포장한 새로운 함수를 반환
+						//여기는 즉 상위클래스 재정의 하는것들 그게 아니면 바로 properties에 넣음
+						(function (name, fn) {
+							return function () {
+								let tmp = this._super;
+								this._super = _super[name];
+								let ret = fn.apply(this, arguments);
+
+								this._super = tmp;
+								return ret;
+							}
+						})(name, properties[name]) : properties[name];
+				}
+				//더미 클래스 생성자
+				function Class() {
+					//생성자와 관련한 모든 작업은 실제로는 init 메서드에서 수행
+					if (!initializing && this.init) this.init.apply(this, arguments);
+				}
+
+				//클래스의 프로토타입을 변경
+				Class.prototype = proto;
+				//생성자 참조를 재정의
+				Class.constructor = Class;
+				//클래스를 확장 가능하게 한다.
+				Class.extends = arguments.callee;
+
+				return Class;
+			}
+		})();
+
+		let Test = Object.subClass({
+			init: function () {
+				console.log("init")
+			},
+			console: function (logText) {
+				console.log(logText)
+			},
+			_param: function () {
+				return new URL(window.location.href).searchParams
+			},
+		});
+
+		let test = new Test();
+		let param = test._param().get('param');
+		test.console(param);
+	</script>
+</body>
+
+</html>

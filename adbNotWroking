@@ -1,0 +1,9 @@
+adb not working in chrome
+
+UniversalAdbDriverSetup 설치 : https://github.com/koush/UniversalAdbDriver or https://adb.clockworkmod.com/ or http://download.clockworkmod.com/test/UniversalAdbDriverSetup.msi or naver my driver
+
+Run it :)
+Open cmd.exe
+
+cd "C:\Program Files (x86)\ClockworkMod\Universal Adb Driver"
+adb devices
