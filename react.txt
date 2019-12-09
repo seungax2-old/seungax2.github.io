@@ -1,0 +1,72 @@
+폴더만들고 폴더위치에서
+npm init -y
+
+npm add -D @babel/core @babel/preset-env @babel/preset-react babel-loader clean-webpack-plugin css-loader html-loader html-webpack-plugin mini-css-extract-plugin node-sass react react-dom sass-loader style-loader webpack webpack-cli webpack-dev-server
+
+npm install --save react@^16.9.0 react-dom@^16.9.0
+
+create-react-app react-router-tutorial
+npm install --save react-router
+
+prop-types func 에러 나면
+npm install --save react-router@3.2
+
+npm i --save prop-types --no-optional
+
+npm install --save express
+
+이미지 로더
+npm install url-loader file-loader --save-dev
+
+config rule 추가
+
+npm install --save-dev @babel/plugin-proposal-class-properties
+
+.babelrc
+{
+	"presets": [
+		"@babel/preset-env",
+		"@babel/preset-react"
+	],
+	"plugins": [
+		[
+			"@babel/plugin-proposal-class-properties"
+		]
+	]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0. 설치
+npm i --save prop-types --no-optional
+
+1. 추가
+// After (15.5)
+import PropTypes from 'prop-types';
+
+2. 변경
+Header.contextTypes = {
+router: PropTypes.object
+}
+

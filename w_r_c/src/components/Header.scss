@@ -1,0 +1,34 @@
+$activeColor : #1562ab;
+
+#Header{
+	width: 100%;
+	.logo{
+		width: 100%;
+		height:50px;
+		background: #212529;
+		color: white;
+		font-weight: bold;
+	}
+	.menu{
+		width: 100%;
+		.menu-item{
+			background: #696969;
+			width: 33.3333%;
+			cursor: pointer;
+			transition: background-color 0.3s;
+			text-decoration: none;
+			color: white;
+			height: 40px;
+			&:hover{
+				background: #495057;
+			}
+			&:active{
+				background: $activeColor;
+			}
+			&.active{
+				background: $activeColor;
+			}
+			
+		}
+	}
+}

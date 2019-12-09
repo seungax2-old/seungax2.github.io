@@ -1,0 +1,15 @@
+#Header{width:100%}#Header .logo{width:100%;height:50px;background:#212529;color:white;font-weight:bold}#Header .menu{width:100%}#Header .menu .menu-item{background:#696969;width:33.3333%;cursor:pointer;transition:background-color 0.3s;text-decoration:none;color:white;height:40px}#Header .menu .menu-item:hover{background:#495057}#Header .menu .menu-item:active{background:#1562ab}#Header .menu .menu-item.active{background:#1562ab}
+
+.big-text{
+    margin-top: 3rem;
+    font-size: 7rem;
+    text-align: center;
+}
+.positionR{position: relative;}
+.flex{display: flex; display: -webkit-flex;}
+.flexGrow{-webkit-flex-grow: 1; flex-grow: 1; }
+.flexColumn{display: flex;  flex-direction: column; display: -webkit-flex;  -webkit-flex-direction: column; }
+.center{-webkit-justify-content: center; justify-content: center; -webkit-align-items: center; align-items: center; }/* 가로세로중앙정렬 */
+.centerH{-webkit-align-items: center; align-items: center; }/* 세로중앙정렬 */
+.rightR{-webkit-justify-content: flex-end; justify-content: flex-end; }
+.rightC{-webkit-align-items: flex-end; align-items: flex-end;}

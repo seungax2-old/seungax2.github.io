@@ -1,11 +1,11 @@
 
 /*개별 체크박스 label 이 싸고 있는 레이아웃	*/
-.delSelect {font-weight:400;color:rgba(0, 0, 0, 0.8);cursor: pointer;margin: 0;}
-.delSelect .checkbox-icon { display: inline-block; width: 4.8vw; height: 4.8vw; background: url('/resources/img/app/checkbox_off_icon.png') left center no-repeat; vertical-align: middle; transition-duration: .3s; background-size: 4.8vw 4.8vw;}
-.delSelect input[type=checkbox] { display: none; }
-.delSelect input[type=checkbox]:checked + .checkbox-icon { background-image: url('/resources/img/app/checkbox_on_icon.png'); }
+.checkBox {font-weight:400;color:rgba(0, 0, 0, 0.8);cursor: pointer;margin: 0;}
+.checkBox .checkbox-icon { display: inline-block; width: 4.8vw; height: 4.8vw; background: url('/resources/img/app/checkbox_off_icon.png') left center no-repeat; vertical-align: middle; transition-duration: .3s; background-size: 4.8vw 4.8vw;}
+.checkBox input[type=checkbox] { display: none; }
+.checkBox input[type=checkbox]:checked + .checkbox-icon { background-image: url('/resources/img/app/checkbox_on_icon.png'); }
 
-<label class="delSelect">
+<label class="checkBox">
 	<input type="checkbox" name="prd" value="">
 	<i class="checkbox-icon"></i>
 </label>
