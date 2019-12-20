@@ -5,8 +5,11 @@ npm add -D @babel/core @babel/preset-env @babel/preset-react babel-loader clean-
 
 npm install --save react@^16.9.0 react-dom@^16.9.0
 
-create-react-app react-router-tutorial
+(create-react-app react-router-tutorial) 없어도 됨
 npm install --save react-router
+npm install --save redux
+npm install --save react-redux
+
 
 prop-types func 에러 나면
 npm install --save react-router@3.2
@@ -15,10 +18,12 @@ npm i --save prop-types --no-optional
 
 npm install --save express
 
+-- 선택사항
 이미지 로더
 npm install url-loader file-loader --save-dev
 
-config rule 추가
+->config rule 추가
+기본틀 복사 했다면 할필요 x
 
 npm install --save-dev @babel/plugin-proposal-class-properties
 
@@ -36,37 +41,6 @@ npm install --save-dev @babel/plugin-proposal-class-properties
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-0. 설치
-npm i --save prop-types --no-optional
-
-1. 추가
-// After (15.5)
-import PropTypes from 'prop-types';
-
-2. 변경
-Header.contextTypes = {
-router: PropTypes.object
-}
+dev : npm start -> 저장시 자동 build
+prod : node serve
 
