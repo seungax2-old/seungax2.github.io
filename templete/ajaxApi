@@ -1,0 +1,45 @@
+	loadApi: function (parameters) {
+        let url = parameters.url;
+        /*let userId = this.getUserInfo();*/
+        /*let isHeader = parameters.head;*/
+        var headers = {};
+        /*if (isHeader) headers.UUID = userId;*/
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: parameters.body,
+                headers: headers,
+                crossDomain: true,
+                error: function (xhr) {
+                    console.log(xhr.responseJSON);
+                    switch (xhr.status) {
+                        //token error
+                        case 401:
+                            break;
+                        //parameter error
+                        case 412:
+                            break;
+                        //server error
+                        case 500:
+                            break;
+                        //예외상황
+                        case 700:
+                            reject(xhr.responseJSON);
+                            break;
+                        default:
+                            reject(xhr.responseJSON);
+                            break;
+                    }
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response && response.result) {
+                        resolve(response);
+                    } else {
+                    	response.msg ? alert(response.msg) : reject(response);
+                    }
+                },
+            });
+        });
+    }

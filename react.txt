@@ -13,7 +13,6 @@ npm install --save react-redux
 
 prop-types func 에러 나면
 npm install --save react-router@3.2
-
 npm i --save prop-types --no-optional
 
 npm install --save express
@@ -43,4 +42,7 @@ npm install --save-dev @babel/plugin-proposal-class-properties
 
 dev : npm start -> 저장시 자동 build
 prod : node serve
+
+--github.io 하는법
+npm install gh-pages --save-dev
 
