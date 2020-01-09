@@ -6,7 +6,8 @@ npm add -D @babel/core @babel/preset-env @babel/preset-react babel-loader clean-
 npm install --save react@^16.9.0 react-dom@^16.9.0
 
 (create-react-app react-router-tutorial) 없어도 됨
-npm install --save react-router
+npm install --save react-router //v3
+npm install --save react-router-dom //v4
 npm install --save redux
 npm install --save react-redux
 
@@ -44,5 +45,45 @@ dev : npm start -> 저장시 자동 build
 prod : node serve
 
 --github.io 하는법
+-->레파지토리 생성
+
+1.깃 초기화하여 생성
+git init
+
+2. 해당 폴더의 전체 파일을 staging에 추가 후
+git add*
+
+3. staging에 올라온 파일을 로컬 저장소에 저장한다.
+git commit -m "first commit"
+
+4. github에서 ropository  생성 -> readme 포함 x
+
+5. create repository 버튼
+
+6. 로컬에 생성한 저장소를 원격으로 올리는것임으로 , 2번째 박스의 push an existing repository from the command line 의 명령어 사용
+
+7. 해당폴더 터미널 열고 6번에 적힌 명령어 실행
+
+8. github 페이지 새로 고침하면 로컬 코드가 원격 저장소에 올라간것 확인가능
+
+9. 해당 폴더에서 gh-pages package 설치
 npm install gh-pages --save-dev
+
+10. 완료후 해당 프로젝트 폴더의 package.json 파일 열어서 프로덕션 빌드 생성하고 github pages 에 배포하기 위한 ㅅ ㅡ크립트를 추가한다.
+
+"homepage": "https://seungax2.github.io/v2",
+"deploy": "npm run build&&gh-pages -d build" --> scripts : { } 안
+
+11. 다시 터밀널에서 react-test폴더에서 추가 한 명령어 실행하면 published 됨
+npm run deploy
+
+12. github > setting > github pages 세션에서 해당 사이트는 gh-pages 브런치로 구축되었다는 문구 확인 가능
+해당 url 클릭하여 페이지가 잘 뜨는지 확인
+
+13. 마지막은 잊지말고 수정사항 커밋하기
+git add*
+git commit -m "publish it to github pages"
+git push
+
+
 
