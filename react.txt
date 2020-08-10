@@ -22,10 +22,17 @@ npm install --save express
 이미지 로더
 npm install url-loader file-loader --save-dev
 
+*** [object%20Module] 같은 오류로 이미지 불러오지 못하는경우는 파일 로더 버전 5.0.2, 5.1.0 에서 발생
+*** 이전버전 ( ex: "file-loader": "^4.2.0", )을 사용하거나 <img src={require('assets/logo.png').default}/>  같이  .default  를 사용할 경우 해결가능
+
 ->config rule 추가
 기본틀 복사 했다면 할필요 x
 
 npm install --save-dev @babel/plugin-proposal-class-properties
+
+async/await 사용 위해서는
+npm install --save @babel/polyfill
+앱 메인 js 에 import "@babel/polyfill"; 추가
 
 .babelrc
 {
@@ -40,9 +47,11 @@ npm install --save-dev @babel/plugin-proposal-class-properties
 	]
 }
 
+//react-id-swiper
+npm install --save react-id-swiper@latest swiper@latest
 
-dev : npm start -> 저장시 자동 build
-prod : node serve
+dev : npm run start -> 저장시 자동 build
+prod :npm run build-> node serve
 
 --github.io 하는법
 -->레파지토리 생성
@@ -75,15 +84,17 @@ npm install gh-pages --save-dev
 "deploy": "npm run build&&gh-pages -d build" --> scripts : { } 안
 
 11. 다시 터밀널에서 react-test폴더에서 추가 한 명령어 실행하면 published 됨
-npm run deploy
+  
 
 12. github > setting > github pages 세션에서 해당 사이트는 gh-pages 브런치로 구축되었다는 문구 확인 가능
 해당 url 클릭하여 페이지가 잘 뜨는지 확인
 
 13. 마지막은 잊지말고 수정사항 커밋하기
-git add*
+git add *
 git commit -m "publish it to github pages"
 git push
 
+
+--disable-web-security --user-data-dir="C:\chrome"
 
 

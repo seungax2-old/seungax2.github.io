@@ -86,11 +86,18 @@ var Element = Object.extends({
 			eventRegNo
 		} = args
 
+		//페이지수 
 		let contentPage = 1;
+		//전체 아이템 개수
 		let contentTotalCt = 0;
+		//넘겨받은 컨테이너 element
 		let $container = $("." + container);
-		/* this => Element */
+
+		// this => Element
+		// elements init 에서 this.api = StoreApi 로 해주어 아래와 같이 사용 가능
+		//api 호출 함수들이 있는 클래스 ex) 찾차: StoreApi
 		let recipeApi = this.api;
+		//파라미터로 넘긴 사용해야하는 api 이름 해당 클래스내에서 찾기
 		let call = recipeApi[api];
 
 		let callApi = function (selectPage) {
@@ -123,7 +130,7 @@ var Element = Object.extends({
 						if (contentTotalCt != contentsList[0].total_row) {
 							if (!moreBtn) {
 								//스크롤
-								containerWrap.scroll(function () {
+								containerWrap.off('scroll').scroll(function () {
 									var el = $(this);
 									//scrollHeight : 스크롤 시키지 않았을때의 전체 높이, scrollTop : 스크롤 되어 올라간 높이, outerHeight : 눈에보이는 컨텐츠 높이
 									if ((el[0].scrollHeight - el.scrollTop()) == el.outerHeight()) {

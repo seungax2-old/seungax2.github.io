@@ -7,3 +7,32 @@ Open cmd.exe
 
 cd "C:\Program Files (x86)\ClockworkMod\Universal Adb Driver"
 adb devices
+
+unauthorized 뜰때
+
+QUESTION/PROBLEM
+How to fix adb devices shows unauthorized device?
+
+APPLIES TO
+Android 4, Android 6, Android 7, Android 8
+
+RESOLUTION
+Possible solutions if "adb devices" shows a device as "unauthorized":
+
+C:\Users\JohnDoo>adb devices
+List of devices attached
+17310D821D      unauthorized
+
+1.Disconnect USB between PC and device
+2.Stop adb server by entering "adb kill-server" in command window
+3.On device use "Revoke USB debugging authorizations" in "Developer Options"
+4.On PC delete "adbkey" file in user directory, for example "C:\Users\JohnDoo\.android"
+5.Reconnect the device to the PC
+6.Open a command window and enter "adb devices". Watch the device's screen for any Authorization message and allow the connection.
+
+7.The device should now show as "device":
+ 
+C:\Users\JohnDoo>adb devices
+List of devices attached
+17310D821D      device
+If the above does not help, re-installing adb and or USB drivers may help.
